@@ -1,0 +1,373 @@
+import { cn } from "@/lib/utils";
+import { ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "wouter";
+import { useLanguage } from "./language-provider";
+import { useTheme } from "./theme-provider";
+import type { PageId } from "../lib/routes";
+
+interface NavItem {
+  page: PageId;
+  key: string;
+}
+
+interface NavGroup {
+  /** Label key for the trigger. */
+  key: string;
+  /** The page the trigger itself links to. */
+  page: PageId;
+  children: NavItem[];
+}
+
+type NavEntry = NavItem | NavGroup;
+
+function isGroup(entry: NavEntry): entry is NavGroup {
+  return "children" in entry;
+}
+
+/**
+ * Five top-level entries instead of ten — the long flat list left no room for
+ * a booking CTA and gave the nav no hierarchy.
+ */
+const NAV: NavEntry[] = [
+  {
+    key: "nav.group.about",
+    page: "about",
+    children: [
+      { page: "about", key: "nav.about" },
+      { page: "studio", key: "nav.studio" },
+    ],
+  },
+  {
+    key: "nav.group.sessions",
+    page: "sessions",
+    children: [
+      { page: "sessions", key: "nav.sessions.all" },
+      { page: "packages", key: "nav.packages" },
+      { page: "prepare", key: "nav.prepare" },
+      { page: "faq", key: "nav.faq" },
+    ],
+  },
+  { page: "gallery", key: "nav.gallery" },
+  { page: "journal", key: "nav.journal" },
+  { page: "contact", key: "nav.contact" },
+];
+
+/** Flat list for the mobile drawer, where a dropdown would only add taps. */
+const MOBILE_LINKS: NavItem[] = [
+  { page: "home", key: "nav.home" },
+  { page: "about", key: "nav.about" },
+  { page: "studio", key: "nav.studio" },
+  { page: "sessions", key: "nav.sessions" },
+  { page: "packages", key: "nav.packages" },
+  { page: "gallery", key: "nav.gallery" },
+  { page: "prepare", key: "nav.prepare" },
+  { page: "journal", key: "nav.journal" },
+  { page: "faq", key: "nav.faq" },
+  { page: "contact", key: "nav.contact" },
+];
+
+export function Navigation() {
+  const { t, language, toggleLanguage, href } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
+  const [location] = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [overHero, setOverHero] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  /** The drawer starts below the bar, whose height now varies with the logo. */
+  const [barHeight, setBarHeight] = useState(60);
+
+  useEffect(() => {
+    const measure = () => {
+      if (headerRef.current) setBarHeight(headerRef.current.offsetHeight);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [scrolled, open]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setOpen(false);
+    setOpenGroup(null);
+  }, [location]);
+
+  /**
+   * Pages that open on a full-bleed photo mark their hero `data-hero="dark"`.
+   * Over one, the default dark nav text is unreadable, so it flips to white.
+   */
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setOverHero(Boolean(document.querySelector('[data-hero="dark"]')));
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [location]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!openGroup) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenGroup(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openGroup]);
+
+  /** Small grace period so the pointer can travel into the dropdown. */
+  const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setOpenGroup(null), 160);
+  };
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
+
+  const isActive = (page: PageId) => {
+    const to = href(page);
+    return page === "home" ? location === to : location.startsWith(to);
+  };
+
+  /** White nav: only while sitting on top of the photo, before the bar solidifies. */
+  const onPhoto = overHero && !scrolled && !open;
+
+  const linkTone = onPhoto
+    ? { idle: "text-white/80 hover:text-white", active: "text-white is-active" }
+    : {
+        idle: "text-foreground/70 hover:text-foreground",
+        active: "text-primary is-active",
+      };
+
+  return (
+    <header
+      ref={headerRef}
+      className={cn(
+        "fixed top-0 right-0 left-0 z-50 transition-all duration-500",
+        scrolled
+          ? "border-border/50 bg-background/80 border-b py-2.5 shadow-[0_1px_24px_-16px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+          : "border-b border-transparent py-5 md:py-7",
+        // With the drawer open the bar sits on the drawer, not on the photo.
+        open && "bg-background border-border/50 border-b",
+      )}
+    >
+      {/*
+        Three columns so the logo stays optically centred whatever the nav or
+        the action cluster measure on either side.
+      */}
+      <div className="container grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+        {/*
+          The wrapper always occupies its grid column — hiding the nav itself
+          on mobile would collapse the column and pull the logo off centre.
+        */}
+        <div className="flex items-center">
+          <nav className="hidden items-center gap-8 lg:flex">
+            {NAV.map((entry) => {
+              if (!isGroup(entry)) {
+                const active = isActive(entry.page);
+                return (
+                  <Link
+                    key={entry.page}
+                    to={href(entry.page)}
+                    className={cn(
+                      "nav-link uppercase-spaced relative py-1 text-[10px]",
+                      active ? linkTone.active : linkTone.idle,
+                    )}
+                  >
+                    {t(entry.key)}
+                  </Link>
+                );
+              }
+
+              const groupActive = entry.children.some((child) =>
+                isActive(child.page),
+              );
+              const expanded = openGroup === entry.key;
+
+              return (
+                <div
+                  key={entry.key}
+                  className="relative"
+                  onMouseEnter={() => {
+                    cancelClose();
+                    setOpenGroup(entry.key);
+                  }}
+                  onMouseLeave={scheduleClose}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    aria-haspopup="true"
+                    onClick={() => setOpenGroup(expanded ? null : entry.key)}
+                    className={cn(
+                      "nav-link uppercase-spaced relative flex items-center gap-1.5 py-1 text-[10px]",
+                      groupActive ? linkTone.active : linkTone.idle,
+                    )}
+                  >
+                    {t(entry.key)}
+                    <ChevronDown
+                      className={cn(
+                        "size-3 transition-transform duration-300",
+                        expanded && "rotate-180",
+                      )}
+                    />
+                  </button>
+
+                  <div
+                    className={cn(
+                      "absolute top-full left-1/2 z-50 w-60 -translate-x-1/2 pt-4 transition-all duration-200",
+                      expanded
+                        ? "visible translate-y-0 opacity-100"
+                        : "invisible -translate-y-1 opacity-0",
+                    )}
+                    onMouseEnter={cancelClose}
+                    onMouseLeave={scheduleClose}
+                  >
+                    <div className="border-border/60 bg-background/95 border p-2 shadow-[0_18px_50px_-30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+                      <p className="text-muted-foreground/70 px-4 pt-2 pb-3 text-[10px] leading-snug">
+                        {t(`${entry.key}.desc`)}
+                      </p>
+                      {entry.children.map((child) => (
+                        <Link
+                          key={child.page}
+                          to={href(child.page)}
+                          onClick={() => setOpenGroup(null)}
+                          className={cn(
+                            "uppercase-spaced hover:bg-card block px-4 py-3 text-[10px] transition-colors duration-200",
+                            isActive(child.page)
+                              ? "text-primary"
+                              : "text-foreground/75 hover:text-foreground",
+                          )}
+                        >
+                          {t(child.key)}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </nav>
+        </div>
+
+        <Link
+          to={href("home")}
+          className="flex shrink-0 items-center justify-center"
+          aria-label="9 Meses Fotografia"
+        >
+          <img
+            src="/images/logo.png"
+            alt="9 Meses Fotografia"
+            className={cn(
+              "w-auto transition-all duration-500",
+              scrolled ? "h-10 md:h-12" : "h-16 md:h-24",
+            )}
+          />
+        </Link>
+
+        <div className="flex items-center justify-end gap-2">
+          <Link
+            to={href("contact")}
+            className={cn(
+              "hidden border px-5 py-2.5 text-[10px] tracking-[0.15em] uppercase transition-colors duration-300 lg:inline-block",
+              onPhoto
+                ? "border-white/70 text-white hover:bg-white hover:text-stone-900"
+                : "border-foreground text-foreground hover:bg-foreground hover:text-background",
+            )}
+          >
+            {t("nav.contact.cta")}
+          </Link>
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            aria-label={t("nav.language")}
+            className={cn(
+              // Same borderless treatment as the theme toggle beside it.
+              "uppercase-spaced p-2 transition-colors duration-300",
+              onPhoto
+                ? "text-white/80 hover:text-white"
+                : "text-foreground/70 hover:text-foreground",
+            )}
+          >
+            {language === "pt" ? "EN" : "PT"}
+          </button>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={t("nav.theme.toggle")}
+            className={cn(
+              "p-2 transition-colors duration-300",
+              onPhoto
+                ? "text-white/80 hover:text-white"
+                : "text-foreground/70 hover:text-foreground",
+            )}
+          >
+            {theme === "dark" ? (
+              <Sun className="size-4" />
+            ) : (
+              <Moon className="size-4" />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setOpen((prev) => !prev)}
+            aria-label={open ? t("nav.menu.close") : t("nav.menu.toggle")}
+            className={cn(
+              "p-2 lg:hidden",
+              onPhoto ? "text-white" : "text-foreground",
+            )}
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div
+          className="bg-background fixed inset-x-0 bottom-0 z-40 overflow-y-auto lg:hidden"
+          style={{ top: barHeight }}
+        >
+          <nav className="container flex flex-col pt-4 pb-10">
+            {MOBILE_LINKS.map((link, index) => (
+              <Link
+                key={link.page}
+                to={href(link.page)}
+                className={cn(
+                  "border-border/60 uppercase-spaced border-b py-4",
+                  isActive(link.page) && "text-primary",
+                )}
+                style={{
+                  animation: `fadeInUp 0.4s ease-out ${index * 35}ms both`,
+                }}
+              >
+                {t(link.key)}
+              </Link>
+            ))}
+            <Link
+              to={href("contact")}
+              className="btn-solid mt-8"
+              style={{
+                animation: `fadeInUp 0.4s ease-out ${MOBILE_LINKS.length * 35}ms both`,
+              }}
+            >
+              {t("nav.contact.cta")}
+            </Link>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+}

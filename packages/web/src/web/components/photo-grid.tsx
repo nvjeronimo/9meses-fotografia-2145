@@ -1,0 +1,79 @@
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import type { DisplayPhoto } from "../lib/photos";
+import { useLanguage } from "./language-provider";
+import { Lightbox } from "./lightbox";
+
+interface PhotoGridProps {
+  photos: DisplayPhoto[];
+  className?: string;
+  /** Widest column count, on large screens. Narrower screens step down. */
+  columns?: 2 | 3 | 4;
+  emptyMessage?: string;
+}
+
+/**
+ * Real masonry, via CSS multi-columns.
+ *
+ * The previous grid forced every photo into one of a handful of fixed aspect
+ * ratios, which cropped portraits and left gaps between rows. Here each image
+ * keeps its own proportions and the columns pack tight — which is what a
+ * photography portfolio needs. `break-inside-avoid` stops an image being split
+ * across a column boundary.
+ */
+const COLUMN_CLASSES: Record<2 | 3 | 4, string> = {
+  2: "columns-1 sm:columns-2",
+  3: "columns-2 md:columns-3",
+  4: "columns-2 md:columns-3 lg:columns-4",
+};
+
+export function PhotoGrid({ photos, className, columns = 3, emptyMessage }: PhotoGridProps) {
+  const { language } = useLanguage();
+  const [index, setIndex] = useState<number | null>(null);
+
+  if (photos.length === 0) {
+    return emptyMessage ? (
+      <p className="text-muted-foreground py-16 text-center text-sm">{emptyMessage}</p>
+    ) : null;
+  }
+
+  return (
+    <>
+      <div
+        className={cn(
+          "gap-3 [column-fill:_balance] md:gap-5",
+          COLUMN_CLASSES[columns],
+          className,
+        )}
+      >
+        {photos.map((photo, i) => {
+          const caption = language === "pt" ? photo.captionPt : photo.captionEn;
+          return (
+            <button
+              key={photo.id}
+              type="button"
+              onClick={() => setIndex(i)}
+              className="image-mat-sm group relative mb-3 block w-full break-inside-avoid overflow-hidden md:mb-5"
+            >
+              <img
+                src={photo.url}
+                alt={caption ?? ""}
+                loading={i < 6 ? "eager" : "lazy"}
+                decoding="async"
+                className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+              <span className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/10" />
+            </button>
+          );
+        })}
+      </div>
+
+      <Lightbox
+        photos={photos}
+        index={index}
+        onClose={() => setIndex(null)}
+        onIndexChange={setIndex}
+      />
+    </>
+  );
+}

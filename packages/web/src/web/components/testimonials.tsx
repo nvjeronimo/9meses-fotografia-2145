@@ -1,0 +1,94 @@
+import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTestimonials } from "../queries/testimonials";
+import { useLanguage } from "./language-provider";
+
+/** Maps a stored session type to its translation key, for the attribution line. */
+const SESSION_KEYS: Record<string, string> = {
+  maternity: "session.maternity",
+  newborn: "session.newborn",
+  baby: "session.baby",
+  family: "session.family",
+  smash: "session.smash",
+};
+
+export function TestimonialsCarousel() {
+  const { t, language } = useLanguage();
+  const { data } = useTestimonials();
+  const [index, setIndex] = useState(0);
+
+  // Reviews come from the admin panel, so the list length changes at runtime.
+  const items = (data ?? []).filter((row) =>
+    ((language === "pt" ? row.quotePt : row.quoteEn) ?? "").trim().length > 0,
+  );
+
+  useEffect(() => {
+    if (items.length < 2) return;
+    const id = setInterval(() => setIndex((prev) => (prev + 1) % items.length), 8000);
+    return () => clearInterval(id);
+  }, [items.length]);
+
+  useEffect(() => {
+    if (index >= items.length) setIndex(0);
+  }, [index, items.length]);
+
+  const item = items[index];
+  if (!item) return null;
+
+  const quote = (language === "pt" ? item.quotePt : item.quoteEn) ?? "";
+  const sessionKey = item.sessionType ? SESSION_KEYS[item.sessionType] : undefined;
+
+  return (
+    <div className="relative mx-auto max-w-3xl text-center">
+      <Quote className="text-primary/25 mx-auto mb-8 size-9" />
+
+      <blockquote key={item.id} style={{ animation: "fadeInUp 0.7s ease-out both" }}>
+        <p className="display-serif text-xl leading-relaxed font-light italic md:text-2xl">
+          “{quote}”
+        </p>
+        <footer className="mt-8">
+          <p className="text-sm font-medium">{item.author}</p>
+          {sessionKey && (
+            <p className="uppercase-spaced text-muted-foreground mt-2">{t(sessionKey)}</p>
+          )}
+        </footer>
+      </blockquote>
+
+      {items.length > 1 && (
+        <div className="mt-12 flex items-center justify-center gap-6">
+          <button
+            type="button"
+            onClick={() => setIndex((prev) => (prev - 1 + items.length) % items.length)}
+            aria-label={t("lightbox.previous")}
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ChevronLeft className="size-5" />
+          </button>
+          <div className="flex gap-2">
+            {items.map((testimonial, i) => (
+              <button
+                key={testimonial.id}
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={testimonial.author}
+                className={cn(
+                  "size-1.5 rounded-full transition-colors duration-300",
+                  i === index ? "bg-primary" : "bg-border hover:bg-muted-foreground",
+                )}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setIndex((prev) => (prev + 1) % items.length)}
+            aria-label={t("lightbox.next")}
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ChevronRight className="size-5" />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

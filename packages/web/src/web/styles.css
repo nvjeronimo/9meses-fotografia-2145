@@ -1,0 +1,507 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Cinematic Editorial Design System — 9 Meses Fotografia
+ * Palette: champagne, warm grey, ivory with espresso + soft gold accents
+ * Typography: Playfair Display (display serif) + Lato (body sans)
+ * Philosophy: luxury through simplicity, emotional storytelling
+ */
+
+@theme inline {
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-band: var(--band);
+  --color-band-foreground: var(--band-foreground);
+  --color-band-chip-foreground: var(--band-chip-foreground);
+  --font-display: "Playfair Display", serif;
+  --font-body: "Lato", sans-serif;
+}
+
+:root {
+  --background: oklch(0.985 0.003 65);
+  --foreground: oklch(0.25 0.01 45);
+  --card: oklch(0.975 0.005 55);
+  --card-foreground: oklch(0.25 0.01 45);
+  --popover: oklch(0.985 0.003 65);
+  --popover-foreground: oklch(0.25 0.01 45);
+  --primary: oklch(0.55 0.04 55);
+  --primary-foreground: oklch(0.985 0.003 65);
+  --secondary: oklch(0.88 0.008 55);
+  --secondary-foreground: oklch(0.25 0.01 45);
+  --muted: oklch(0.92 0.005 55);
+  --muted-foreground: oklch(0.45 0.01 45);
+  --accent: oklch(0.55 0.04 55);
+  --accent-foreground: oklch(0.985 0.003 65);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.985 0.003 65);
+  --border: oklch(0.88 0.008 55);
+  --input: oklch(0.88 0.008 55);
+  --ring: oklch(0.55 0.04 55);
+  /* The booking band at the foot of most pages: brand brown, ivory type, and
+     an ivory chip carrying the page's own ink. Its own tokens rather than
+     `primary`, so the dark theme can make it a deep panel instead of
+     inheriting a lightened brown. */
+  --band: oklch(0.55 0.04 55);
+  --band-foreground: oklch(0.985 0.003 65);
+  --band-chip-foreground: oklch(0.25 0.01 45);
+  --radius: 6px;
+}
+
+/* Dark theme — espresso, not charcoal.
+ * The light theme is champagne over ivory, so the dark one has to stay on the
+ * same warm axis (hue 45-80) rather than collapsing to neutral grey: at chroma
+ * 0.002-0.01 the surfaces and the type read cold and generic, which is what
+ * made the theme feel off-brand.
+ */
+.dark {
+  --background: oklch(0.155 0.014 45);
+  --foreground: oklch(0.945 0.012 82);
+  --card: oklch(0.215 0.017 45);
+  --card-foreground: oklch(0.945 0.012 82);
+  --popover: oklch(0.215 0.017 45);
+  --popover-foreground: oklch(0.945 0.012 82);
+  /* Accent lifts from the light theme's mid brown to the brand's champagne
+     gold: a 0.65-lightness brown has nothing to sit against on a dark page and
+     reads as dull mauve, while the gold matches the dandelion artwork. */
+  --primary: oklch(0.79 0.075 80);
+  --primary-foreground: oklch(0.18 0.016 45);
+  --secondary: oklch(0.31 0.018 45);
+  --secondary-foreground: oklch(0.945 0.012 82);
+  --muted: oklch(0.25 0.016 45);
+  --muted-foreground: oklch(0.73 0.021 78);
+  --accent: oklch(0.79 0.075 80);
+  --accent-foreground: oklch(0.18 0.016 45);
+  --destructive: oklch(0.64 0.19 27);
+  --destructive-foreground: oklch(0.97 0.008 82);
+  --border: oklch(0.305 0.017 45);
+  --input: oklch(0.305 0.017 45);
+  --ring: oklch(0.79 0.075 80);
+  /* Deep espresso panel: the band is meant to be the darkest, warmest moment
+     on the page, not — as it was when it tracked `primary` — a pale blob. */
+  --band: oklch(0.255 0.028 45);
+  --band-foreground: oklch(0.945 0.012 82);
+  --band-chip-foreground: oklch(0.18 0.016 45);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  h1 {
+    font-size: 96px;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: 60px;
+  }
+
+  h3 {
+    font-size: 36px;
+  }
+
+  h4 {
+    font-size: 22px;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 44px;
+    }
+    h2 {
+      font-size: 32px;
+    }
+    h3 {
+      font-size: 26px;
+    }
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 4rem;
+      padding-right: 4rem;
+      max-width: 1400px;
+    }
+  }
+
+  .display-serif {
+    font-family: var(--font-display);
+  }
+
+  .body-sans {
+    font-family: var(--font-body);
+  }
+
+  .uppercase-spaced {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .rule-line {
+    height: 0.5px;
+    background-color: oklch(0.88 0.008 55);
+    border: none;
+  }
+
+  .dark .rule-line {
+    background-color: var(--border);
+  }
+
+  /* Medallions from the studio's brand pack: aged-paper discs with dark line
+     art, drawn for the brochure's white page. Left untouched on the dark theme
+     each one reads as a spotlight on near-black, so they are dimmed and warmed
+     back into the page — still legible, no longer glaring. */
+  .dark .brand-mark {
+    filter: brightness(0.76) saturate(1.25) contrast(1.05);
+    opacity: 0.92;
+  }
+
+  .image-mat {
+    padding: 40px;
+    background: oklch(0.985 0.003 65);
+  }
+
+  .dark .image-mat {
+    background: var(--card);
+  }
+
+  /* Slim mat for grid thumbnails — the framed look without eating the photo. */
+  .image-mat-sm {
+    padding: 12px;
+    background: oklch(0.985 0.003 65);
+  }
+
+  .dark .image-mat-sm {
+    background: var(--card);
+  }
+
+  @media (max-width: 768px) {
+    .image-mat-sm {
+      padding: 8px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .image-mat {
+      padding: 20px;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  /* Standard vertical rhythm for sections — tighter on phones, where the
+     stacked layout made pages very long. */
+  .section-y {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-y {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+
+  /* Bottom-only variant, for sections that follow a page hero. */
+  .section-y-b {
+    padding-bottom: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-y-b {
+      padding-bottom: 6rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-y-b {
+      padding-bottom: 7rem;
+    }
+  }
+
+  /* Collapses the padding on the side where a section meets the watercolour
+     divider. The wash is tall artwork and carries its own breathing room, so
+     stacking a section's 7rem on top of it left a visible gap in the middle of
+     what should read as one continuous edge. Two classes, so it beats the
+     `.section-y` it overrides regardless of utility order. */
+  .section-y.section-flush-b,
+  .section-y-b.section-flush-b {
+    padding-bottom: 0;
+  }
+
+  .section-y.section-flush-t {
+    padding-top: 0;
+  }
+
+  /* Animated underline for nav links. */
+  .nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 0;
+    background-color: currentColor;
+    transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.is-active::after {
+    width: 100%;
+  }
+
+  /* Same rule as `.nav-link`, drawn on hover of the parent group instead of
+     the link itself — for text CTAs that sit inside a card-sized link. Timing
+     is kept identical to the header so every animated underline on the site
+     reads as one gesture. */
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 0;
+    background-color: currentColor;
+    transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .link-underline:hover::after,
+  .group:hover .link-underline::after {
+    width: 100%;
+  }
+
+  /* Hero slide progress fill. */
+  .hero-progress {
+    animation: heroProgress 6.5s linear forwards;
+  }
+
+  @keyframes heroProgress {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  /* Page transition on mount.
+   * `backwards`, not `both`: a fill-mode that holds the final keyframe leaves a
+   * `transform` on the wrapper forever, and a transformed ancestor becomes the
+   * containing block for `position: fixed` children (overlays then size to the
+   * whole page instead of the viewport). Once the animation ends the element
+   * should fall back to its untransformed base style. */
+  .page-enter {
+    animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  @keyframes pageEnter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Outlined editorial button */
+  .btn-outline {
+    @apply inline-block border border-foreground px-6 py-3 text-center transition-all duration-300;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .btn-outline:hover {
+    @apply bg-foreground text-background;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.6);
+  }
+
+  .btn-outline:active {
+    transform: translateY(0);
+  }
+
+  /* Solid accent button */
+  .btn-solid {
+    @apply inline-block bg-primary px-8 py-4 text-center text-primary-foreground transition-all duration-300;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .btn-solid:hover {
+    @apply bg-primary/90 shadow-lg;
+    transform: translateY(-1px);
+  }
+
+  .btn-solid:active {
+    transform: translateY(0);
+  }
+
+  .field {
+    @apply h-12 w-full border border-input bg-background px-4 text-foreground transition-colors outline-none;
+  }
+
+  .field:focus {
+    @apply border-primary;
+  }
+
+  textarea.field {
+    @apply h-auto py-3;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Honour the OS "reduce motion" setting: keep the layout, drop the movement. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Anything that animates in must still end up visible. */
+  [style*="fadeInUp"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+::selection {
+  background-color: oklch(0.55 0.04 55 / 0.2);
+  color: oklch(0.25 0.01 45);
+}
+
+/* Selection was inheriting the light theme's espresso ink, which all but
+   disappeared into the brown highlight on a dark page. */
+.dark ::selection {
+  background-color: oklch(0.79 0.075 80 / 0.28);
+  color: oklch(0.97 0.008 82);
+}
