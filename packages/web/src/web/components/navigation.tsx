@@ -201,7 +201,8 @@ export function Navigation() {
           on mobile would collapse the column and pull the logo off centre.
         */}
         <div className="flex items-center">
-          <nav className="hidden items-center gap-8 lg:flex">
+          {/* Full nav only from 1280px: below that the links crowd the logo. */}
+          <nav className="hidden items-center gap-6 xl:flex 2xl:gap-8">
             {NAV.map((entry) => {
               if (!isGroup(entry)) {
                 const active = isActive(entry.page);
@@ -210,7 +211,7 @@ export function Navigation() {
                     key={entry.page}
                     to={href(entry.page)}
                     className={cn(
-                      "nav-link uppercase-spaced relative py-1 text-[11px]",
+                      "nav-link uppercase-spaced relative py-1 text-[11px] whitespace-nowrap",
                       active ? linkTone.active : linkTone.idle,
                     )}
                   >
@@ -248,7 +249,7 @@ export function Navigation() {
                     aria-expanded={expanded}
                     onClick={() => setOpenGroup(expanded ? null : entry.key)}
                     className={cn(
-                      "nav-link uppercase-spaced relative flex items-center gap-1.5 py-1 text-[11px]",
+                      "nav-link uppercase-spaced relative flex items-center gap-1.5 py-1 text-[11px] whitespace-nowrap",
                       groupActive ? linkTone.active : linkTone.idle,
                     )}
                   >
@@ -319,7 +320,7 @@ export function Navigation() {
           <Link
             to={href("contact")}
             className={cn(
-              "hidden border px-5 py-2.5 text-[11px] tracking-[0.15em] uppercase transition-colors duration-300 lg:inline-block",
+              "hidden border px-5 py-2.5 text-[11px] tracking-[0.15em] uppercase transition-colors duration-300 xl:inline-block",
               onPhoto
                 ? "border-white/70 text-white hover:bg-white hover:text-stone-900"
                 : "border-foreground text-foreground hover:bg-foreground hover:text-background",
@@ -348,7 +349,7 @@ export function Navigation() {
             className={cn(
               // On phones it lives in the drawer, so the bar keeps two
               // full-size targets beside the centred logo.
-              "hidden size-11 shrink-0 place-items-center transition-colors duration-300 lg:grid",
+              "hidden size-11 shrink-0 place-items-center transition-colors duration-300 xl:grid",
               onPhoto
                 ? "text-white/80 hover:text-white"
                 : "text-foreground/70 hover:text-foreground",
@@ -367,7 +368,7 @@ export function Navigation() {
             aria-label={open ? t("nav.menu.close") : t("nav.menu.toggle")}
             aria-expanded={open}
             className={cn(
-              "-mr-2 grid size-11 shrink-0 place-items-center lg:hidden",
+              "-mr-2 grid size-11 shrink-0 place-items-center xl:hidden",
               onPhoto ? "text-white" : "text-foreground",
             )}
           >
@@ -385,7 +386,7 @@ export function Navigation() {
         createPortal(
             <div
               ref={drawerRef}
-              className="bg-background fixed inset-x-0 bottom-0 z-40 overflow-y-auto lg:hidden"
+              className="bg-background fixed inset-x-0 bottom-0 z-40 overflow-y-auto xl:hidden"
               style={{ top: barHeight }}
             >
               <nav className="container flex flex-col pt-4 pb-10">
