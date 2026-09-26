@@ -27,6 +27,15 @@ function Sessions() {
         <div className="space-y-12 md:space-y-28">
           {SESSIONS.map((session, i) => (
             <Reveal key={session.slug} as="article">
+              {/* Title leads the block, as in the brochure: frame first, then the work. */}
+              <FramedTitle className="mb-6 md:mb-10">
+                <Link
+                  to={href("sessionDetail", slugOf(session))}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {t(session.shortKey)}
+                </Link>
+              </FramedTitle>
               <div
                 className={`grid items-center gap-5 md:grid-cols-2 md:gap-16 ${
                   i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
@@ -49,7 +58,7 @@ function Sessions() {
                 <div>
                   {/* Brand mark for the session, paired with its timing line so
                       the two read as one label rather than a floating badge. */}
-                  <div className="mb-4 flex items-center gap-3.5">
+                  <div className="mb-5 flex items-center gap-3.5">
                     <img
                       src={session.icon}
                       alt=""
@@ -61,11 +70,6 @@ function Sessions() {
                       {t(session.timingKey)}
                     </p>
                   </div>
-                  <FramedTitle align="start" className="my-5 md:my-7">
-                    <Link to={href("sessionDetail", slugOf(session))} className="hover:text-foreground transition-colors">
-                      {t(session.shortKey)}
-                    </Link>
-                  </FramedTitle>
                   <p className="text-muted-foreground mb-4 leading-relaxed md:mb-5">{t(session.descKey)}</p>
                   {/* Secondary blurb is redundant on a phone — the detail page carries it. */}
                   <p className="text-muted-foreground mb-9 hidden text-sm leading-relaxed md:block">
