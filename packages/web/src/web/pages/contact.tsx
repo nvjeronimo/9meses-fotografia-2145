@@ -21,7 +21,15 @@ const AUTOREPLY_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID
   | string
   | undefined;
 
-if (PUBLIC_KEY) emailjs.init(PUBLIC_KEY);
+// Free-tier protections from the SDK: refuse headless browsers (most bots)
+// and allow one send per 10 seconds from the same browser.
+if (PUBLIC_KEY) {
+  emailjs.init({
+    publicKey: PUBLIC_KEY,
+    blockHeadless: true,
+    limitRate: { id: "contact", throttle: 10_000 },
+  });
+}
 
 interface FormState {
   name: string;
