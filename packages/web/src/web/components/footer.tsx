@@ -66,8 +66,20 @@ export function Footer() {
                 ))}
               </span>
               {t("footer.google")
-                .replace("{rating}", language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn)
-                .replace("{count}", String(GOOGLE_REVIEWS.count))}
+                .replace("{count}", String(GOOGLE_REVIEWS.count))
+                .split("{rating}")
+                .map((part, i) =>
+                  i === 0 ? (
+                    part
+                  ) : (
+                    <span key={i}>
+                      <strong className="font-bold">
+                        {language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn}
+                      </strong>
+                      {part}
+                    </span>
+                  ),
+                )}
             </a>
           </div>
 

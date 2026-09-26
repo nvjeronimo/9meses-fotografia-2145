@@ -201,6 +201,23 @@ export function Navigation() {
           on mobile would collapse the column and pull the logo off centre.
         */}
         <div className="flex items-center">
+          {/* Below 1280px the menu sits left of the logo: Menu | logo | EN. */}
+          <button
+            type="button"
+            ref={menuButtonRef}
+            onClick={() => setOpen((prev) => !prev)}
+            aria-label={open ? t("nav.menu.close") : t("nav.menu.toggle")}
+            aria-expanded={open}
+            className={cn(
+              "-ml-2 flex h-11 shrink-0 items-center gap-2 px-2 xl:hidden",
+              onPhoto ? "text-white" : "text-foreground",
+            )}
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            <span aria-hidden className="uppercase-spaced text-[11px]">
+              {t("nav.menu.label")}
+            </span>
+          </button>
           {/* Full nav only from 1280px: below that the links crowd the logo. */}
           <nav className="hidden items-center gap-6 xl:flex 2xl:gap-8">
             {NAV.map((entry) => {
@@ -360,22 +377,6 @@ export function Navigation() {
             ) : (
               <Moon className="size-4" />
             )}
-          </button>
-          <button
-            type="button"
-            ref={menuButtonRef}
-            onClick={() => setOpen((prev) => !prev)}
-            aria-label={open ? t("nav.menu.close") : t("nav.menu.toggle")}
-            aria-expanded={open}
-            className={cn(
-              "-mr-2 flex h-11 shrink-0 items-center gap-2 px-2 xl:hidden",
-              onPhoto ? "text-white" : "text-foreground",
-            )}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-            <span aria-hidden className="uppercase-spaced text-[11px]">
-              {t("nav.menu.label")}
-            </span>
           </button>
         </div>
       </div>

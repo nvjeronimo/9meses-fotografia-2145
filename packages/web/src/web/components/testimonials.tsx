@@ -120,8 +120,20 @@ export function TestimonialsCarousel() {
       <p className="text-muted-foreground mt-10 text-sm">
         <a href={GOOGLE_REVIEWS.url} target="_blank" rel="noreferrer" className="link-underline">
           {t("testimonials.google")
-            .replace("{rating}", language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn)
-            .replace("{count}", String(GOOGLE_REVIEWS.count))}
+                .replace("{count}", String(GOOGLE_REVIEWS.count))
+                .split("{rating}")
+                .map((part, i) =>
+                  i === 0 ? (
+                    part
+                  ) : (
+                    <span key={i}>
+                      <strong className="font-bold">
+                        {language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn}
+                      </strong>
+                      {part}
+                    </span>
+                  ),
+                )}
         </a>
       </p>
     </div>
