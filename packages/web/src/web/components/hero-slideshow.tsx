@@ -50,16 +50,19 @@ export function HeroSlideshow() {
           fetchPriority={i === 0 ? "high" : "auto"}
           decoding={i === 0 ? "sync" : "async"}
           className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ease-in-out",
+            "absolute inset-0 h-full w-full object-cover will-change-[opacity,transform]",
             i === index ? "opacity-100" : "opacity-0",
           )}
           style={
-            i === index && !reduced
-              ? {
-                  transform: "scale(1.04)",
-                  transition: "opacity 1.6s ease-in-out, transform 8s ease-out",
-                }
-              : undefined
+            reduced
+              ? { transition: "opacity 1.6s ease-in-out" }
+              : i === index
+                ? // Incoming: fade in while a slow zoom starts.
+                  { transform: "scale(1.06)", transition: "opacity 1.6s ease-in-out, transform 9s ease-out" }
+                : // Outgoing: keep the zoom it reached and only reset it once
+                  // fully faded (delay = fade length). Resetting it straight
+                  // away was the visible "snap back" before each change.
+                  { transform: "scale(1)", transition: "opacity 1.6s ease-in-out, transform 0s linear 1.7s" }
           }
         />
         ),

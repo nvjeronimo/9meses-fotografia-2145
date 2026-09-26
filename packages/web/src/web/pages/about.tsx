@@ -47,7 +47,7 @@ function About() {
               {t("about.signature")}
             </p>
           </Reveal>
-          <Reveal delay={150}>
+          <Reveal delay={150} className="order-first md:order-none">
             <div className="image-mat aspect-[4/5] overflow-hidden">
               <img
                 {...responsive(portrait, "(min-width: 768px) 45vw, 100vw")}
