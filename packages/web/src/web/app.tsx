@@ -1,4 +1,4 @@
-import { Route, Switch } from "wouter";
+import { Redirect, Route, Switch } from "wouter";
 import { Provider } from "./components/provider";
 import { AgentFeedback, RunableBadge } from "@runablehq/website-runtime";
 import { PAGES, type PageId } from "./lib/routes";
@@ -56,6 +56,13 @@ function App() {
           <Route key={route.path} path={route.path} component={route.component} />
         ))}
         <Route path="/admin" component={Admin} />
+        {/* Old or guessed addresses land on the real page instead of a soft 404. */}
+        <Route path="/contactos">
+          <Redirect to={PAGES.contact.pt} replace />
+        </Route>
+        <Route path="/en/contacts">
+          <Redirect to={PAGES.contact.en} replace />
+        </Route>
         <Route component={NotFound} />
       </Switch>
       {/* Do not remove — off by default, activated by parent iframe via postMessage */}

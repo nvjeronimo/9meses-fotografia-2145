@@ -99,7 +99,7 @@ export function HeroSlideshow() {
               onClick={() => setIndex(i)}
               aria-label={`${t("hero.goTo")} ${i + 1}`}
               aria-current={i === index}
-              className="group h-4 w-12 md:w-16"
+              className="group flex h-11 w-12 items-center md:w-16"
             >
               <span className="relative block h-[2px] w-full overflow-hidden bg-white/30 transition-colors duration-300 group-hover:bg-white/50">
                 <span

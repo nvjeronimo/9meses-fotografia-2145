@@ -215,6 +215,8 @@ export const translations = {
 
     // Contact
     "contact.title": "Contacto",
+    "a11y.skip": "Saltar para o conteúdo",
+    "gallery.open": "Ampliar fotografia",
     "contact.package.chosen": "Pacote escolhido",
     "contact.package.remove": "Remover pacote",
     "contact.dueDate.maternity": "Data prevista do parto",
@@ -674,6 +676,8 @@ export const translations = {
 
     // Contact
     "contact.title": "Contact",
+    "a11y.skip": "Skip to content",
+    "gallery.open": "Open photo",
     "contact.package.chosen": "Chosen package",
     "contact.package.remove": "Remove package",
     "contact.dueDate.maternity": "Due date",

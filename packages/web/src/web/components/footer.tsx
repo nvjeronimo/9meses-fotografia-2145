@@ -57,9 +57,9 @@ export function Footer() {
               utilities came off with it. `inline-block` keeps the rule the
               width of the label instead of the column. */}
           <div>
-            <h5 className="uppercase-spaced text-muted-foreground mb-5">
+            <h2 className="uppercase-spaced text-muted-foreground mb-5">
               {t("footer.nav")}
-            </h5>
+            </h2>
             <ul className="space-y-3">
               {NAV.map((item) => (
                 <li key={item.page}>
@@ -75,9 +75,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="uppercase-spaced text-muted-foreground mb-5">
+            <h2 className="uppercase-spaced text-muted-foreground mb-5">
               {t("footer.sessions")}
-            </h5>
+            </h2>
             <ul className="space-y-3">
               {SESSIONS.map((session) => (
                 <li key={session.slug}>
@@ -96,9 +96,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="uppercase-spaced text-muted-foreground mb-5">
+            <h2 className="uppercase-spaced text-muted-foreground mb-5">
               {t("footer.contact")}
-            </h5>
+            </h2>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <Phone className="text-primary mt-0.5 size-4 shrink-0" />

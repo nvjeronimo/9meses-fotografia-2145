@@ -455,6 +455,19 @@
     transform: translateY(0);
   }
 
+  /* Keyboard focus: a clear gold ring, never the faint browser default. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+
+  .skip-link {
+    @apply bg-foreground text-background fixed top-3 left-3 z-[100] -translate-y-24 px-5 py-3 text-xs tracking-[0.15em] uppercase transition-transform duration-200;
+  }
+  .skip-link:focus-visible {
+    @apply translate-y-0;
+  }
+
   /* 16px keeps iOS Safari from zooming the page when a field takes focus. */
   .field {
     @apply h-12 w-full border border-input bg-background px-4 text-base text-foreground transition-colors outline-none;

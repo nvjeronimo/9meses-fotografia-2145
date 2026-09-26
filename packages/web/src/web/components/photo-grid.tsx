@@ -28,7 +28,7 @@ const COLUMN_CLASSES: Record<2 | 3 | 4, string> = {
 };
 
 export function PhotoGrid({ photos, className, columns = 3, emptyMessage }: PhotoGridProps) {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [index, setIndex] = useState<number | null>(null);
 
   if (photos.length === 0) {
@@ -53,6 +53,7 @@ export function PhotoGrid({ photos, className, columns = 3, emptyMessage }: Phot
               key={photo.id}
               type="button"
               onClick={() => setIndex(i)}
+              aria-label={caption || `${t("gallery.open")} ${i + 1}`}
               className="image-mat-sm group relative mb-3 block w-full break-inside-avoid overflow-hidden md:mb-5"
             >
               <img

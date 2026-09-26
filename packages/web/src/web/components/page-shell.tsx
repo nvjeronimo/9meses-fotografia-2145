@@ -16,6 +16,7 @@ import { useAnalytics } from "../hooks/use-analytics";
 export function PageShell({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { trackView } = useAnalytics();
+  const { t } = useLanguage();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,8 +30,11 @@ export function PageShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <a href="#conteudo" className="skip-link">
+        {t("a11y.skip")}
+      </a>
       <Navigation />
-      <main key={location} className="page-enter flex-1">
+      <main id="conteudo" tabIndex={-1} key={location} className="page-enter flex-1 outline-none">
         {children}
       </main>
       <Footer />

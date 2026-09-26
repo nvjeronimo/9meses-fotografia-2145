@@ -297,7 +297,7 @@ export function Navigation() {
             aria-label={t("nav.language")}
             className={cn(
               // Same borderless treatment as the theme toggle beside it.
-              "uppercase-spaced p-2 transition-colors duration-300",
+              "uppercase-spaced grid size-11 shrink-0 place-items-center transition-colors duration-300",
               onPhoto
                 ? "text-white/80 hover:text-white"
                 : "text-foreground/70 hover:text-foreground",
@@ -310,7 +310,9 @@ export function Navigation() {
             onClick={toggleTheme}
             aria-label={t("nav.theme.toggle")}
             className={cn(
-              "p-2 transition-colors duration-300",
+              // On phones it lives in the drawer, so the bar keeps two
+              // full-size targets beside the centred logo.
+              "hidden size-11 shrink-0 place-items-center transition-colors duration-300 lg:grid",
               onPhoto
                 ? "text-white/80 hover:text-white"
                 : "text-foreground/70 hover:text-foreground",
@@ -326,8 +328,9 @@ export function Navigation() {
             type="button"
             onClick={() => setOpen((prev) => !prev)}
             aria-label={open ? t("nav.menu.close") : t("nav.menu.toggle")}
+            aria-expanded={open}
             className={cn(
-              "p-2 lg:hidden",
+              "-mr-2 grid size-11 shrink-0 place-items-center lg:hidden",
               onPhoto ? "text-white" : "text-foreground",
             )}
           >
@@ -372,6 +375,14 @@ export function Navigation() {
                 >
                   {t("nav.contact.cta")}
                 </Link>
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="uppercase-spaced text-muted-foreground hover:text-foreground mt-6 flex min-h-11 items-center gap-3 self-start"
+                >
+                  {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+                  {t("nav.theme.toggle")}
+                </button>
               </nav>
             </div>,
           document.body,

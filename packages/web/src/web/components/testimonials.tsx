@@ -61,29 +61,34 @@ export function TestimonialsCarousel() {
             type="button"
             onClick={() => setIndex((prev) => (prev - 1 + items.length) % items.length)}
             aria-label={t("lightbox.previous")}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground grid size-11 place-items-center transition-colors"
           >
             <ChevronLeft className="size-5" />
           </button>
-          <div className="flex gap-2">
+          <div className="flex">
             {items.map((testimonial, i) => (
               <button
                 key={testimonial.id}
                 type="button"
                 onClick={() => setIndex(i)}
                 aria-label={testimonial.author}
-                className={cn(
-                  "size-1.5 rounded-full transition-colors duration-300",
-                  i === index ? "bg-primary" : "bg-border hover:bg-muted-foreground",
-                )}
-              />
+                aria-current={i === index}
+                className="group grid size-8 place-items-center"
+              >
+                <span
+                  className={cn(
+                    "size-1.5 rounded-full transition-colors duration-300",
+                    i === index ? "bg-primary" : "bg-border group-hover:bg-muted-foreground",
+                  )}
+                />
+              </button>
             ))}
           </div>
           <button
             type="button"
             onClick={() => setIndex((prev) => (prev + 1) % items.length)}
             aria-label={t("lightbox.next")}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground grid size-11 place-items-center transition-colors"
           >
             <ChevronRight className="size-5" />
           </button>
