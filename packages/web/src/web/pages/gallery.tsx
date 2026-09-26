@@ -9,7 +9,7 @@ import { useMixedPhotos } from "../lib/photos";
 import type { PhotoCategory } from "../queries/photos";
 
 const FILTERS: { value: PhotoCategory | "all"; key: string }[] = [
-  { value: "all", key: "gallery.filter.label" },
+  { value: "all", key: "gallery.filter.all" },
   { value: "maternity", key: "gallery.filter.maternity" },
   { value: "newborn", key: "gallery.filter.newborn" },
   { value: "baby", key: "gallery.filter.baby" },

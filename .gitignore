@@ -67,8 +67,6 @@ yarn-error.*
 ios
 android
 
-# scripts (local-only provisioning)
+# scripts (local-only provisioning) — except the site's build scripts
 scripts/
-!packages/mobile/scripts/
-packages/mobile/scripts/*
-!packages/mobile/scripts/generate-ios-certs.py
+!packages/web/scripts/
