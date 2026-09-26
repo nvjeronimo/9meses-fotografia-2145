@@ -250,23 +250,35 @@
     opacity: 0.92;
   }
 
+  /*
+   * Mat board around photos. On the white page background it is a soft grey
+   * (#f4f4f5) so the frame reads; inside cream sections (.bg-card) it keeps
+   * the ivory mat, which already stands out against the cream.
+   */
   .image-mat {
     padding: 40px;
-    background: oklch(0.985 0.003 65);
-  }
-
-  .dark .image-mat {
-    background: var(--card);
+    background: #f4f4f5;
   }
 
   /* Slim mat for grid thumbnails — the framed look without eating the photo. */
   .image-mat-sm {
     padding: 12px;
+    background: #f4f4f5;
+  }
+
+  .bg-card .image-mat,
+  .bg-card .image-mat-sm {
     background: oklch(0.985 0.003 65);
   }
 
+  .dark .image-mat,
   .dark .image-mat-sm {
     background: var(--card);
+  }
+
+  .dark .bg-card .image-mat,
+  .dark .bg-card .image-mat-sm {
+    background: var(--background);
   }
 
   @media (max-width: 768px) {
