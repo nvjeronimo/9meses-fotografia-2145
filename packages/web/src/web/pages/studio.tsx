@@ -96,7 +96,7 @@ function Studio() {
                   className="text-primary mx-auto mb-5 size-7"
                   strokeWidth={1.25}
                 />
-                <p className="text-sm leading-relaxed">{t(amenity.key)}</p>
+                <p className="text-base leading-relaxed">{t(amenity.key)}</p>
               </Reveal>
             ))}
           </div>

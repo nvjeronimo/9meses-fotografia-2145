@@ -90,7 +90,7 @@ function SessionDetail() {
                 <div>
                   <h2 className="display-serif mb-3 text-2xl font-light">{t("newborn.safety.title")}</h2>
                   <p className="text-muted-foreground mb-3 leading-relaxed">{t("newborn.safety.text")}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{t("newborn.safety.book")}</p>
+                  <p className="text-muted-foreground text-base leading-relaxed">{t("newborn.safety.book")}</p>
                 </div>
               </aside>
             </Reveal>

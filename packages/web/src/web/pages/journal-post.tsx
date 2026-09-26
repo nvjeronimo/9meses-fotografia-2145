@@ -126,7 +126,7 @@ function JournalPost() {
             <div className="space-y-6">
               {paragraphs.map((block, i) => (
                 <Reveal key={i} delay={Math.min(i, 4) * 50}>
-                  <p className="text-muted-foreground text-sm leading-relaxed md:text-base">
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     {block}
                   </p>
                 </Reveal>

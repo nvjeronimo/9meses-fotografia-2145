@@ -50,7 +50,7 @@ export function SessionCards({ className }: { className?: string }) {
                   {t(session.titleKey)}
                 </h3>
                 {/* The blurb is noise in a two-up phone grid — the title carries it. */}
-                <p className="text-muted-foreground mt-3.5 hidden text-sm leading-relaxed sm:block">
+                <p className="text-muted-foreground mt-3.5 hidden text-base leading-relaxed sm:block">
                   {t(session.descKey)}
                 </p>
                 <span className="uppercase-spaced text-primary link-underline mt-3 inline-block text-[11px] md:mt-5">

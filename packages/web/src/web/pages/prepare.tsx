@@ -63,7 +63,7 @@ function Prepare() {
                   <h3 className="display-serif mb-3 text-xl font-light">
                     {t(`prepare.general.${n}.title`)}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     {t(`prepare.general.${n}.text`)}
                   </p>
                 </div>
@@ -171,7 +171,7 @@ function Prepare() {
             <ol className="mx-auto mt-10 grid max-w-3xl gap-8 text-left sm:grid-cols-2">
               {[1, 2, 3, 4].map((n) => (
                 <li key={n} className="border-border/70 border-t pt-5">
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     {t(`prepare.after.${n}`)}
                   </p>
                 </li>
@@ -181,7 +181,7 @@ function Prepare() {
             <hr className="rule-line mx-auto my-12 w-24" />
 
             <h3 className="display-serif mb-4 text-2xl font-light">{t("prepare.cta.title")}</h3>
-            <p className="text-muted-foreground mx-auto mb-9 max-w-md text-sm leading-relaxed">
+            <p className="text-muted-foreground mx-auto mb-9 max-w-md text-base leading-relaxed">
               {t("prepare.cta.text")}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">

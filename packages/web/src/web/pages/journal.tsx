@@ -71,7 +71,7 @@ function Journal() {
                         {title}
                       </h2>
                       {excerpt && (
-                        <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
+                        <p className="text-muted-foreground mt-3 text-base leading-relaxed">
                           {excerpt}
                         </p>
                       )}

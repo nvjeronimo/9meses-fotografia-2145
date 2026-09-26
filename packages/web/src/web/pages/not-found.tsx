@@ -14,7 +14,7 @@ function NotFound() {
         <h1 className="display-serif mt-6 text-3xl leading-tight font-light md:text-4xl">
           {t("notfound.title")}
         </h1>
-        <p className="text-muted-foreground mt-5 max-w-md text-sm leading-relaxed">
+        <p className="text-muted-foreground mt-5 max-w-md text-base leading-relaxed">
           {t("notfound.text")}
         </p>
         <Link to={href("home")} className="btn-outline mt-10">

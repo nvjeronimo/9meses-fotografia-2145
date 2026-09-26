@@ -61,7 +61,7 @@ function Faq() {
                     )}
                   >
                     <div className="overflow-hidden">
-                      <p className="text-muted-foreground pb-7 text-sm leading-relaxed">
+                      <p className="text-muted-foreground pb-7 text-base leading-relaxed">
                         {t(`faq.a${n}`)}
                       </p>
                     </div>

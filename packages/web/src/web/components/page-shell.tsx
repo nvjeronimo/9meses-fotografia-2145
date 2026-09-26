@@ -195,7 +195,7 @@ export function CtaCard({
           {t(titleKey)}
         </h3>
         <hr className="rule-line my-4 w-16 md:my-5" />
-        <p className="text-muted-foreground text-sm leading-relaxed">
+        <p className="text-muted-foreground text-base leading-relaxed">
           {t(descriptionKey)}
         </p>
         {/* mt-auto pins the action to the card's foot, so the two line up. */}
@@ -280,7 +280,7 @@ export function BookingCta() {
               <span className="mt-[21px] h-px w-10 bg-current/30 md:mt-[30px] md:w-20" />
             </div>
 
-            <p className="mx-auto max-w-md text-sm leading-relaxed opacity-80">
+            <p className="mx-auto max-w-md text-base leading-relaxed opacity-80">
               {t("home.cta.subtitle")}
             </p>
 

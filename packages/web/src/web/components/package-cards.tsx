@@ -70,7 +70,7 @@ export function PackageCards({ sessionType, className, showBundle = true }: Pack
               <hr className="rule-line my-5 md:my-6" />
               <ul className="mb-7 flex-1 space-y-2.5 md:mb-9 md:space-y-3.5">
                 {features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">
+                  <li key={feature} className="flex items-start gap-3 text-base leading-relaxed">
                     <Check className="text-primary mt-0.5 size-4 shrink-0" strokeWidth={1.5} />
                     <span className="text-muted-foreground">{feature}</span>
                   </li>
@@ -94,7 +94,7 @@ export function PackageCards({ sessionType, className, showBundle = true }: Pack
         <div className="border-primary/40 bg-background mx-auto mt-8 flex max-w-3xl flex-col items-start gap-5 border p-6 sm:flex-row sm:items-center sm:justify-between md:mt-10 md:p-8">
           <div>
             <p className="display-serif text-primary text-2xl font-light">{t("bundle.title")}</p>
-            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{t("bundle.text")}</p>
+            <p className="text-muted-foreground mt-2 text-base leading-relaxed">{t("bundle.text")}</p>
           </div>
           <Link
             to={`${href("contact")}?sessao=maternity&pacote=${encodeURIComponent(t("bundle.package"))}`}
@@ -105,7 +105,7 @@ export function PackageCards({ sessionType, className, showBundle = true }: Pack
         </div>
       )}
       {notes.length > 0 && (
-        <ul className="text-muted-foreground mx-auto mt-8 max-w-3xl space-y-2 text-center text-sm leading-relaxed md:mt-10">
+        <ul className="text-muted-foreground mx-auto mt-8 max-w-3xl space-y-2 text-center text-base leading-relaxed md:mt-10">
           {notes.map((key) => (
             <li key={key}>{t(key)}</li>
           ))}

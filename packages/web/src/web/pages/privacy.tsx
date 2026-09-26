@@ -47,7 +47,7 @@ function Privacy() {
                   <h2 className="display-serif mb-4 text-xl font-light md:text-2xl">
                     {t(`privacy.${section}.title`)}
                   </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-base leading-relaxed">
                     {t(`privacy.${section}.text`)}
                   </p>
                 </article>
@@ -57,7 +57,7 @@ function Privacy() {
 
           <hr className="rule-line my-14" />
 
-          <p className="text-muted-foreground text-sm leading-relaxed">
+          <p className="text-muted-foreground text-base leading-relaxed">
             <a
               href={`mailto:${CONTACT.email}`}
               className="nav-link text-primary"

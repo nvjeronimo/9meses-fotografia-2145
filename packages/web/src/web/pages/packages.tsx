@@ -97,7 +97,7 @@ function Packages() {
             </div>
             <div>
               <h2 className="display-serif mb-6 text-3xl font-light">{t("packages.terms.title")}</h2>
-              <ul className="text-muted-foreground space-y-4 text-sm leading-relaxed">
+              <ul className="text-muted-foreground space-y-4 text-base leading-relaxed">
                 {[1, 2, 3, 4, 5].map((n) => (
                   <li key={n} className="border-border/60 border-l pl-4">
                     {t(`packages.terms.${n}`)}

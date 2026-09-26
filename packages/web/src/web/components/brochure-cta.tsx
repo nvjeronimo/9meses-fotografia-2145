@@ -63,7 +63,7 @@ export function BrochureCta({
           <h3 className="display-serif text-2xl leading-tight font-light md:text-[1.75rem]">
             {t("brochure.title")}
           </h3>
-          <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{t("brochure.text")}</p>
+          <p className="text-muted-foreground mt-3 text-base leading-relaxed">{t("brochure.text")}</p>
           <p className="uppercase-spaced text-muted-foreground mt-3 text-[11px]">
             {t("brochure.meta")}
           </p>

@@ -51,7 +51,7 @@ export function Footer() {
               loading="lazy"
               className="mb-5 h-20 w-auto md:h-24"
             />
-            <p className="text-muted-foreground max-w-xs text-sm leading-relaxed">
+            <p className="text-muted-foreground max-w-xs text-base leading-relaxed">
               {t("footer.tagline")}
             </p>
             <a

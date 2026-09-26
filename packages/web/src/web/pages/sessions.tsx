@@ -66,7 +66,7 @@ function Sessions() {
                   </p>
                   <p className="text-muted-foreground mb-4 leading-relaxed md:mb-5">{t(session.descKey)}</p>
                   {/* Secondary blurb is redundant on a phone — the detail page carries it. */}
-                  <p className="text-muted-foreground mb-9 hidden text-sm leading-relaxed md:block">
+                  <p className="text-muted-foreground mb-9 hidden text-base leading-relaxed md:block">
                     {t(session.bodyKeys[0])}
                   </p>
                   <Link to={href("sessionDetail", slugOf(session))} className="btn-outline">
