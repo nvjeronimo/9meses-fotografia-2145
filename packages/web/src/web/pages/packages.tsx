@@ -1,12 +1,15 @@
 import { AguarelaDivider } from "../components/aguarela-divider";
 import { BrochureCta } from "../components/brochure-cta";
-import { FramedTitle } from "../components/framed-title";
 import { useLanguage } from "../components/language-provider";
 import { Seo } from "../components/seo";
 import { PackageCards } from "../components/package-cards";
 import { BookingCta, PageHero, PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import type { SessionType } from "../queries/packages";
+import { SESSIONS } from "../lib/site";
+
+const iconFor = (type: SessionType) =>
+  SESSIONS.find((session) => session.sessionType === type)?.icon;
 
 const GROUPS: { titleKey: string; types: SessionType[] }[] = [
   { titleKey: "packages.maternity.title", types: ["maternity"] },
@@ -47,7 +50,19 @@ function Packages() {
           {GROUPS.map((group) => (
             <div key={group.titleKey}>
               <Reveal>
-                <FramedTitle className="mb-8 md:mb-12">{t(group.titleKey)}</FramedTitle>
+                {/* Same icon + letter-spaced title as the Sessões page. */}
+                <h2 className="text-primary mb-8 flex items-center justify-center gap-4 text-xl leading-snug font-normal tracking-[0.25em] uppercase md:mb-12 md:text-[1.7rem]">
+                  {iconFor(group.types[0]) && (
+                    <img
+                      src={iconFor(group.types[0])}
+                      alt=""
+                      aria-hidden
+                      loading="lazy"
+                      className="brand-mark size-11 shrink-0 md:size-14"
+                    />
+                  )}
+                  {t(group.titleKey)}
+                </h2>
               </Reveal>
               <div className="mx-auto max-w-5xl">
                 <PackageCards sessionType={group.types} />

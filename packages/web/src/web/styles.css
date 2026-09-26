@@ -456,18 +456,6 @@
     transform: translateY(0);
   }
 
-  /* Brochure frame, drawn from a mask so it follows the theme colour. */
-  .ornament-frame::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: var(--muted-foreground);
-    opacity: 0.75;
-    -webkit-mask: url("/images/ornament-frame.png") center / 100% 100% no-repeat;
-    mask: url("/images/ornament-frame.png") center / 100% 100% no-repeat;
-    pointer-events: none;
-  }
-
   /* Keyboard focus: a clear gold ring, never the faint browser default. */
   :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
     outline: 2px solid var(--primary);
