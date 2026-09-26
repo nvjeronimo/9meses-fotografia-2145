@@ -26,6 +26,7 @@ export function WhatsappButton() {
       : "Hello! I would like to know more about your photography sessions.";
   const url = `${CONTACT.whatsappUrl}?text=${encodeURIComponent(greeting)}`;
 
+  // Same frosted surface as the sticky header, so the two read as one family.
   return (
     <aside aria-label={t("contact.whatsapp")} data-floating>
     <a
@@ -37,7 +38,7 @@ export function WhatsappButton() {
       rel="noreferrer"
       aria-label={t("contact.whatsapp.aria")}
       onClick={() => trackEvent("whatsapp_click", { placement: "floating" })}
-      className={`fixed right-4 bottom-4 z-40 flex size-14 items-center justify-center gap-2.5 rounded-full border border-border bg-background text-foreground shadow-[0_10px_30px_-12px_rgba(0,0,0,0.35)] transition-all duration-500 hover:border-primary hover:text-primary sm:right-5 sm:bottom-5 sm:size-auto sm:py-3 sm:pr-5 sm:pl-4 ${
+      className={`fixed right-4 bottom-4 z-40 flex size-14 items-center justify-center gap-2.5 rounded-full border border-border/50 bg-background/80 text-foreground shadow-[0_1px_24px_-16px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-500 hover:border-primary hover:text-primary sm:right-5 sm:bottom-5 sm:size-auto sm:py-3 sm:pr-5 sm:pl-4 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
