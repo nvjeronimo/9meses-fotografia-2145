@@ -1,0 +1,55 @@
+# Vigia do site: a cada 30 minutos confirma a página inicial, uma página interna,
+# o pedido de contacto (assets) e o certificado https. Se falhar, abre uma issue
+# (o GitHub envia email ao dono do repositório); quando volta ao normal, fecha-a.
+name: Vigia do site
+on:
+  schedule:
+    - cron: '13,43 * * * *'
+  workflow_dispatch:
+permissions:
+  issues: write
+concurrency: vigia
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar
+        id: v
+        run: |
+          set +e
+          B=https://9mesesfotografia.com
+          erros=""
+          for i in 1 2 3; do
+            code=$(curl -s -o /tmp/home.html -w '%{http_code}' --max-time 20 "$B/")
+            [ "$code" = "200" ] && grep -q "9 Meses Fotografia" /tmp/home.html && break
+            sleep 20
+          done
+          [ "$code" = "200" ] && grep -q "9 Meses Fotografia" /tmp/home.html || erros="$erros\n- Página inicial: HTTP $code"
+          js=$(grep -o '/assets/index-[^"]*\.js' /tmp/home.html | head -1)
+          [ -n "$js" ] && [ "$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$B$js")" = "200" ] || erros="$erros\n- JavaScript do site ($js) não carrega"
+          c=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$B/contacto")
+          [ "$c" = "200" ] || erros="$erros\n- Página de contacto: HTTP $c"
+          fim=$(echo | openssl s_client -connect 9mesesfotografia.com:443 -servername 9mesesfotografia.com 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+          dias=$(( ( $(date -d "$fim" +%s) - $(date +%s) ) / 86400 ))
+          [ "$dias" -ge 14 ] || erros="$erros\n- Certificado https expira em $dias dias ($fim)"
+          echo "certificado: $dias dias"
+          printf "erros<<EOF\n%b\nEOF\n" "$erros" >> "$GITHUB_OUTPUT"
+      - name: Abrir ou fechar aviso
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        env:
+          ERROS: ${{ steps.v.outputs.erros }}
+        with:
+          script: |
+            const erros = (process.env.ERROS || '').trim();
+            const titulo = 'O site 9mesesfotografia.com está com problemas';
+            const { data: abertas } = await github.rest.issues.listForRepo({ ...context.repo, state: 'open', labels: 'vigia' });
+            if (erros) {
+              if (!abertas.length) await github.rest.issues.create({ ...context.repo, title: titulo, labels: ['vigia'],
+                body: `Detetado às ${new Date().toISOString()}:\n${erros}\n\nEsta issue fecha-se sozinha quando o site voltar ao normal.` });
+              core.setFailed(erros);
+            } else {
+              for (const i of abertas) {
+                await github.rest.issues.createComment({ ...context.repo, issue_number: i.number, body: 'O site voltou ao normal. ✅' });
+                await github.rest.issues.update({ ...context.repo, issue_number: i.number, state: 'closed' });
+              }
+            }
