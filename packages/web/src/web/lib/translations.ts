@@ -188,7 +188,7 @@ export const translations = {
     "packages.extras":
       "Extras disponíveis: impressões, telas, imagens adicionais",
     "packages.package": "Pacote",
-    "packages.extras.link": "Ver extras, impressões, telas e condições de pagamento",
+    "packages.extras.link": "Extras e condições de pagamento",
     "packages.note.studioOutdoor":
       "Sessão em estúdio + exterior: acresce 50€ a qualquer um dos pacotes.",
     "packages.note.bundle":
@@ -696,7 +696,7 @@ export const translations = {
     "packages.cta": "BOOK NOW",
     "packages.extras": "Extras available: prints, canvases, additional images",
     "packages.package": "Package",
-    "packages.extras.link": "See extras, prints, canvases and payment terms",
+    "packages.extras.link": "Extras and payment terms",
     "packages.note.studioOutdoor":
       "Studio + outdoor session: add €50 to any package.",
     "packages.note.bundle":

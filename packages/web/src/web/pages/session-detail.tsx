@@ -121,24 +121,18 @@ function SessionDetail() {
           <div className="mx-auto max-w-5xl">
             <PackageCards sessionType={session.sessionType} />
           </div>
-          {/* Same pull quote as /pacotes, so the line reads identically
-              wherever prices are shown. */}
-          <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-sm">
-            <Link to={href("packages")} className="link-underline">
+          {/* The two practical next reads after the prices, kept together. */}
+          <div className="mx-auto mt-8 flex max-w-3xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4 md:mt-10">
+            <Link to={href("packages")} className="btn-outline">
               {t("packages.extras.link")}
             </Link>
-          </p>
+            <Link to={`${href("prepare")}#${session.sessionType}`} className="btn-outline">
+              {t("sessions.prepareLink")}
+            </Link>
+          </div>
           {/* Same catalogue as /pacotes — it covers every session, so it is
               worth offering wherever prices are being read. */}
           <BrochureCta surface="background" className="mx-auto mt-12 max-w-4xl md:mt-16" />
-          <p className="mt-10 text-center">
-            <Link
-              to={`${href("prepare")}#${session.sessionType}`}
-              className="link-underline uppercase-spaced text-primary"
-            >
-              {t("sessions.prepareLink")}
-            </Link>
-          </p>
         </div>
       </section>
 
