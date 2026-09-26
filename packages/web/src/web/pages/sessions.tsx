@@ -1,6 +1,5 @@
 import { Link } from "wouter";
 import { AguarelaDivider } from "../components/aguarela-divider";
-import { FramedTitle } from "../components/framed-title";
 import { useLanguage } from "../components/language-provider";
 import { Seo } from "../components/seo";
 import { BookingCta, PageHero, PageShell } from "../components/page-shell";
@@ -47,21 +46,21 @@ function Sessions() {
                   </span>
                 </Link>
                 <div>
-                  <FramedTitle align="start" className="mb-5 md:mb-7">
+                  <h2 className="text-primary mb-5 text-xl leading-snug font-normal tracking-[0.25em] uppercase md:mb-6 md:text-[1.7rem]">
                     <Link
                       to={href("sessionDetail", slugOf(session))}
-                      className="hover:text-foreground inline-flex items-center gap-3 transition-colors"
+                      className="hover:text-foreground inline-flex items-center gap-4 transition-colors"
                     >
                       <img
                         src={session.icon}
                         alt=""
                         aria-hidden
                         loading="lazy"
-                        className="brand-mark size-8 shrink-0 tracking-normal md:size-9"
+                        className="brand-mark size-11 shrink-0 md:size-14"
                       />
                       {t(session.shortKey)}
                     </Link>
-                  </FramedTitle>
+                  </h2>
                   <p className="uppercase-spaced text-muted-foreground mb-4">
                     {t(session.timingKey)}
                   </p>
