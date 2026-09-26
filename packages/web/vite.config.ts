@@ -2,10 +2,7 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwind from "@tailwindcss/vite";
 import path from "path";
-import runableAnalyticsPlugin from "./vite/__plugins/runable-analytics-plugin";
-import honoDevPlugin from "./vite/__plugins/hono-dev-plugin";
 import assetOptimizerPlugin from "./vite/__plugins/asset-optimizer-plugin";
-import ports from "../../__ports.cjs";
 
 const root = path.resolve(__dirname, "../..");
 
@@ -18,9 +15,7 @@ export default defineConfig(({ mode }) => {
     // so packages/web/.env* files can never shadow the root .env.
     envDir: root,
     plugins: [
-      honoDevPlugin(),
       react(),
-      runableAnalyticsPlugin(),
       tailwind(),
       assetOptimizerPlugin(),
     ],
@@ -36,7 +31,7 @@ export default defineConfig(({ mode }) => {
       // hits it over IPv4 and got a connection refused, which renders as a
       // blank white page. `::` accepts IPv4, IPv6 and LAN alike.
       host: "::",
-      port: ports.website,
+      port: 4200,
       strictPort: true,
       allowedHosts: true,
       hmr: { overlay: false },

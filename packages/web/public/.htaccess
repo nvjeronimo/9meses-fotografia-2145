@@ -1,0 +1,52 @@
+# 9mesesfotografia.com — static site on DreamHost (Apache).
+
+Options -Indexes
+DirectoryIndex index.html
+AddDefaultCharset UTF-8
+
+RewriteEngine On
+
+# One canonical address: https://9mesesfotografia.com
+RewriteCond %{HTTP_HOST} !^localhost [NC]
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://9mesesfotografia.com%{REQUEST_URI} [L,R=301]
+
+# Old/guessed addresses
+RewriteRule ^contactos/?$ /contacto [L,R=301]
+RewriteRule ^en/contacts/?$ /en/contact [L,R=301]
+
+# Pre-rendered pages live in folders (/sobre/index.html) but are addressed
+# without the trailing slash, which is also their canonical URL.
+DirectorySlash Off
+RewriteRule ^$ /index.html [L]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.+?)/?$ /$1/index.html [L]
+# Anything else is a real 404; the app shell renders the "not found" page.
+RewriteRule ^ - [R=404,L]
+ErrorDocument 404 /app.html
+
+<IfModule mod_headers.c>
+  # Photos and documents keep their names when replaced: cache for 30 days.
+  <FilesMatch "\.(webp|jpe?g|png|svg|ico|woff2?|pdf|mp4)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/xml
+</IfModule>
+
+# Build assets carry a content hash in the name, so they can be cached forever.
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} =~ m#^/assets/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>

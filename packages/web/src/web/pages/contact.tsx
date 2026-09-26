@@ -8,7 +8,6 @@ import { PageHero, PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import { useAnalytics } from "../hooks/use-analytics";
 import { CONTACT, SESSIONS } from "../lib/site";
-import { useCreateMessage } from "../queries/messages";
 
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
@@ -58,7 +57,6 @@ const TODAY = new Date().toISOString().slice(0, 10);
 function Contact() {
   const { t, href, language } = useLanguage();
   const { trackEvent } = useAnalytics();
-  const createMessage = useCreateMessage();
   const search = useSearch();
   const [form, setForm] = useState<FormState>(() => {
     // "Reservar" on a package card arrives as ?sessao=newborn&pacote=Gold · 250€,
@@ -102,48 +100,26 @@ function Contact() {
     const message =
       [...context, form.message.trim()].filter(Boolean).join("\n\n") || "—";
 
-    // Store the lead first — it must survive even if the email provider fails.
-    // The honeypot travels with it so the server can drop bots silently.
-    let rateLimited = false;
-    const stored = createMessage
-      .mutateAsync({
-        name: form.name,
-        email: form.email,
-        phone: form.phone || null,
-        sessionType: form.sessionType || null,
-        familyMembers: showFamilyMembers ? form.familyMembers || null : null,
-        preferredDate: form.preferredDate || null,
-        message,
-        consent: form.consent,
-        website: form.website,
-      })
-      .catch((error: unknown) => {
-        const code = (error as { code?: string; status?: number })?.code;
-        const httpStatus = (error as { status?: number })?.status;
-        if (code === "TOO_MANY_REQUESTS" || httpStatus === 429) rateLimited = true;
-        return null;
-      });
+    // Bots fill the hidden "website" field; pretend success and send nothing.
+    if (form.website) {
+      setStatus("sent");
+      setForm(EMPTY);
+      return;
+    }
 
     try {
-      if (SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
-        await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-          from_name: form.name,
-          from_email: form.email,
-          phone: form.phone || "—",
-          session_type: sessionLabel,
-          family_members: showFamilyMembers ? form.familyMembers || "—" : "—",
-          preferred_date: preferredDate,
-          message,
-          language: language === "pt" ? "Português" : "English",
-          to_email: CONTACT.email,
-        });
-      }
-
-      await stored;
-      if (rateLimited) {
-        setStatus("ratelimited");
-        return;
-      }
+      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) throw new Error("EmailJS not configured");
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+        from_name: form.name,
+        from_email: form.email,
+        phone: form.phone || "—",
+        session_type: sessionLabel,
+        family_members: showFamilyMembers ? form.familyMembers || "—" : "—",
+        preferred_date: preferredDate,
+        message,
+        language: language === "pt" ? "Português" : "English",
+        to_email: CONTACT.email,
+      });
 
       // Auto-reply to the visitor. A failure here must not turn a delivered
       // enquiry into an error, so it is awaited separately and swallowed.
@@ -169,9 +145,10 @@ function Contact() {
       setStatus("sent");
       setForm(EMPTY);
       setChosenPackage("");
-    } catch {
-      await stored;
-      setStatus(rateLimited ? "ratelimited" : "error");
+    } catch (error) {
+      // EmailJS answers 429 when its own rate limit trips.
+      const code = (error as { status?: number })?.status;
+      setStatus(code === 429 ? "ratelimited" : "error");
     }
   }
 

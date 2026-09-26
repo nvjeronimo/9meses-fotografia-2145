@@ -1,0 +1,48 @@
+# Constrói o site (Vite + pré-render de todas as páginas) e envia-o para a
+# DreamHost sempre que há um push para o main.
+# Segredos do repositório: DH_HOST, DH_USER, DH_SSH_KEY e (opcional) DH_PATH.
+name: Publicar na DreamHost
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', 'README.md', 'design.md', 'task.md', '.impeccable/**']
+  workflow_dispatch:
+concurrency: dreamhost
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.12
+      - name: Instalar dependências
+        run: bun install --frozen-lockfile
+      - name: Verificar tipos
+        run: bun run typecheck
+      - name: Instalar Chromium (pré-render)
+        working-directory: packages/web
+        run: bunx playwright install --with-deps chromium
+      - name: Construir e pré-renderizar
+        working-directory: packages/web
+        run: bun run build
+      - name: Verificar segredos
+        id: check
+        env:
+          DH_HOST: ${{ secrets.DH_HOST }}
+        run: |
+          if [ -z "$DH_HOST" ]; then echo "Segredos da DreamHost ainda não configurados: build OK, nada enviado."; echo "skip=1" >> "$GITHUB_OUTPUT"; fi
+      - name: Enviar por rsync
+        if: steps.check.outputs.skip != '1'
+        env:
+          DH_HOST: ${{ secrets.DH_HOST }}
+          DH_USER: ${{ secrets.DH_USER }}
+          DH_SSH_KEY: ${{ secrets.DH_SSH_KEY }}
+          DH_PATH: ${{ secrets.DH_PATH }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$DH_SSH_KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+          for i in 1 2 3; do ssh-keyscan -H "$DH_HOST" >> ~/.ssh/known_hosts 2>/dev/null && break; sleep 5; done
+          rsync -rlptvz --delete --exclude '.DS_Store' --exclude '.well-known' --exclude '.dh-diag' \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20" \
+            packages/web/dist/ "$DH_USER@$DH_HOST:${DH_PATH:-9mesesfotografia.com}/"

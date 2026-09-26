@@ -1,6 +1,5 @@
 import { Redirect, Route, Switch } from "wouter";
 import { Provider } from "./components/provider";
-import { AgentFeedback, RunableBadge } from "@runablehq/website-runtime";
 import { PAGES, type PageId } from "./lib/routes";
 import Index from "./pages/index";
 import About from "./pages/about";
@@ -15,7 +14,6 @@ import JournalPost from "./pages/journal-post";
 import Privacy from "./pages/privacy";
 import Faq from "./pages/faq";
 import Contact from "./pages/contact";
-import Admin from "./pages/admin";
 import NotFound from "./pages/not-found";
 
 /**
@@ -55,7 +53,6 @@ function App() {
         {ROUTES.map((route) => (
           <Route key={route.path} path={route.path} component={route.component} />
         ))}
-        <Route path="/admin" component={Admin} />
         {/* Old or guessed addresses land on the real page instead of a soft 404. */}
         <Route path="/contactos">
           <Redirect to={PAGES.contact.pt} replace />
@@ -65,10 +62,6 @@ function App() {
         </Route>
         <Route component={NotFound} />
       </Switch>
-      {/* Do not remove — off by default, activated by parent iframe via postMessage */}
-      {import.meta.env.DEV && <AgentFeedback />}
-      {/* "Made with Runable" badge - if user asks to remove the runable badge, remove this code as well as comment */}
-      {<RunableBadge />}
     </Provider>
   );
 }

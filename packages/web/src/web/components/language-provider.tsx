@@ -3,7 +3,6 @@ import { useLocation } from "wouter";
 import { type Language, translations, type TranslationKey } from "../lib/translations";
 import { languageFromPath, pathFor, translatePath, type PageId } from "../lib/routes";
 import { translateSessionSlug } from "../lib/site";
-import { useContentOverrides } from "../queries/content";
 
 interface LanguageContextValue {
   language: Language;
@@ -22,7 +21,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // The URL is the single source of truth: /en/... is English, everything else
   // Portuguese. That is what makes both versions crawlable and shareable.
   const language = languageFromPath(location);
-  const overrides = useContentOverrides();
 
   useEffect(() => {
     document.documentElement.lang = language;
@@ -39,24 +37,13 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     [language, location, navigate],
   );
 
-  const overrideMap = useMemo(() => {
-    const map = new Map<string, string>();
-    for (const row of overrides.data ?? []) {
-      const value = language === "pt" ? row.valuePt : row.valueEn;
-      if (value && value.trim().length > 0) map.set(row.key, value);
-    }
-    return map;
-  }, [overrides.data, language]);
-
   const t = useCallback(
     (key: TranslationKey | string) => {
-      const override = overrideMap.get(key);
-      if (override) return override;
       const dictionary = translations[language] as Record<string, string>;
       const fallback = translations.pt as Record<string, string>;
       return dictionary[key] ?? fallback[key] ?? key;
     },
-    [overrideMap, language],
+    [language],
   );
 
   const href = useCallback(

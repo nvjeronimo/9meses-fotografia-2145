@@ -12,7 +12,8 @@ interface RevealProps {
 /** Fades + lifts its children into view once, on scroll. */
 export function Reveal({ children, className, delay = 0, as = "div" }: RevealProps) {
   const { ref, visible, reduced } = useScrollAnimation<HTMLDivElement>();
-  const Tag = as;
+  // One element type for the ref keeps TS from intersecting all four tags.
+  const Tag = as as "div";
 
   // Reduced motion: render plainly, no opacity tricks and no transform.
   if (reduced) {

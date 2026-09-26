@@ -9,13 +9,13 @@ export const translations = {
   pt: {
     // Navigation
     "nav.home": "INÍCIO",
-    "nav.about": "SOBRE",
-    "nav.studio": "ESTÚDIO",
-    "nav.sessions": "SESSÕES",
+    "nav.about": "SOBRE MIM",
+    "nav.studio": "O ESTÚDIO",
+    "nav.sessions": "SESSÕES/SERVIÇOS",
     "nav.packages": "PACOTES",
     "nav.gallery": "GALERIA",
-    "nav.faq": "FAQ",
-    "nav.contact": "CONTACTO",
+    "nav.faq": "FAQs",
+    "nav.contact": "CONTACTOS",
 
     // Session types
     "session.maternity": "Maternidade",
@@ -274,7 +274,7 @@ export const translations = {
     "contact.select": "Selecione uma opção",
 
     // Footer
-    "footer.tagline": "Fotografia de maternidade, newborn, bebé e família",
+    "footer.tagline": "Da barriga ao primeiro aninho: fotografia de maternidade, newborn, bebé e família no Algarve.",
     "footer.nav": "NAVEGAÇÃO",
     "footer.sessions": "SESSÕES",
     "footer.contact": "CONTACTO",
@@ -348,9 +348,9 @@ export const translations = {
     "nav.prepare": "PREPARAR",
     "nav.journal": "DIÁRIO",
     "nav.privacy": "Política de Privacidade",
-    "nav.group.about": "ESTÚDIO",
+    "nav.group.about": "O ESTÚDIO",
     "nav.group.sessions": "SESSÕES",
-    "nav.sessions.all": "TODAS AS SESSÕES",
+    "nav.sessions.all": "AS NOSSAS SESSÕES",
     "nav.group.about.desc": "Quem somos e onde trabalhamos",
     "nav.group.sessions.desc": "Tipos de sessão, pacotes e preparação",
     "footer.complaints": "Livro de Reclamações",
@@ -507,13 +507,13 @@ export const translations = {
   en: {
     // Navigation
     "nav.home": "HOME",
-    "nav.about": "ABOUT",
-    "nav.studio": "STUDIO",
-    "nav.sessions": "SESSIONS",
+    "nav.about": "ABOUT ME",
+    "nav.studio": "THE STUDIO",
+    "nav.sessions": "SESSIONS/SERVICES",
     "nav.packages": "PACKAGES",
     "nav.gallery": "GALLERY",
-    "nav.faq": "FAQ",
-    "nav.contact": "CONTACT",
+    "nav.faq": "FAQs",
+    "nav.contact": "CONTACTS",
 
     // Session types
     "session.maternity": "Maternity",
@@ -770,7 +770,7 @@ export const translations = {
     "contact.select": "Select an option",
 
     // Footer
-    "footer.tagline": "Maternity, newborn, baby and family photography",
+    "footer.tagline": "From bump to first birthday: maternity, newborn, baby and family photography in the Algarve.",
     "footer.nav": "NAVIGATION",
     "footer.sessions": "SESSIONS",
     "footer.contact": "CONTACT",
@@ -843,9 +843,9 @@ export const translations = {
     "nav.prepare": "PREPARE",
     "nav.journal": "JOURNAL",
     "nav.privacy": "Privacy Policy",
-    "nav.group.about": "STUDIO",
+    "nav.group.about": "THE STUDIO",
     "nav.group.sessions": "SESSIONS",
-    "nav.sessions.all": "ALL SESSIONS",
+    "nav.sessions.all": "OUR SESSIONS",
     "nav.group.about.desc": "Who we are and where we work",
     "nav.group.sessions.desc": "Session types, packages and preparation",
     "footer.complaints": "Complaints Book",

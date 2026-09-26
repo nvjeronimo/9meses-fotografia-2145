@@ -1,19 +1,28 @@
-# App template
+# 9 Meses Fotografia — 9mesesfotografia.com
 
-Runable copies this Bun and Turborepo project into each new sandbox.
+Site estático (React + Vite, pré-renderizado) alojado na DreamHost.
+Cada push para `main` constrói e publica automaticamente
+(`.github/workflows/deploy-dreamhost.yml`).
 
-The root package commands are the external contract:
+## Onde se muda o quê
 
-- `bun run dev` starts the web app.
-- `bun run dev:desktop` and `bun run dev:mobile` start platform clients.
-- `bun run build` builds every package.
-- `bun run start` starts or restarts the production server.
-- `bun run stop` stops the production server.
-- `bun run lint` and `bun run typecheck` validate the project.
-- The `db:generate`, `db:migrate`, and `db:push` commands manage the database.
+| O quê | Ficheiro |
+|---|---|
+| Textos do site (PT/EN) | `packages/web/src/web/lib/translations.ts` |
+| Pacotes e preços | `packages/web/src/web/content/packages.ts` |
+| Testemunhos | `packages/web/src/web/content/testimonials.ts` |
+| Artigos do diário | `packages/web/src/web/content/posts.ts` |
+| Fotos por sessão / galeria | `packages/web/src/web/lib/site.ts` (`DEFAULT_PHOTOS`) + ficheiros em `packages/web/public/images/` |
+| Contactos, redes sociais | `packages/web/src/web/lib/site.ts` (`CONTACT`) |
+| Formulário (EmailJS) | `.env.production` |
 
-Deployment tools depend on these command names. Their implementations may change, but the names must remain stable.
+Depois de acrescentar fotos: `python3 tools/optimize-images.py` (gera as versões WebP).
 
-The web package owns the API, database, and shared web interface. The mobile package is an Expo client. The desktop package is an Electron shell around the web app. Services use the fixed ports defined in `__ports.cjs`, and the web health endpoint is `/api/health`.
+## Comandos
 
-Secrets belong in the root `.env` file. Browser values must use the `VITE_` prefix. Commands prefixed with `internal:` are for template maintenance.
+```bash
+bun install
+bun run dev        # http://localhost:4200
+bun run typecheck
+cd packages/web && bun run build   # dist/ com todas as páginas pré-renderizadas
+```

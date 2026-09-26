@@ -198,12 +198,6 @@ export function Footer() {
             >
               {t("footer.complaints")}
             </a>
-            <Link
-              to="/admin"
-              className="nav-link hover:text-foreground"
-            >
-              Admin
-            </Link>
           </div>
         </div>
       </div>
