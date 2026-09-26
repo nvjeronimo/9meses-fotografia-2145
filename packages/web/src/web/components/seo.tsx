@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import { CONTACT, SITE_URL } from "../lib/site";
+import { CONTACT, GOOGLE_REVIEWS, SITE_URL } from "../lib/site";
 import { matchPath, translatePath } from "../lib/routes";
 import { translateSessionSlug } from "../lib/site";
 import { useLanguage } from "./language-provider";
@@ -119,7 +119,9 @@ export function localBusinessJsonLd(language: "pt" | "en"): Record<string, unkno
       addressRegion: CONTACT.region,
       addressCountry: CONTACT.country,
     },
-    geo: { "@type": "GeoCoordinates", latitude: 37.1281, longitude: -8.2361 },
+    // Same pin as the Google Business listing.
+    geo: { "@type": "GeoCoordinates", latitude: 37.1282895, longitude: -8.2485006 },
+    hasMap: GOOGLE_REVIEWS.url,
     areaServed: ["Albufeira", "Algarve", "Portugal"],
     openingHoursSpecification: [
       {
@@ -129,6 +131,6 @@ export function localBusinessJsonLd(language: "pt" | "en"): Record<string, unkno
         closes: "19:00",
       },
     ],
-    sameAs: [CONTACT.instagramUrl, CONTACT.facebookUrl],
+    sameAs: [CONTACT.instagramUrl, CONTACT.facebookUrl, GOOGLE_REVIEWS.url],
   };
 }

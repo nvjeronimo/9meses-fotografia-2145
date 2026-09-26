@@ -166,7 +166,7 @@ export const translations = {
     "sessions.family.body2":
       "A sessão começa 1 hora antes do pôr do sol, quando a luz é mais suave e dourada. Pode ser na praia, no campo, na cidade ou um pouco de tudo, e ajudo-vos a escolher o local e o que vestir.",
 
-    "sessions.smash.title": "Smash the Cake",
+    "sessions.smash.title": "Fotografia Smash the Cake",
     "sessions.smash.timing": "Primeiro aniversário",
     "sessions.smash.desc":
       "Celebre o primeiro aniversário com uma sessão divertida e memorável. Bolo incluído no pacote.",
@@ -679,7 +679,7 @@ export const translations = {
     "sessions.family.body2":
       "We start 1 hour before sunset, when the light is soft and golden. It can be at the beach, in the countryside, in town or a bit of each, and I'll help you choose the place and what to wear.",
 
-    "sessions.smash.title": "Smash the Cake",
+    "sessions.smash.title": "Smash the Cake Photography",
     "sessions.smash.timing": "First birthday",
     "sessions.smash.desc":
       "Celebrate the first birthday with a fun and memorable session. Cake included in the package.",
