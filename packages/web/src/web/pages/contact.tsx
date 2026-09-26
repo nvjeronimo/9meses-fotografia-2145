@@ -370,7 +370,7 @@ function Contact() {
                   aria-label={t("contact.form.consent")}
                   checked={form.consent}
                   onChange={(event) => update("consent", event.target.checked)}
-                  className="border-border accent-primary mt-1 size-4 shrink-0 rounded-none"
+                  className="border-border accent-primary mt-0.5 size-5 shrink-0 rounded-none"
                 />
                 <span className="text-muted-foreground leading-relaxed">
                   {t("contact.form.consent")}{" "}

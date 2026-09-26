@@ -97,6 +97,7 @@ function Index() {
           <PhotoGrid
             photos={preview.slice(0, 9)}
             columns={3}
+            eagerCount={0}
             emptyMessage={t("gallery.empty")}
           />
           <div className="mt-12 text-center">

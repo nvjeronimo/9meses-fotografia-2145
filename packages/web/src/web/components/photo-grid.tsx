@@ -11,6 +11,8 @@ interface PhotoGridProps {
   /** Widest column count, on large screens. Narrower screens step down. */
   columns?: 2 | 3 | 4;
   emptyMessage?: string;
+  /** How many leading photos load eagerly (0 when the grid starts below the fold). */
+  eagerCount?: number;
 }
 
 /**
@@ -28,7 +30,20 @@ const COLUMN_CLASSES: Record<2 | 3 | 4, string> = {
   4: "columns-2 md:columns-3 lg:columns-4",
 };
 
-export function PhotoGrid({ photos, className, columns = 3, emptyMessage }: PhotoGridProps) {
+/** Rendered tile width per layout, so phones pick the -800 variant. */
+const COLUMN_SIZES: Record<2 | 3 | 4, string> = {
+  2: "(min-width: 640px) 50vw, 100vw",
+  3: "(min-width: 768px) 33vw, 50vw",
+  4: "(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw",
+};
+
+export function PhotoGrid({
+  photos,
+  className,
+  columns = 3,
+  emptyMessage,
+  eagerCount = 6,
+}: PhotoGridProps) {
   const { language, t } = useLanguage();
   const [index, setIndex] = useState<number | null>(null);
 
@@ -58,9 +73,9 @@ export function PhotoGrid({ photos, className, columns = 3, emptyMessage }: Phot
               className="image-mat-sm group relative mb-3 block w-full break-inside-avoid overflow-hidden md:mb-5"
             >
               <img
-                {...responsive(photo.url, "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw")}
+                {...responsive(photo.url, COLUMN_SIZES[columns])}
                 alt={caption ?? ""}
-                loading={i < 6 ? "eager" : "lazy"}
+                loading={i < eagerCount ? "eager" : "lazy"}
                 decoding="async"
                 className="h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />

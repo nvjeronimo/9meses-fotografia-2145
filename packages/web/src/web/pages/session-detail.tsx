@@ -55,7 +55,7 @@ function SessionDetail() {
         data-hero={DARK_HEROES.has(session.sessionType) ? "dark" : undefined}
         className="relative flex h-[75vh] min-h-[460px] items-end overflow-hidden"
       >
-        <img {...responsive(hero)} alt={t(session.titleKey)} className="absolute inset-0 h-full w-full object-cover" />
+        <img {...responsive(hero)} fetchPriority="high" alt={t(session.titleKey)} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
         {DARK_HEROES.has(session.sessionType) && (
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/45 to-transparent" />
@@ -103,7 +103,7 @@ function SessionDetail() {
         <Reveal>
           <SectionHeading label={t("home.gallery.label")} title={t("home.gallery.title")} />
         </Reveal>
-        <PhotoGrid photos={photos} columns={3} />
+        <PhotoGrid photos={photos} columns={3} eagerCount={0} />
       </section>
 
       {/* The wash opens the packages block rather than closing the page, so the

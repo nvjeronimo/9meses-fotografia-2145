@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "../hooks/use-scroll-animation";
 import { responsive } from "../lib/responsive";
+import { useAfterLoad } from "../hooks/use-after-load";
 
 /** Long hold, long dissolve — the section reads as a portrait, not a carousel. */
 const INTERVAL = 5200;
@@ -28,6 +29,7 @@ export function AboutSlideshow({
 }) {
   const [index, setIndex] = useState(0);
   const reduced = usePrefersReducedMotion();
+  const later = useAfterLoad(1500);
 
   useEffect(() => {
     // Respect the OS setting by simply never advancing — frame one stays up.
@@ -40,10 +42,12 @@ export function AboutSlideshow({
 
   return (
     <div className={cn("relative h-full w-full overflow-hidden", className)}>
-      {photos.map((url, i) => (
+      {photos.map((url, i) =>
+        // Frames after the first get their source only once the page has loaded.
+        i !== 0 && !later ? null : (
         <img
           key={url}
-          {...responsive(url, "(min-width: 768px) 45vw, 90vw")}
+          {...responsive(url, "(min-width: 768px) 45vw, 80vw")}
           /* Only the visible frame is announced; the rest are decorative dupes. */
           alt={i === 0 ? alt : ""}
           aria-hidden={i !== 0}
@@ -54,7 +58,8 @@ export function AboutSlideshow({
             i === index ? "opacity-100" : "opacity-0",
           )}
         />
-      ))}
+        ),
+      )}
     </div>
   );
 }

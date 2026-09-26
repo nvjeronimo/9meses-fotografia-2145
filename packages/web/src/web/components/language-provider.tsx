@@ -23,7 +23,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const language = languageFromPath(location);
 
   useEffect(() => {
-    document.documentElement.lang = language;
+    document.documentElement.lang = language === "pt" ? "pt-PT" : "en";
   }, [language]);
 
   const setLanguage = useCallback(
@@ -32,7 +32,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       const target = translatePath(location, next, translateSessionSlug);
       // Pages outside the localized set (e.g. /admin) have no counterpart, so
       // fall back to that language's home rather than a dead URL.
-      navigate(target ?? (next === "en" ? "/en" : "/"));
+      // Keep ?sessao=… and #tab so the same view opens in the other language.
+      navigate(
+        target ? `${target}${window.location.search}${window.location.hash}` : next === "en" ? "/en" : "/",
+      );
     },
     [language, location, navigate],
   );

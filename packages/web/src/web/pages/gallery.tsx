@@ -53,26 +53,27 @@ function Gallery() {
       />
 
       <section className="container section-y-b">
-        <Reveal className="mb-12 flex flex-wrap justify-center gap-x-7 gap-y-3">
+        <Reveal className="mb-10 flex flex-wrap justify-center gap-x-7 gap-y-1">
           {FILTERS.map((item) => (
             <button
               key={item.value}
               type="button"
+              aria-pressed={filter === item.value}
               onClick={() => {
                 setFilter(item.value);
                 setLimit(PAGE_SIZE);
               }}
               className={cn(
-                "uppercase-spaced relative py-1 transition-colors duration-300",
+                "uppercase-spaced relative py-3 transition-colors duration-300",
                 filter === item.value
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
-              {item.value === "all" ? t("nav.gallery") : t(item.key)}
+              {t(item.key)}
               <span
                 className={cn(
-                  "bg-primary absolute -bottom-0.5 left-0 h-[1px] transition-all duration-300",
+                  "bg-primary absolute bottom-2 left-0 h-[1px] transition-all duration-300",
                   filter === item.value ? "w-full" : "w-0",
                 )}
               />

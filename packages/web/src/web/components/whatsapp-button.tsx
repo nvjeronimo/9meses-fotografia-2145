@@ -27,13 +27,17 @@ export function WhatsappButton() {
   const url = `${CONTACT.whatsappUrl}?text=${encodeURIComponent(greeting)}`;
 
   return (
+    <aside aria-label={t("contact.whatsapp")} data-floating>
     <a
       href={url}
+      // Out of the tab order and hidden from AT while it is faded out.
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
       target="_blank"
       rel="noreferrer"
       aria-label={t("contact.whatsapp.aria")}
       onClick={() => trackEvent("whatsapp_click", { placement: "floating" })}
-      className={`fixed right-5 bottom-20 z-40 flex items-center gap-2.5 rounded-full bg-[#25D366] py-3 pr-5 pl-4 text-white shadow-lg transition-all duration-500 hover:brightness-105 ${
+      className={`fixed right-5 bottom-20 z-40 flex items-center gap-2.5 rounded-full bg-[#0F7A5A] py-3 pr-5 pl-4 text-white shadow-lg transition-all duration-500 hover:brightness-105 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
@@ -44,5 +48,6 @@ export function WhatsappButton() {
       </svg>
       <span className="text-[11px] tracking-[0.12em] uppercase">{t("contact.whatsapp")}</span>
     </a>
+    </aside>
   );
 }

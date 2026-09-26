@@ -78,6 +78,9 @@ export function Navigation() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const groupButtons = useRef(new Map<string, HTMLButtonElement>());
   /** The drawer starts below the bar, whose height now varies with the logo. */
   const [barHeight, setBarHeight] = useState(60);
 
@@ -121,15 +124,32 @@ export function Navigation() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return () => void (document.body.style.overflow = "");
+    // Drawer behaves as a modal: the page behind is inert, focus starts on the
+    // first link, Escape closes it and focus goes back to the menu button.
+    const behind = document.querySelectorAll<HTMLElement>("main, footer, [data-floating]");
+    behind.forEach((node) => (node.inert = true));
+    requestAnimationFrame(() => drawerRef.current?.querySelector<HTMLElement>("a")?.focus());
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      menuButtonRef.current?.focus();
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      behind.forEach((node) => (node.inert = false));
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
   useEffect(() => {
     if (!openGroup) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpenGroup(null);
+      if (event.key !== "Escape") return;
+      // Hand focus back to the group's button before its links disappear.
+      groupButtons.current.get(openGroup)?.focus();
+      setOpenGroup(null);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -190,7 +210,7 @@ export function Navigation() {
                     key={entry.page}
                     to={href(entry.page)}
                     className={cn(
-                      "nav-link uppercase-spaced relative py-1 text-[10px]",
+                      "nav-link uppercase-spaced relative py-1 text-[11px]",
                       active ? linkTone.active : linkTone.idle,
                     )}
                   >
@@ -213,14 +233,22 @@ export function Navigation() {
                     setOpenGroup(entry.key);
                   }}
                   onMouseLeave={scheduleClose}
+                  onBlur={(event) => {
+                    // Tabbing out of the group closes its panel.
+                    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                      setOpenGroup((current) => (current === entry.key ? null : current));
+                    }
+                  }}
                 >
                   <button
                     type="button"
+                    ref={(node) => {
+                      if (node) groupButtons.current.set(entry.key, node);
+                    }}
                     aria-expanded={expanded}
-                    aria-haspopup="true"
                     onClick={() => setOpenGroup(expanded ? null : entry.key)}
                     className={cn(
-                      "nav-link uppercase-spaced relative flex items-center gap-1.5 py-1 text-[10px]",
+                      "nav-link uppercase-spaced relative flex items-center gap-1.5 py-1 text-[11px]",
                       groupActive ? linkTone.active : linkTone.idle,
                     )}
                   >
@@ -244,7 +272,7 @@ export function Navigation() {
                     onMouseLeave={scheduleClose}
                   >
                     <div className="border-border/60 bg-background/95 border p-2 shadow-[0_18px_50px_-30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-                      <p className="text-muted-foreground/70 px-4 pt-2 pb-3 text-[10px] leading-snug">
+                      <p className="text-muted-foreground px-4 pt-2 pb-3 text-[11px] leading-snug">
                         {t(`${entry.key}.desc`)}
                       </p>
                       {entry.children.map((child) => (
@@ -253,7 +281,7 @@ export function Navigation() {
                           to={href(child.page)}
                           onClick={() => setOpenGroup(null)}
                           className={cn(
-                            "uppercase-spaced hover:bg-card block px-4 py-3 text-[10px] transition-colors duration-200",
+                            "uppercase-spaced hover:bg-card block px-4 py-3 text-[11px] transition-colors duration-200",
                             isActive(child.page)
                               ? "text-primary"
                               : "text-foreground/75 hover:text-foreground",
@@ -278,6 +306,8 @@ export function Navigation() {
           <img
             src="/images/logo.webp"
             alt="9 Meses Fotografia"
+            width={330}
+            height={196}
             className={cn(
               "w-auto transition-all duration-500",
               scrolled ? "h-10 md:h-12" : "h-16 md:h-24",
@@ -289,7 +319,7 @@ export function Navigation() {
           <Link
             to={href("contact")}
             className={cn(
-              "hidden border px-5 py-2.5 text-[10px] tracking-[0.15em] uppercase transition-colors duration-300 lg:inline-block",
+              "hidden border px-5 py-2.5 text-[11px] tracking-[0.15em] uppercase transition-colors duration-300 lg:inline-block",
               onPhoto
                 ? "border-white/70 text-white hover:bg-white hover:text-stone-900"
                 : "border-foreground text-foreground hover:bg-foreground hover:text-background",
@@ -332,6 +362,7 @@ export function Navigation() {
           </button>
           <button
             type="button"
+            ref={menuButtonRef}
             onClick={() => setOpen((prev) => !prev)}
             aria-label={open ? t("nav.menu.close") : t("nav.menu.toggle")}
             aria-expanded={open}
@@ -353,6 +384,7 @@ export function Navigation() {
       {open &&
         createPortal(
             <div
+              ref={drawerRef}
               className="bg-background fixed inset-x-0 bottom-0 z-40 overflow-y-auto lg:hidden"
               style={{ top: barHeight }}
             >

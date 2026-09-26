@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import type { DisplayPhoto } from "../lib/photos";
 import { useLanguage } from "./language-provider";
@@ -15,6 +15,20 @@ interface LightboxProps {
 export function Lightbox({ photos, index, onClose, onIndexChange }: LightboxProps) {
   const { t, language } = useLanguage();
   const open = index !== null && photos.length > 0;
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const returnFocus = useRef<HTMLElement | null>(null);
+
+  // A real modal: showModal() traps focus, makes the page behind inert and
+  // gives Escape for free; focus goes back to the photo that opened it.
+  useEffect(() => {
+    if (!open) return;
+    returnFocus.current = document.activeElement as HTMLElement | null;
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.open) dialog.showModal();
+    return () => {
+      returnFocus.current?.focus({ preventScroll: true });
+    };
+  }, [open]);
 
   const go = useCallback(
     (delta: number) => {
@@ -27,7 +41,6 @@ export function Lightbox({ photos, index, onClose, onIndexChange }: LightboxProp
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
       if (event.key === "ArrowLeft") go(-1);
       if (event.key === "ArrowRight") go(1);
     };
@@ -54,10 +67,14 @@ export function Lightbox({ photos, index, onClose, onIndexChange }: LightboxProp
    */
   return createPortal(
     <dialog
-      open
+      ref={dialogRef}
+      aria-label={t("lightbox.label")}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
       className="fixed inset-0 z-100 m-0 flex h-dvh max-h-none w-screen max-w-none items-center justify-center overflow-hidden border-0 bg-black/95 p-4 md:p-10"
       style={{ animation: "fadeInUp 0.3s ease-out" }}
-      aria-modal="true"
     >
       <button
         type="button"

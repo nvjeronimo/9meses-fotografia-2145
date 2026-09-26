@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTestimonials } from "../queries/testimonials";
 import { useLanguage } from "./language-provider";
 import { GOOGLE_REVIEWS } from "../lib/site";
+import { usePrefersReducedMotion } from "../hooks/use-scroll-animation";
 import { responsive } from "../lib/responsive";
 
 /** Maps a stored session type to its translation key, for the attribution line. */
@@ -25,11 +26,14 @@ export function TestimonialsCarousel() {
     ((language === "pt" ? row.quotePt : row.quoteEn) ?? "").trim().length > 0,
   );
 
+  // Rotates on its own only when nobody is reading or asked for less motion.
+  const reduced = usePrefersReducedMotion();
+  const [held, setHeld] = useState(false);
   useEffect(() => {
-    if (items.length < 2) return;
+    if (items.length < 2 || reduced || held) return;
     const id = setInterval(() => setIndex((prev) => (prev + 1) % items.length), 8000);
     return () => clearInterval(id);
-  }, [items.length]);
+  }, [items.length, reduced, held]);
 
   useEffect(() => {
     if (index >= items.length) setIndex(0);
@@ -42,7 +46,15 @@ export function TestimonialsCarousel() {
   const sessionKey = item.sessionType ? SESSION_KEYS[item.sessionType] : undefined;
 
   return (
-    <div className="relative mx-auto max-w-3xl text-center">
+    <div
+      className="relative mx-auto max-w-3xl text-center"
+      onMouseEnter={() => setHeld(true)}
+      onMouseLeave={() => setHeld(false)}
+      onFocus={() => setHeld(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setHeld(false);
+      }}
+    >
       <blockquote key={item.id} style={{ animation: "fadeInUp 0.7s ease-out both" }}>
         {item.photo ? (
           <img

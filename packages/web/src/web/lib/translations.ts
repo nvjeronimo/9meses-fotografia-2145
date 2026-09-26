@@ -309,9 +309,12 @@ export const translations = {
     "hero.previous": "Imagem anterior",
     "hero.next": "Imagem seguinte",
     "hero.goTo": "Ir para a imagem",
+    "hero.pause": "Pausar apresentação",
+    "hero.play": "Retomar apresentação",
 
     // Lightbox
     "lightbox.close": "Fechar",
+    "lightbox.label": "Fotografia ampliada",
     "lightbox.previous": "Anterior",
     "lightbox.next": "Seguinte",
     "lightbox.loading": "A carregar imagem...",
@@ -815,9 +818,12 @@ export const translations = {
     "hero.previous": "Previous image",
     "hero.next": "Next image",
     "hero.goTo": "Go to image",
+    "hero.pause": "Pause slideshow",
+    "hero.play": "Play slideshow",
 
     // Lightbox
     "lightbox.close": "Close",
+    "lightbox.label": "Enlarged photo",
     "lightbox.previous": "Previous",
     "lightbox.next": "Next",
     "lightbox.loading": "Loading image...",

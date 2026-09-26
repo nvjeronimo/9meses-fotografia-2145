@@ -118,7 +118,7 @@ function Studio() {
 
       {/* Gallery */}
       <section className="container section-y-b">
-        <PhotoGrid photos={photos} columns={3} />
+        <PhotoGrid photos={photos} columns={3} eagerCount={0} />
       </section>
 
       {/* CTA cards */}

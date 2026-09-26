@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ArrowRight, MessageCircle } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { useLocation } from "wouter";
 import type { PageId } from "../lib/routes";
@@ -19,8 +19,16 @@ export function PageShell({ children }: { children: React.ReactNode }) {
   const { trackView } = useAnalytics();
   const { t } = useLanguage();
 
+  const firstRender = useRef(true);
   useEffect(() => {
     window.scrollTo(0, 0);
+    // After in-app navigation, move focus to the new page so keyboard and
+    // screen-reader users start at its content (not on the first load).
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    document.getElementById("conteudo")?.focus({ preventScroll: true });
   }, [location]);
 
   useEffect(() => {
@@ -68,6 +76,7 @@ export function PageHero({
       >
         <img
           {...responsive(image)}
+          fetchPriority="high"
           alt={t(titleKey)}
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -217,9 +226,11 @@ export function BookingCta() {
         printed brochure gets from its paper.
       */}
       <img
-        {...responsive("/images/portfolio/home-2.jpg")}
+        // Blurred 34px under a 93% overlay: the smallest variant is plenty.
+        {...responsive("/images/portfolio/home-2.jpg", "10vw")}
         alt=""
         aria-hidden
+        loading="lazy"
         className="absolute inset-0 -z-20 h-full w-full scale-110 object-cover blur-[34px]"
       />
       <div aria-hidden className="bg-band/[0.93] absolute inset-0 -z-10" />
@@ -259,8 +270,11 @@ export function BookingCta() {
                   curling stem hangs below the line like a signature flourish. */}
               <span className="mt-[21px] h-px w-10 bg-current/30 md:mt-[30px] md:w-20" />
               <img
-                src="/images/dandelion-gold.png"
+                src="/images/dandelion-gold.webp"
                 alt=""
+                width={240}
+                height={195}
+                loading="lazy"
                 className="h-14 w-auto md:h-20"
               />
               <span className="mt-[21px] h-px w-10 bg-current/30 md:mt-[30px] md:w-20" />

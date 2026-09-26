@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
+import { Pause, Play } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useCategoryPhotos } from "../lib/photos";
 import { usePrefersReducedMotion } from "../hooks/use-scroll-animation";
 import { useLanguage } from "./language-provider";
 import { responsive } from "../lib/responsive";
+import { useAfterLoad } from "../hooks/use-after-load";
 
 const INTERVAL = 6500;
 
@@ -13,20 +15,40 @@ export function HeroSlideshow() {
   const { photos } = useCategoryPhotos("home");
   const [index, setIndex] = useState(0);
   const reduced = usePrefersReducedMotion();
+  // Only slide one loads with the page; the rest follow once it has settled.
+  const later = useAfterLoad();
+
+  // WCAG 2.2.2: the slideshow can be paused, pauses while hovered or focused,
+  // and never advances on its own for visitors who asked for reduced motion.
+  const [userPaused, setUserPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const paused = reduced || userPaused || hovered;
 
   useEffect(() => {
-    if (photos.length < 2) return;
+    if (photos.length < 2 || paused) return;
     const id = setInterval(() => setIndex((prev) => (prev + 1) % photos.length), INTERVAL);
     return () => clearInterval(id);
-  }, [photos.length]);
+  }, [photos.length, paused]);
 
   return (
-    <section data-hero="dark" className="relative h-[94vh] min-h-[560px] overflow-hidden">
-      {photos.map((photo, i) => (
+    <section
+      data-hero="dark"
+      className="relative h-[94vh] min-h-[560px] overflow-hidden"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setHovered(false);
+      }}
+    >
+      {photos.map((photo, i) =>
+        i !== 0 && !later ? null : (
         <img
           key={photo.id}
           {...responsive(photo.url)}
           alt=""
+          fetchPriority={i === 0 ? "high" : "auto"}
+          decoding={i === 0 ? "sync" : "async"}
           className={cn(
             "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ease-in-out",
             i === index ? "opacity-100" : "opacity-0",
@@ -40,7 +62,8 @@ export function HeroSlideshow() {
               : undefined
           }
         />
-      ))}
+        ),
+      )}
 
       {/*
         One continuous ramp across the whole hero instead of three stacked
@@ -108,12 +131,22 @@ export function HeroSlideshow() {
                   className={cn(
                     "absolute inset-y-0 left-0 bg-white",
                     i === index ? "w-full" : "w-0",
-                    i === index && !reduced && "hero-progress",
+                    i === index && !paused && "hero-progress",
                   )}
                 />
               </span>
             </button>
           ))}
+          {!reduced && (
+            <button
+              type="button"
+              onClick={() => setUserPaused((prev) => !prev)}
+              aria-label={t(userPaused ? "hero.play" : "hero.pause")}
+              className="grid size-11 place-items-center text-white/70 transition-colors hover:text-white"
+            >
+              {userPaused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
+            </button>
+          )}
         </div>
       )}
     </section>

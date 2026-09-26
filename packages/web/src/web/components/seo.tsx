@@ -1,6 +1,7 @@
 import { useLocation } from "wouter";
 import { CONTACT, SITE_URL } from "../lib/site";
-import { PAGES, matchPath, type PageId } from "../lib/routes";
+import { matchPath, translatePath } from "../lib/routes";
+import { translateSessionSlug } from "../lib/site";
 import { useLanguage } from "./language-provider";
 
 /**
@@ -32,25 +33,21 @@ function absolute(url: string) {
 export function Seo({ title, description, image, path, jsonLd, noindex }: SeoProps) {
   const [location] = useLocation();
   const { language } = useLanguage();
-  const canonicalPath = path ?? location;
+  const rawPath = path ?? location;
+  const canonicalPath = rawPath.length > 1 ? rawPath.replace(/\/+$/, "") : rawPath;
   const canonical = absolute(canonicalPath);
   const match = matchPath(canonicalPath);
 
   // hreflang pair — each language's own URL for this same page.
   const alternates: { hrefLang: string; href: string }[] = [];
   if (match) {
-    const page = match.page as PageId;
-    for (const [lang, code] of [
-      ["pt", "pt-PT"],
-      ["en", "en"],
-    ] as const) {
-      const template = PAGES[page][lang];
-      const href = PAGES[page].dynamic
-        ? template.replace(":slug", match.slug ?? "")
-        : template;
-      alternates.push({ hrefLang: code, href: absolute(href) });
-    }
-    alternates.push({ hrefLang: "x-default", href: absolute(PAGES[page].pt) });
+    // Same translation the language toggle uses, so session slugs that differ
+    // per language (maternidade ↔ maternity) point at pages that exist.
+    const pt = translatePath(canonicalPath, "pt", translateSessionSlug) ?? canonicalPath;
+    const en = translatePath(canonicalPath, "en", translateSessionSlug) ?? canonicalPath;
+    alternates.push({ hrefLang: "pt-PT", href: absolute(pt) });
+    alternates.push({ hrefLang: "en", href: absolute(en) });
+    alternates.push({ hrefLang: "x-default", href: absolute(pt) });
   }
 
   const fullTitle = title.includes(BRAND) ? title : `${title} | ${BRAND}`;
@@ -75,8 +72,9 @@ export function Seo({ title, description, image, path, jsonLd, noindex }: SeoPro
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={socialImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      {/* The branded card's real size; page photos vary, so they carry none. */}
+      {!image && <meta property="og:image:width" content="1200" />}
+      {!image && <meta property="og:image:height" content="630" />}
       <meta property="og:image:alt" content={fullTitle} />
       <meta property="og:locale" content={language === "pt" ? "pt_PT" : "en_GB"} />
       <meta name="twitter:card" content="summary_large_image" />

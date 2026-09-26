@@ -86,7 +86,7 @@ function Packages() {
                   <div key={line.label} className="flex items-baseline justify-between gap-6 py-3">
                     <dt className="text-muted-foreground">
                       {line.labelKey ? t(line.labelKey) : `${t(line.kindKey ?? "")} ${line.label}`}
-                      {line.each && <span className="text-muted-foreground/70"> ({t("packages.extras.each")})</span>}
+                      {line.each && <span className="text-muted-foreground"> ({t("packages.extras.each")})</span>}
                     </dt>
                     <dd className="display-serif text-foreground shrink-0 text-lg tabular-nums">
                       {line.price}

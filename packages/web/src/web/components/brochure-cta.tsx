@@ -64,7 +64,7 @@ export function BrochureCta({
             {t("brochure.title")}
           </h3>
           <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{t("brochure.text")}</p>
-          <p className="uppercase-spaced text-muted-foreground/70 mt-3 text-[9px] md:text-[10px]">
+          <p className="uppercase-spaced text-muted-foreground mt-3 text-[11px]">
             {t("brochure.meta")}
           </p>
         </div>

@@ -43,7 +43,7 @@ export function SessionCards({ className }: { className?: string }) {
               </div>
 
               <div className="pt-3.5 md:pt-5">
-                <p className="uppercase-spaced text-muted-foreground mb-2 text-[9px] md:mb-2.5 md:text-[11px]">
+                <p className="uppercase-spaced text-muted-foreground mb-2 text-[11px] md:mb-2.5">
                   {t(session.timingKey)}
                 </p>
                 <h3 className="display-serif group-hover:text-primary min-h-[2.5em] text-lg leading-tight font-light transition-colors duration-300 sm:min-h-0 md:text-[1.75rem]">
@@ -53,7 +53,7 @@ export function SessionCards({ className }: { className?: string }) {
                 <p className="text-muted-foreground mt-3.5 hidden text-sm leading-relaxed sm:block">
                   {t(session.descKey)}
                 </p>
-                <span className="uppercase-spaced text-primary link-underline mt-3 inline-block text-[9px] md:mt-5 md:text-[11px]">
+                <span className="uppercase-spaced text-primary link-underline mt-3 inline-block text-[11px] md:mt-5">
                   {t("sessions.viewSession")}
                 </span>
               </div>

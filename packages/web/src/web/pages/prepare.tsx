@@ -56,7 +56,7 @@ function Prepare() {
           {TIPS.map((n, i) => (
             <Reveal key={n} delay={i * 70}>
               <div className="border-border/70 flex gap-5 border-t pt-7">
-                <span className="display-serif text-primary/40 text-3xl leading-none font-light">
+                <span className="display-serif text-primary/80 text-3xl leading-none font-light">
                   {String(n).padStart(2, "0")}
                 </span>
                 <div>
@@ -82,7 +82,7 @@ function Prepare() {
             aria-label={t("prepare.sessions.title")}
             className="mx-auto mb-10 flex max-w-3xl flex-wrap justify-center gap-2 md:mb-14"
           >
-            {SESSION_NOTES.map((note) => {
+            {SESSION_NOTES.map((note, i) => {
               const Icon = note.icon;
               const selected = note.key === active;
               return (
@@ -93,7 +93,23 @@ function Prepare() {
                   role="tab"
                   aria-selected={selected}
                   aria-controls={`panel-${note.key}`}
+                  // Roving tabindex: one tab stop, arrows move between tabs.
+                  tabIndex={selected ? 0 : -1}
                   onClick={() => select(note.key)}
+                  onKeyDown={(event) => {
+                    const last = SESSION_NOTES.length - 1;
+                    const to =
+                      event.key === "ArrowRight" ? (i === last ? 0 : i + 1)
+                      : event.key === "ArrowLeft" ? (i === 0 ? last : i - 1)
+                      : event.key === "Home" ? 0
+                      : event.key === "End" ? last
+                      : null;
+                    if (to === null) return;
+                    event.preventDefault();
+                    const next = SESSION_NOTES[to]!.key;
+                    select(next);
+                    document.getElementById(`tab-${next}`)?.focus();
+                  }}
                   className={cn(
                     "uppercase-spaced inline-flex min-h-11 items-center gap-2 border px-4 transition-colors duration-300",
                     selected
@@ -108,13 +124,15 @@ function Prepare() {
             })}
           </div>
 
-          {SESSION_NOTES.filter((note) => note.key === active).map((note) => (
+          {SESSION_NOTES.map((note) => (
             <div
               key={note.key}
               id={`panel-${note.key}`}
               role="tabpanel"
+              hidden={note.key !== active}
+              tabIndex={0}
               aria-labelledby={`tab-${note.key}`}
-              className="mx-auto grid max-w-5xl gap-10 md:grid-cols-2 md:gap-16"
+              className="mx-auto grid max-w-5xl gap-10 md:grid-cols-2 md:gap-16 [&[hidden]]:hidden"
             >
               <h3 className="sr-only">{t(`prepare.${note.key}.title`)}</h3>
               {(["before", "day"] as const).map((part) => (
