@@ -61,6 +61,7 @@ export const translations = {
     "bundle.cta": "RESERVAR AS DUAS",
     "bundle.package": "Barriga + Bebé (−50€)",
     "testimonials.google": "{rating} ★ em {count} avaliações no Google",
+    "footer.google": "{rating} · {count} avaliações no Google",
     "home.testimonials.label": "TESTEMUNHOS",
     "home.testimonials.title": "O que dizem de nós",
 
@@ -568,6 +569,7 @@ export const translations = {
     "bundle.cta": "BOOK BOTH",
     "bundle.package": "Bump + Baby (−€50)",
     "testimonials.google": "{rating} ★ from {count} Google reviews",
+    "footer.google": "{rating} · {count} Google reviews",
     "home.testimonials.label": "TESTIMONIALS",
     "home.testimonials.title": "What families say",
 

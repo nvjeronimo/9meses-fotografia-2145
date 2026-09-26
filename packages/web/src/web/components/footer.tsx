@@ -5,9 +5,10 @@ import {
   MapPin,
   MessageCircle,
   Phone,
+  Star,
 } from "lucide-react";
 import { Link } from "wouter";
-import { CONTACT, SESSIONS } from "../lib/site";
+import { CONTACT, GOOGLE_REVIEWS, SESSIONS } from "../lib/site";
 import type { PageId } from "../lib/routes";
 import { useLanguage } from "./language-provider";
 
@@ -50,6 +51,21 @@ export function Footer() {
             <p className="text-muted-foreground max-w-xs text-sm leading-relaxed">
               {t("footer.tagline")}
             </p>
+            <a
+              href={GOOGLE_REVIEWS.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-foreground/80 hover:text-primary mt-4 inline-flex min-h-6 items-center gap-2 text-sm whitespace-nowrap transition-colors"
+            >
+              <span className="text-primary flex gap-0.5" aria-hidden>
+                {[0, 1, 2, 3, 4].map((n) => (
+                  <Star key={n} className="size-3.5 fill-current" strokeWidth={0} />
+                ))}
+              </span>
+              {t("footer.google")
+                .replace("{rating}", language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn)
+                .replace("{count}", String(GOOGLE_REVIEWS.count))}
+            </a>
           </div>
 
           {/* Footer links carry the header's `nav-link` underline: it already
