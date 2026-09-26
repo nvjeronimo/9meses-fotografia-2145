@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { Link } from "wouter";
 import { usePackages, type SessionType } from "../queries/packages";
-import { SESSIONS } from "../lib/site";
 import { useLanguage } from "./language-provider";
 import { Reveal } from "./reveal";
 
@@ -25,10 +24,6 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
   /** Brochure notes that belong to these sessions (bundle discount, add-ons). */
   const notes = wanted.flatMap((type) => PACKAGE_NOTES[type] ?? []);
   const packageWord = t("packages.package").toLowerCase();
-
-  /** The session's own brand mark, so a card is placeable at a glance. */
-  const iconFor = (type: string) =>
-    SESSIONS.find((session) => session.sessionType === type)?.icon;
 
   return (
     <div className={className}>
@@ -54,17 +49,8 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
                   : "border-border/70 bg-background",
               )}
             >
-              {/* One heading row: mark, label and name on the left, price on the right. */}
+              {/* One heading row: label and name on the left, price on the right. */}
               <div className="flex items-center gap-4">
-                {iconFor(row.sessionType) && (
-                  <img
-                    src={iconFor(row.sessionType)}
-                    alt=""
-                    aria-hidden
-                    loading="lazy"
-                    className="brand-mark size-12 shrink-0"
-                  />
-                )}
                 <div className="min-w-0">
                   {/* "Pacote 1" already says it; don't print "Pacote" twice. */}
                   {!row.name.toLowerCase().startsWith(packageWord) && (
