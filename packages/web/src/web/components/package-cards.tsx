@@ -22,16 +22,20 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
 
   if (rows.length === 0) return null;
 
+  /** Brochure notes that belong to these sessions (bundle discount, add-ons). */
+  const notes = wanted.flatMap((type) => PACKAGE_NOTES[type] ?? []);
+  const packageWord = t("packages.package").toLowerCase();
+
   /** The session's own brand mark, so a card is placeable at a glance. */
   const iconFor = (type: string) =>
     SESSIONS.find((session) => session.sessionType === type)?.icon;
 
   return (
+    <div className={className}>
     <div
       className={cn(
         "grid gap-4 sm:gap-6",
         rows.length > 2 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2",
-        className,
       )}
     >
       {rows.map((row, i) => {
@@ -52,7 +56,8 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
             >
               <div className="mb-3 flex items-start justify-between gap-4">
                 <p className="uppercase-spaced text-muted-foreground">
-                  {t("packages.package")}
+                  {/* "Pacote 1" already says it; don't print "Pacote" twice. */}
+                  {row.name.toLowerCase().startsWith(packageWord) ? "\u00a0" : t("packages.package")}
                 </p>
                 {iconFor(row.sessionType) && (
                   <img
@@ -93,5 +98,19 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
         );
       })}
     </div>
+      {notes.length > 0 && (
+        <ul className="text-muted-foreground mx-auto mt-8 max-w-3xl space-y-2 text-center text-sm leading-relaxed md:mt-10">
+          {notes.map((key) => (
+            <li key={key}>{t(key)}</li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
+
+const PACKAGE_NOTES: Partial<Record<SessionType, string[]>> = {
+  maternity: ["packages.note.studioOutdoor", "packages.note.bundle"],
+  newborn: ["packages.note.bundle"],
+  smash: ["packages.note.balloons"],
+};

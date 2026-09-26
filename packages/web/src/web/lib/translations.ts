@@ -25,7 +25,7 @@ export const translations = {
     "session.smash": "Smash the Cake",
 
     // Home page
-    "home.hero.eyebrow": "ESTÚDIO EM FERREIRAS, ALBUFEIRA",
+    "home.hero.eyebrow": "ESTÚDIO FOTOGRAFIA, ALGARVE",
     "home.hero.title": "Escrevemos com luz a vossa história",
     "home.hero.subtitle":
       "Fotografia de maternidade, newborn, bebé e família em Portugal",
@@ -46,7 +46,7 @@ export const translations = {
       "Conte-nos o que gostaria de fotografar e a data que tem em mente. Respondemos com as datas disponíveis e todos os detalhes da sessão.",
     "home.cta.button": "MARCAR SESSÃO",
     "home.cta.whatsapp": "FALAR POR WHATSAPP",
-    "home.cta.note": "ESTÚDIO EM FERREIRAS, ALBUFEIRA",
+    "home.cta.note": "ESTÚDIO FOTOGRAFIA, ALGARVE",
     "home.gallery.label": "GALERIA",
     "home.gallery.title": "Momentos Capturados",
     "home.gallery.loadMore": "CARREGAR MAIS",
@@ -141,16 +141,17 @@ export const translations = {
     "sessions.baby.body1":
       "As sessões de bebé são perfeitas para registar os marcos importantes do crescimento do seu filho. Desde o primeiro mês até ao primeiro ano, cada fase é especial e merece ser capturada.",
     "sessions.baby.body2":
-      "Estas sessões podem ser realizadas em estúdio ou ao ar livre, dependendo das suas preferências. Gosto de capturar momentos naturais e espontâneos, mostrando a personalidade única do seu bebé em cada etapa do desenvolvimento.",
+      "Esta sessão é feita em estúdio, numa hora que não colida com a sesta do vosso bebé, e dura aproximadamente 1 hora. Fotografo o bebé e também a família, e no estúdio há roupinhas de vários tamanhos que podem ser usadas.",
 
     "sessions.family.title": "Fotografia de Família",
-    "sessions.family.timing": "Estúdio ou exterior",
+    "sessions.family.timing":
+      "Exterior, ao pôr do sol",
     "sessions.family.desc":
-      "Sessões em estúdio ou ao ar livre, preferencialmente durante a golden hour, capturando a conexão e o amor da vossa família.",
+      "Sessões ao ar livre, a começar 1 hora antes do pôr do sol — praia, campo ou cidade — para captar a ligação e o amor da vossa família.",
     "sessions.family.body1":
-      "As sessões de família são uma excelente forma de registar os momentos especiais com as pessoas que mais amamos. Quer seja em estúdio ou ao ar livre, criamos memórias que durarão para sempre.",
+      "As sessões de família são uma excelente forma de registar os momentos especiais com as pessoas que mais amamos: os sorrisos, os abraços, os olhares marotos.",
     "sessions.family.body2":
-      "Prefiro realizar estas sessões durante a golden hour, quando a luz é mais suave e dourada, criando uma atmosfera mágica e acolhedora. Capturo momentos naturais de conexão, risos genuínos e abraços calorosos que refletem o amor da vossa família.",
+      "A sessão começa 1 hora antes do pôr do sol, quando a luz é mais suave e dourada. Pode ser na praia, no campo, na cidade ou um pouco de tudo, e ajudo-vos a escolher o local e o que vestir.",
 
     "sessions.smash.title": "Smash the Cake",
     "sessions.smash.timing": "Primeiro aniversário",
@@ -159,7 +160,7 @@ export const translations = {
     "sessions.smash.body1":
       "O Smash the Cake é uma sessão divertida e memorável para celebrar o primeiro aniversário do seu bebé. É uma oportunidade perfeita para capturar a personalidade e a alegria do seu filho enquanto ele explora e brinca com o bolo.",
     "sessions.smash.body2":
-      "A sessão inclui um bolo delicioso (que pode ser personalizado de acordo com as suas preferências), e capturo todos os momentos de diversão, sujidade e sorrisos. É uma forma única de marcar este marco importante na vida do seu filho.",
+      "O bolo está incluído em todos os pacotes. A sessão dura aproximadamente 1 hora: primeiro fotografo toda a família, depois só o bebé, e no fim vem o bolo. Pode ser em estúdio ou no exterior, ao pôr do sol.",
 
     // Packages
     "packages.title": "Pacotes",
@@ -174,6 +175,28 @@ export const translations = {
     "packages.extras":
       "Extras disponíveis: impressões, telas, imagens adicionais",
     "packages.package": "Pacote",
+    "packages.note.studioOutdoor":
+      "Sessão em estúdio + exterior: acresce 50€ a qualquer um dos pacotes.",
+    "packages.note.bundle":
+      "Na reserva de uma sessão de maternidade e newborn, têm um desconto de 50€ sobre o valor total.",
+    "packages.note.balloons":
+      "Em qualquer um dos pacotes, é possível adicionar uma grinalda de balões por mais 50€.",
+    "packages.extras.title": "Extras",
+    "packages.extras.photos": "Fotografia digital extra em alta resolução",
+    "packages.extras.prints": "Impressões",
+    "packages.extras.canvas": "Telas",
+    "packages.extras.each": "cada",
+    "packages.extras.print": "Impressão",
+    "packages.extras.canvasOne": "Tela",
+    "packages.terms.title": "Reserva e pagamento",
+    "packages.terms.1":
+      "O pagamento é feito em duas vezes: 50% na reserva e 50% no dia da sessão.",
+    "packages.terms.2": "Numerário, transferência bancária ou MB WAY (sem multibanco).",
+    "packages.terms.3":
+      "Depois de verem o slideshow, podem fazer upgrade de pacote ou juntar imagens e produtos extra.",
+    "packages.terms.4":
+      "Galeria em 3 dias úteis, mediante taxa de urgência de 100€ (sujeito a disponibilidade).",
+    "packages.terms.5": "O valor da reserva não é reembolsável em caso de desistência.",
 
     // Brochure
     "brochure.label": "CATÁLOGO",
@@ -202,16 +225,16 @@ export const translations = {
     "faq.a2": "Os vouchers têm validade de 6 meses após a sua aquisição.",
     "faq.q3": "E se precisar remarcar a sessão?",
     "faq.a3":
-      "Se por motivo de doença for necessária a remarcação, não haverá qualquer custo extra. A nova data será acordada conforme a disponibilidade da agenda.",
+      "Se por motivo de doença ou acidente for necessário remarcar, não há qualquer custo extra; o mesmo acontece se uma sessão no exterior tiver de ser adiada pelo tempo. A nova data é acordada conforme a disponibilidade da agenda. Faltar sem aviso prévio implica uma nova reserva.",
     "faq.q4": "Posso usar as imagens comercialmente?",
     "faq.a4":
-      "Todas as imagens estão protegidas por direitos de autor. Para uso pessoal não há restrições, mas qualquer utilização comercial requer aprovação prévia.",
+      "Todas as imagens estão protegidas por direitos de autor e destinam-se a uso pessoal; o uso comercial ou publicitário precisa da aprovação da fotógrafa. A publicação das vossas imagens pelo estúdio depende sempre do vosso consentimento.",
     "faq.q5": "Qual o prazo de entrega?",
     "faq.a5":
-      "O prazo de entrega das imagens editadas é de aproximadamente 3-4 semanas após a sessão.",
+      "O prazo de entrega da galeria é de 2 meses (se houver alterações, serão avisados). Antes disso marcamos uma reunião online para verem o slideshow e escolherem as imagens. Existe também entrega em 3 dias úteis, com taxa de urgência de 100€.",
     "faq.q6": "O valor da reserva é reembolsável?",
     "faq.a6":
-      "O valor da reserva não é reembolsável, mas pode ser transferido para uma nova data em caso de necessidade.",
+      "O valor da reserva (50% do pacote) não é reembolsável em caso de desistência. Em caso de doença, acidente ou mau tempo, a sessão é remarcada sem custos.",
 
     // Contact
     "contact.title": "Contacto",
@@ -399,26 +422,36 @@ export const translations = {
     "prepare.general.2.text":
       "Bege, branco, cinza, tons de terra e verdes suaves fotografam sempre bem. Evite estampados fortes, logótipos e listas finas.",
     "prepare.general.3.title": "Traga o essencial",
-    "prepare.general.3.text":
-      "Fraldas, uma muda de roupa, a chupeta e algo de que o bebé goste. No estúdio há água, chá e espaço para amamentar.",
+    "prepare.general.3.text": "Fraldas, uma muda de roupa, a chupeta e algo de que o bebé goste. No estúdio há café, água e alguns snacks, TV e internet, e brinquedos para os mais pequenos.",
     "prepare.general.4.title": "Diga-nos o que quer",
     "prepare.general.4.text":
       "Se tem uma fotografia em mente, um objeto com valor sentimental ou alguém que deve aparecer, avise antes da sessão.",
     "prepare.maternity.title": "Sessão de maternidade",
-    "prepare.maternity.text":
-      "A melhor altura é entre as 28 e as 34 semanas — a barriga já está redonda e ainda se move com conforto. Traga dois ou três conjuntos; temos também vestidos de estúdio em vários tamanhos. Hidrate a pele nos dias anteriores e evite roupa apertada nas horas antes da sessão, para não marcar a pele.",
-    "prepare.newborn.title": "Sessão de recém-nascido",
-    "prepare.newborn.text":
-      "O ideal são os primeiros 14 dias, quando o bebé ainda dorme profundamente e se enrola com facilidade. A sessão é conduzida pelo bebé e dura 3 a 4 horas, com pausas para mamar, trocar a fralda e acalmar. O estúdio é mantido quente. Dê banho ao bebé em casa e, se possível, mantenha-o acordado na hora anterior — ajuda a que adormeça aqui.",
-    "prepare.baby.title": "Sessão de bebé e smash the cake",
-    "prepare.baby.text":
-      "Marque a sessão para a hora do dia em que o bebé está mais bem-humorado, normalmente depois da sesta da manhã. Traga um brinquedo com som e um snack. No smash the cake, traga roupa de muda e uma toalha — o bolo vai para todo o lado, e é isso que a torna divertida.",
+    "prepare.newborn.title": "Sessão newborn",
+    "prepare.baby.title": "Sessão de bebé",
     "prepare.family.title": "Sessão de família",
-    "prepare.family.text":
-      "Combinem as cores entre todos sem ficarem iguais: escolham dois ou três tons e distribuam-nos. Com crianças pequenas, a primeira meia hora é para brincar e ganhar confiança — as melhores fotografias aparecem quase sempre depois disso.",
     "prepare.after.title": "Depois da sessão",
     "prepare.after.text":
       "Recebe uma galeria privada online para escolher as suas fotografias favoritas. A edição das imagens escolhidas é entregue em alta resolução, pronta para imprimir, e ficam guardadas em arquivo para futuras encomendas.",
+    "prepare.sessions.title": "Sessão a sessão",
+    "prepare.before": "Antes da sessão",
+    "prepare.session": "A sessão",
+    "prepare.day": "O dia da sessão",
+    "prepare.maternity.before": "Recomendo fazer a sessão entre as 29 e as 35 semanas, quando a barriga já está proeminente e linda, mas a mamã ainda não se sente muito desconfortável ou cansada. A sessão gira em torno da mamã, mas o papá e os irmãos também estão convidados!\n\nNo exterior, a sessão começa 1 hora antes do pôr do sol, para captarmos a luz tão bonita do final do dia: praia, campo, cidade ou um pouco de tudo — ajudo-vos a escolher. Também pode ser em estúdio, num ambiente mais intimista, ou podem ter o melhor dos dois mundos e fazer exterior e estúdio.\n\nQuanto ao que vestir, aconselho o mais adequado para cada ambiente, e no estúdio há guarda-roupa de grávida com peças que podem usar.",
+    "prepare.maternity.day": "Hoje é o dia da sessão! Procurem relaxar e fazer de conta que não estou ali. Se é a primeira vez que fazem uma sessão fotográfica, não se preocupem: ajudo-vos a posicionar e digo-vos o que fazer. A intenção é que se divirtam e que juntos possamos criar memórias!",
+    "prepare.newborn.before": "A sessão newborn faz-se preferencialmente nas duas primeiras semanas do bebé, quando está mais sonolento e “maleável”, o que permite aquelas poses deliciosas.\n\nComo o tempo ideal é curto, é muito importante marcarem ainda durante a gravidez, para garantirem a vossa vaga — depois do nascimento, muitas vezes já não há espaço na agenda. Normalmente marco para a data provável do parto e, como a maioria dos bebés não nasce nesse dia, contactam-me assim que o bebé nascer para marcarmos a data definitiva.\n\nDepois da marcação recebem um questionário, para eu adequar a sessão ao máximo às vossas expectativas.",
+    "prepare.newborn.day": "Antes da data marcada recebem por email as indicações para a sessão: o que fazer antes, o que levar e a localização do estúdio.\n\nA sessão dura aproximadamente 3 a 4 horas, independentemente do pacote. Quem “comanda” é o bebé — sigo literalmente o ritmo dele. Preparo os sets e os acessórios com antecedência, de acordo com as respostas ao questionário, mas se virem no estúdio algo de que gostem, posso trocar ou acrescentar.",
+    "prepare.baby.before": "Todas as fases do bebé são dignas de ser registadas. Cada uma é única e há pequenas coisas que não voltam atrás: aquele beicinho, o sorriso desdentado, o cabelo desgrenhado, o abraço sentido aos papás, aquele beijinho…\n\nEsta sessão é feita em estúdio, e marco para uma hora que não colida com a sesta do vosso bebé.",
+    "prepare.baby.day": "A sessão dura aproximadamente 1 hora, independentemente do pacote. Fotografo o bebé e também a vossa família!\n\nNo estúdio há roupinhas de diferentes tamanhos que podem ser usadas. Para os pais e irmãos aconselho tons neutros, branco ou jeans. Para as fotos do bebé sozinho, decidimos juntos que tons usar.",
+    "prepare.family.before": "Nesta sessão quero captar os vossos sorrisos, os abraços, os olhares marotos… a ligação especial que existe entre vocês.\n\nA sessão começa 1 hora antes do pôr do sol, para captarmos a luz bonita do final do dia. Pode ser na praia, no campo, na cidade ou um pouco de tudo — ajudo-vos a escolher. Também vos dou a minha opinião sobre o que vestir e as cores que funcionam melhor em cada ambiente.",
+    "prepare.family.day": "Hoje é o dia da sessão! Procurem relaxar e fazer de conta que não estou ali. Se é a primeira vez que fazem uma sessão fotográfica, não se preocupem: ajudo-vos a posicionar e digo-vos o que fazer. A intenção é que se divirtam e que juntos possamos criar memórias!",
+    "prepare.smash.title": "Sessão Smash the Cake",
+    "prepare.smash.before": "Passou 1 ano e é tempo de comemorar! Com esta idade o bebé é curioso e gosta de explorar tudo à sua volta, e o bolo é a melhor ferramenta para que fique no set. Uns comem o bolo, outros nem por isso, uns ficam todos sujos e outros só experimentam com a colher… Será certamente uma forma original de comemorar o primeiro aninho!\n\nPode ser no exterior ou em estúdio, conforme a vossa escolha e o tempo. Em estúdio marco para uma hora que não colida com a sesta; no exterior, a sessão começa 1 hora antes do pôr do sol.",
+    "prepare.smash.day": "A sessão dura aproximadamente 1 hora, independentemente do pacote. Primeiro fotografo toda a família, depois só o bebé, e no fim vem o “Smash the Cake”.\n\nNo estúdio há roupinhas de diferentes tamanhos. Para os pais e irmãos aconselho tons neutros, branco ou jeans; para as fotos do bebé sozinho, decidimos juntos que tons usar.",
+    "prepare.after.1": "A galeria é entregue em 2 meses. Se o prazo mudar, serão avisados com antecedência.",
+    "prepare.after.2": "Com pressa? Há entrega em 3 dias úteis, mediante uma taxa de urgência.",
+    "prepare.after.3": "Marcamos uma reunião online (Zoom) em que vos mostro um slideshow com a história da vossa sessão, e escolhem as imagens em digital ou impressão, de acordo com o pacote.",
+    "prepare.after.4": "Logo a seguir recebem acesso à galeria online; as impressões e produtos são entregues em data a combinar.",
     "prepare.cta.title": "Alguma dúvida?",
     "prepare.cta.text":
       "Responda a este email ou mande-nos uma mensagem no WhatsApp — respondemos sempre antes da sessão.",
@@ -487,7 +520,7 @@ export const translations = {
     "session.smash": "Smash the Cake",
 
     // Home page
-    "home.hero.eyebrow": "STUDIO IN FERREIRAS, ALBUFEIRA",
+    "home.hero.eyebrow": "PHOTOGRAPHY STUDIO, ALGARVE",
     "home.hero.title": "We write your story with light",
     "home.hero.subtitle":
       "Maternity, newborn, baby and family photography in Portugal",
@@ -507,7 +540,7 @@ export const translations = {
     "home.cta.subtitle": "Get in touch to schedule your session",
     "home.cta.button": "BOOK SESSION",
     "home.cta.whatsapp": "CHAT ON WHATSAPP",
-    "home.cta.note": "STUDIO IN FERREIRAS, ALBUFEIRA",
+    "home.cta.note": "PHOTOGRAPHY STUDIO, ALGARVE",
     "home.gallery.label": "GALLERY",
     "home.gallery.title": "Captured Moments",
     "home.gallery.loadMore": "LOAD MORE",
@@ -603,16 +636,17 @@ export const translations = {
     "sessions.baby.body1":
       "Baby sessions are perfect for recording the important milestones of your child's growth. From the first month to the first year, every stage is special and deserves to be captured.",
     "sessions.baby.body2":
-      "These sessions can be held in the studio or outdoors, depending on your preference. I love capturing natural, spontaneous moments that show your baby's unique personality at each stage of development.",
+      "This session takes place in the studio, at a time that doesn't clash with your baby's nap, and lasts about 1 hour. I photograph your baby and the family too, and the studio has little outfits in several sizes you can use.",
 
     "sessions.family.title": "Family Photography",
-    "sessions.family.timing": "Studio or outdoor",
+    "sessions.family.timing":
+      "Outdoors, at sunset",
     "sessions.family.desc":
-      "Studio or outdoor sessions, preferably during golden hour, capturing the connection and love of your family.",
+      "Outdoor sessions starting 1 hour before sunset — beach, countryside or town — capturing your family's connection and love.",
     "sessions.family.body1":
-      "Family sessions are a wonderful way to record special moments with the people we love most. Whether in the studio or outdoors, we create memories that last forever.",
+      "Family sessions are a wonderful way to remember special moments with the people we love most: the smiles, the hugs, the cheeky glances.",
     "sessions.family.body2":
-      "I prefer to photograph these sessions during golden hour, when the light is softer and golden, creating a magical and welcoming atmosphere. I capture natural moments of connection, genuine laughter and warm hugs that reflect your family's love.",
+      "We start 1 hour before sunset, when the light is soft and golden. It can be at the beach, in the countryside, in town or a bit of each, and I'll help you choose the place and what to wear.",
 
     "sessions.smash.title": "Smash the Cake",
     "sessions.smash.timing": "First birthday",
@@ -621,7 +655,7 @@ export const translations = {
     "sessions.smash.body1":
       "Smash the Cake is a fun and memorable session to celebrate your baby's first birthday. It is the perfect opportunity to capture your child's personality and joy as they explore and play with the cake.",
     "sessions.smash.body2":
-      "The session includes a delicious cake (which can be customised to your preferences), and I capture every moment of fun, mess and smiles. It is a unique way to mark this important milestone in your child's life.",
+      "The cake is included in every package. The session takes about 1 hour: first the whole family, then just the baby, and the cake comes last. It can be in the studio or outdoors at sunset.",
 
     // Packages
     "packages.title": "Packages",
@@ -635,6 +669,26 @@ export const translations = {
     "packages.cta": "BOOK NOW",
     "packages.extras": "Extras available: prints, canvases, additional images",
     "packages.package": "Package",
+    "packages.note.studioOutdoor":
+      "Studio + outdoor session: add €50 to any package.",
+    "packages.note.bundle":
+      "Book a maternity and a newborn session together and get €50 off the total.",
+    "packages.note.balloons": "Add a balloon garland to any package for €50.",
+    "packages.extras.title": "Extras",
+    "packages.extras.photos": "Extra high-resolution digital image",
+    "packages.extras.prints": "Prints",
+    "packages.extras.canvas": "Canvases",
+    "packages.extras.each": "each",
+    "packages.extras.print": "Print",
+    "packages.extras.canvasOne": "Canvas",
+    "packages.terms.title": "Booking and payment",
+    "packages.terms.1": "Payment is made in two parts: 50% when booking and 50% on the day.",
+    "packages.terms.2": "Cash, bank transfer or MB WAY (no Multibanco card payments).",
+    "packages.terms.3":
+      "After the slideshow you can upgrade your package or add extra images and products.",
+    "packages.terms.4":
+      "Gallery within 3 working days for a €100 rush fee (subject to availability).",
+    "packages.terms.5": "The booking deposit is non-refundable if you cancel.",
 
     // Brochure
     "brochure.label": "CATALOGUE",
@@ -663,16 +717,16 @@ export const translations = {
     "faq.a2": "Vouchers are valid for 6 months after purchase.",
     "faq.q3": "What if I need to reschedule the session?",
     "faq.a3":
-      "If rescheduling is necessary due to illness, there will be no extra cost. The new date will be agreed according to schedule availability.",
+      "If you need to reschedule because of illness or an accident, there is no extra cost; the same applies if an outdoor session has to move because of the weather. The new date is agreed according to availability. Missing the session without notice requires a new booking.",
     "faq.q4": "Can I use the images commercially?",
     "faq.a4":
-      "All images are protected by copyright. For personal use there are no restrictions, but any commercial use requires prior approval.",
+      "All images are protected by copyright and are for personal use; commercial or advertising use needs the photographer's approval. The studio only publishes your images with your consent.",
     "faq.q5": "What is the delivery time?",
     "faq.a5":
-      "The delivery time for edited images is approximately 3-4 weeks after the session.",
+      "The gallery is delivered within 2 months (you will be told in advance if that changes). Before that we meet online so you can watch the slideshow and choose your images. Delivery within 3 working days is also possible for a €100 rush fee.",
     "faq.q6": "Is the booking fee refundable?",
     "faq.a6":
-      "The booking fee is non-refundable, but can be transferred to a new date if necessary.",
+      "The booking deposit (50% of the package) is non-refundable if you cancel. Illness, accidents or bad weather mean a free reschedule instead.",
 
     // Contact
     "contact.title": "Contact",
@@ -858,26 +912,36 @@ export const translations = {
     "prepare.general.2.text":
       "Beige, white, grey, earth tones and soft greens always photograph well. Avoid bold prints, logos and thin stripes.",
     "prepare.general.3.title": "Bring the essentials",
-    "prepare.general.3.text":
-      "Nappies, a change of clothes, the dummy and something your baby loves. The studio has water, tea and space to breastfeed.",
+    "prepare.general.3.text": "Nappies, a change of clothes, the dummy and something your baby loves. At the studio there is coffee, water and a few snacks, TV and Wi-Fi, and toys for the little ones.",
     "prepare.general.4.title": "Tell us what you want",
     "prepare.general.4.text":
       "If you have a photograph in mind, a keepsake to include or someone who must be in the frame, let us know before the session.",
     "prepare.maternity.title": "Maternity session",
-    "prepare.maternity.text":
-      "The best window is between 28 and 34 weeks — the bump is beautifully round and you still move comfortably. Bring two or three outfits; we also have studio gowns in a range of sizes. Moisturise your skin in the days before, and avoid tight clothing in the hours before the session so it does not mark your skin.",
     "prepare.newborn.title": "Newborn session",
-    "prepare.newborn.text":
-      "The first 14 days are ideal, while your baby still sleeps deeply and curls easily. The session is baby-led and lasts 3 to 4 hours, with breaks for feeding, changing and soothing. The studio is kept warm. Bathe your baby at home and, if you can, keep them awake for the hour before — it helps them settle here.",
-    "prepare.baby.title": "Baby and smash the cake sessions",
-    "prepare.baby.text":
-      "Book the time of day when your baby is at their happiest, usually after the morning nap. Bring a noisy toy and a snack. For smash the cake, bring a change of clothes and a towel — the cake goes everywhere, and that is exactly what makes it fun.",
+    "prepare.baby.title": "Baby session",
     "prepare.family.title": "Family session",
-    "prepare.family.text":
-      "Coordinate colours without matching exactly: pick two or three tones and spread them across the family. With small children, the first half hour is for playing and building trust — the best photographs almost always come after that.",
     "prepare.after.title": "After the session",
     "prepare.after.text":
       "You receive a private online gallery to choose your favourite photographs. The images you select are retouched and delivered in high resolution, ready to print, and kept on file for future orders.",
+    "prepare.sessions.title": "Session by session",
+    "prepare.before": "Before the session",
+    "prepare.session": "The session",
+    "prepare.day": "On the day",
+    "prepare.maternity.before": "I recommend the session between 29 and 35 weeks, when the bump is round and beautiful but mum is not yet too uncomfortable or tired. The session is all about mum, but dad and siblings are welcome too!\n\nOutdoors, we start 1 hour before sunset to catch that lovely end-of-day light: beach, countryside, town or a bit of each — I'll help you choose. It can also be in the studio, for something more intimate, or you can have the best of both and do outdoor and studio.\n\nAs for what to wear, I'll advise on what suits each setting, and the studio has a maternity wardrobe with pieces you can use.",
+    "prepare.maternity.day": "Today is the day! Try to relax and pretend I'm not there. If it's your first photo session, don't worry: I'll help you with poses and tell you what to do. The idea is to have fun and make memories together!",
+    "prepare.newborn.before": "Newborn sessions are best in the baby's first two weeks, when they are sleepier and more “curl-up-able”, which allows those delicious poses.\n\nBecause that window is short, it's really important to book during pregnancy to secure your spot — after the birth there is often no room left in the diary. I usually book for the due date and, since most babies don't arrive on that day, you let me know as soon as your baby is born and we set the final date.\n\nOnce you book you'll receive a questionnaire, so I can shape the session around what you hope for.",
+    "prepare.newborn.day": "Before the date you'll receive an email with everything for the session: what to do beforehand, what to bring and the studio's location.\n\nThe session takes about 3 to 4 hours, whatever the package. The baby is in charge — I follow their rhythm, literally. I prepare the sets and props in advance from your questionnaire, but if you see something in the studio you'd like, I can swap or add it.",
+    "prepare.baby.before": "Every stage of your baby deserves to be remembered. Each one is unique, and some little things never come back: that pout, the toothless smile, the messy hair, the heartfelt hug for mum and dad, that little kiss…\n\nThis session takes place in the studio, at a time that doesn't clash with your baby's nap.",
+    "prepare.baby.day": "The session takes about 1 hour, whatever the package. I photograph your baby and your family too!\n\nThe studio has little outfits in different sizes you can use. For parents and siblings I suggest neutral tones, white or denim. For the baby's solo photos, we choose the colours together.",
+    "prepare.family.before": "In this session I want to capture your smiles, hugs and cheeky glances… the special connection between you.\n\nWe start 1 hour before sunset to catch the lovely end-of-day light. It can be at the beach, in the countryside, in town or a bit of each — I'll help you choose. I'm also happy to advise on what to wear and which colours work best in each setting.",
+    "prepare.family.day": "Today is the day! Try to relax and pretend I'm not there. If it's your first photo session, don't worry: I'll help you with poses and tell you what to do. The idea is to have fun and make memories together!",
+    "prepare.smash.title": "Smash the Cake session",
+    "prepare.smash.before": "A whole year has gone by and it's time to celebrate! At this age babies are curious and love exploring, and the cake is the best way to keep them on set. Some eat it, some don't, some get covered head to toe and some only try it with a spoon… It's a lovely, original way to celebrate the first birthday!\n\nIt can be outdoors or in the studio, depending on your choice and the weather. In the studio I book a time that doesn't clash with nap time; outdoors, we start 1 hour before sunset.",
+    "prepare.smash.day": "The session takes about 1 hour, whatever the package. First I photograph the whole family, then just the baby, and at the end comes the “Smash the Cake”.\n\nThe studio has little outfits in different sizes. For parents and siblings I suggest neutral tones, white or denim; for the baby's solo photos, we choose the colours together.",
+    "prepare.after.1": "Your gallery is delivered within 2 months. If that changes, you'll be told in advance.",
+    "prepare.after.2": "In a hurry? Delivery within 3 working days is available for a rush fee.",
+    "prepare.after.3": "We meet online (Zoom), I show you a slideshow telling the story of your session, and you choose your images, digital or printed, according to your package.",
+    "prepare.after.4": "Straight after, you get access to the online gallery; prints and products are delivered on a date we agree.",
     "prepare.cta.title": "Any questions?",
     "prepare.cta.text":
       "Reply to your email or send us a WhatsApp message — we always answer before the session.",

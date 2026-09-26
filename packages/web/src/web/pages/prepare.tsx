@@ -1,5 +1,7 @@
 import { Baby, Cake, Camera, Heart, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { cn } from "@/lib/utils";
 import { useLanguage } from "../components/language-provider";
 import { BookingCta, PageHero, PageShell, SectionHeading } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
@@ -9,14 +11,33 @@ import { CONTACT } from "../lib/site";
 const TIPS = [1, 2, 3, 4] as const;
 
 const SESSION_NOTES = [
-  { key: "maternity", icon: Heart },
-  { key: "newborn", icon: Baby },
-  { key: "baby", icon: Cake },
-  { key: "family", icon: Users },
+  { key: "maternity", icon: Heart, inStudioOnly: false },
+  { key: "newborn", icon: Baby, inStudioOnly: false },
+  { key: "baby", icon: Baby, inStudioOnly: true },
+  { key: "family", icon: Users, inStudioOnly: false },
+  { key: "smash", icon: Cake, inStudioOnly: true },
 ] as const;
+
+type SessionKey = (typeof SESSION_NOTES)[number]["key"];
+const isSessionKey = (value: string): value is SessionKey =>
+  SESSION_NOTES.some((note) => note.key === value);
 
 function Prepare() {
   const { t, href } = useLanguage();
+  // Session pages link here as /preparar-a-sessao#newborn.
+  const [active, setActive] = useState<SessionKey>(() => {
+    const hash = typeof window === "undefined" ? "" : window.location.hash.slice(1);
+    return isSessionKey(hash) ? hash : "maternity";
+  });
+  useEffect(() => {
+    if (isSessionKey(window.location.hash.slice(1))) {
+      document.getElementById("sessoes")?.scrollIntoView();
+    }
+  }, []);
+  const select = (key: SessionKey) => {
+    setActive(key);
+    history.replaceState(null, "", `#${key}`);
+  };
 
   return (
     <PageShell>
@@ -52,33 +73,72 @@ function Prepare() {
         </div>
       </section>
 
-      {/* Per-session notes */}
-      <section className="bg-card border-border/60 border-y section-y">
+      {/* Session by session — the brochure's "Antes / O dia" pages. */}
+      <section id="sessoes" className="bg-card border-border/60 border-y section-y scroll-mt-24">
         <div className="container">
-          <div className="mx-auto max-w-3xl space-y-12">
-            {SESSION_NOTES.map((note, i) => {
+          <SectionHeading title={t("prepare.sessions.title")} />
+          <div
+            role="tablist"
+            aria-label={t("prepare.sessions.title")}
+            className="mx-auto mb-10 flex max-w-3xl flex-wrap justify-center gap-2 md:mb-14"
+          >
+            {SESSION_NOTES.map((note) => {
               const Icon = note.icon;
+              const selected = note.key === active;
               return (
-                <Reveal key={note.key} delay={i * 70}>
-                  <article className="flex gap-6">
-                    <Icon
-                      className="text-primary mt-1.5 size-6 shrink-0"
-                      strokeWidth={1.25}
-                      aria-hidden
-                    />
-                    <div>
-                      <h3 className="display-serif mb-3 text-2xl font-light">
-                        {t(`prepare.${note.key}.title`)}
-                      </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        {t(`prepare.${note.key}.text`)}
-                      </p>
-                    </div>
-                  </article>
-                </Reveal>
+                <button
+                  key={note.key}
+                  id={`tab-${note.key}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  aria-controls={`panel-${note.key}`}
+                  onClick={() => select(note.key)}
+                  className={cn(
+                    "uppercase-spaced inline-flex min-h-11 items-center gap-2 border px-4 transition-colors duration-300",
+                    selected
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border text-foreground/70 hover:border-foreground/50 hover:text-foreground",
+                  )}
+                >
+                  <Icon className="size-3.5" strokeWidth={1.5} aria-hidden />
+                  {t(`session.${note.key}`)}
+                </button>
               );
             })}
           </div>
+
+          {SESSION_NOTES.filter((note) => note.key === active).map((note) => (
+            <div
+              key={note.key}
+              id={`panel-${note.key}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${note.key}`}
+              className="mx-auto grid max-w-5xl gap-10 md:grid-cols-2 md:gap-16"
+            >
+              <h3 className="sr-only">{t(`prepare.${note.key}.title`)}</h3>
+              {(["before", "day"] as const).map((part) => (
+                <article key={part} className="animate-fade-in-up">
+                  <p className="uppercase-spaced text-primary mb-4">
+                    {t(
+                      part === "before"
+                        ? note.inStudioOnly
+                          ? "prepare.session"
+                          : "prepare.before"
+                        : "prepare.day",
+                    )}
+                  </p>
+                  <div className="text-muted-foreground space-y-4 text-[15px] leading-relaxed">
+                    {t(`prepare.${note.key}.${part}`)
+                      .split("\n\n")
+                      .map((paragraph) => (
+                        <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                      ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          ))}
         </div>
       </section>
 
@@ -90,9 +150,15 @@ function Prepare() {
             <h2 className="display-serif mb-5 text-3xl font-light md:text-4xl">
               {t("prepare.after.title")}
             </h2>
-            <p className="text-muted-foreground text-sm leading-relaxed md:text-base">
-              {t("prepare.after.text")}
-            </p>
+            <ol className="mx-auto mt-10 grid max-w-3xl gap-8 text-left sm:grid-cols-2">
+              {[1, 2, 3, 4].map((n) => (
+                <li key={n} className="border-border/70 border-t pt-5">
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {t(`prepare.after.${n}`)}
+                  </p>
+                </li>
+              ))}
+            </ol>
 
             <hr className="rule-line mx-auto my-12 w-24" />
 
