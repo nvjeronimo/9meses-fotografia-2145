@@ -60,11 +60,7 @@ export function Footer() {
               rel="noreferrer"
               className="text-foreground/80 hover:text-primary mt-4 flex max-w-xs min-h-6 flex-wrap items-center gap-x-2 gap-y-1 text-sm transition-colors"
             >
-              <span className="text-primary flex gap-0.5" aria-hidden>
-                {[0, 1, 2, 3, 4].map((n) => (
-                  <Star key={n} className="size-3.5 fill-current" strokeWidth={0} />
-                ))}
-              </span>
+              <Star className="text-primary size-3.5 fill-current" strokeWidth={0} aria-hidden />
               {t("footer.google")
                 .replace("{count}", String(GOOGLE_REVIEWS.count))
                 .split("{rating}")
