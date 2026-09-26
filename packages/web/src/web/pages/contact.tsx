@@ -1,7 +1,7 @@
 import emailjs from "@emailjs/browser";
-import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Facebook, Instagram, Mail, MapPin, Phone, X } from "lucide-react";
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { useLanguage } from "../components/language-provider";
 import { Seo } from "../components/seo";
 import { PageHero, PageShell } from "../components/page-shell";
@@ -30,6 +30,8 @@ interface FormState {
   phone: string;
   sessionType: string;
   familyMembers: string;
+  /** Due date (maternity) or birth date (newborn) — the session hinges on it. */
+  dueDate: string;
   preferredDate: string;
   message: string;
   consent: boolean;
@@ -43,6 +45,7 @@ const EMPTY: FormState = {
   phone: "",
   sessionType: "",
   familyMembers: "",
+  dueDate: "",
   preferredDate: "",
   message: "",
   consent: false,
@@ -56,13 +59,28 @@ function Contact() {
   const { t, href, language } = useLanguage();
   const { trackEvent } = useAnalytics();
   const createMessage = useCreateMessage();
-  const [form, setForm] = useState<FormState>(EMPTY);
+  const search = useSearch();
+  const [form, setForm] = useState<FormState>(() => {
+    // "Reservar" on a package card arrives as ?sessao=newborn&pacote=Gold · 250€,
+    // so the visitor never has to re-state what they just chose.
+    const params = new URLSearchParams(search);
+    const sessao = params.get("sessao") ?? "";
+    const known = SESSIONS.some((session) => session.sessionType === sessao);
+    return { ...EMPTY, sessionType: known ? sessao : "" };
+  });
+  const [chosenPackage, setChosenPackage] = useState(
+    () => new URLSearchParams(search).get("pacote")?.slice(0, 80) ?? "",
+  );
   const [status, setStatus] = useState<
     "idle" | "sending" | "sent" | "error" | "ratelimited"
   >("idle");
   const [autoReplySent, setAutoReplySent] = useState(false);
 
   const showFamilyMembers = form.sessionType === "family";
+  const dueDateKind =
+    form.sessionType === "maternity" || form.sessionType === "newborn"
+      ? form.sessionType
+      : null;
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -75,6 +93,14 @@ function Contact() {
 
     const sessionLabel = form.sessionType ? t(`session.${form.sessionType}`) : "—";
     const preferredDate = form.preferredDate || "—";
+    // Package and due date have no columns of their own; they travel at the
+    // top of the message so both the inbox and the email carry them.
+    const context = [
+      chosenPackage && `${t("contact.package.chosen")}: ${chosenPackage}`,
+      dueDateKind && form.dueDate && `${t(`contact.dueDate.${dueDateKind}`)}: ${form.dueDate}`,
+    ].filter(Boolean);
+    const message =
+      [...context, form.message.trim()].filter(Boolean).join("\n\n") || "—";
 
     // Store the lead first — it must survive even if the email provider fails.
     // The honeypot travels with it so the server can drop bots silently.
@@ -87,7 +113,7 @@ function Contact() {
         sessionType: form.sessionType || null,
         familyMembers: showFamilyMembers ? form.familyMembers || null : null,
         preferredDate: form.preferredDate || null,
-        message: form.message,
+        message,
         consent: form.consent,
         website: form.website,
       })
@@ -107,7 +133,7 @@ function Contact() {
           session_type: sessionLabel,
           family_members: showFamilyMembers ? form.familyMembers || "—" : "—",
           preferred_date: preferredDate,
-          message: form.message,
+          message,
           language: language === "pt" ? "Português" : "English",
           to_email: CONTACT.email,
         });
@@ -128,7 +154,7 @@ function Contact() {
             to_email: form.email,
             session_type: sessionLabel,
             preferred_date: preferredDate,
-            message: form.message,
+            message,
             language: language === "pt" ? "pt" : "en",
             studio_email: CONTACT.email,
             studio_phone: CONTACT.phone,
@@ -142,14 +168,20 @@ function Contact() {
       trackEvent("contact_submit", { session_type: form.sessionType || "unspecified" });
       setStatus("sent");
       setForm(EMPTY);
+      setChosenPackage("");
     } catch {
       await stored;
       setStatus(rateLimited ? "ratelimited" : "error");
     }
   }
 
-  const whatsappGreeting =
-    language === "pt"
+  const sessionName = form.sessionType ? t(`session.${form.sessionType}`) : "";
+  const whatsappGreeting = sessionName
+    ? t("contact.whatsapp.withPackage").replace(
+        "{session}",
+        chosenPackage ? `${sessionName} (${chosenPackage})` : sessionName,
+      )
+    : language === "pt"
       ? "Olá! Gostaria de saber mais sobre as sessões de fotografia."
       : "Hello! I would like to know more about your photography sessions.";
   const whatsappUrl = `${CONTACT.whatsappUrl}?text=${encodeURIComponent(whatsappGreeting)}`;
@@ -184,6 +216,25 @@ function Contact() {
           {/* Form */}
           <Reveal>
             <form onSubmit={onSubmit} className="relative space-y-6">
+              {chosenPackage && (
+                <div className="border-primary/40 bg-card flex items-center justify-between gap-4 border px-5 py-4">
+                  <p className="text-sm">
+                    <span className="uppercase-spaced text-muted-foreground mr-3">
+                      {t("contact.package.chosen")}
+                    </span>
+                    <span className="display-serif text-lg">{chosenPackage}</span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setChosenPackage("")}
+                    aria-label={t("contact.package.remove")}
+                    className="text-muted-foreground hover:text-foreground -m-2 grid size-11 shrink-0 place-items-center transition-colors"
+                  >
+                    <X className="size-4" />
+                  </button>
+                </div>
+              )}
+
               <div className="grid gap-6 sm:grid-cols-2">
                 <label className="block">
                   <span className="uppercase-spaced text-muted-foreground mb-2.5 block">
@@ -192,6 +243,8 @@ function Contact() {
                   <input
                     aria-label={t("contact.name")}
                     required
+                    name="name"
+                    autoComplete="name"
                     value={form.name}
                     onChange={(event) => update("name", event.target.value)}
                     className="field"
@@ -205,6 +258,8 @@ function Contact() {
                     aria-label={t("contact.email")}
                     required
                     type="email"
+                    name="email"
+                    autoComplete="email"
                     value={form.email}
                     onChange={(event) => update("email", event.target.value)}
                     className="field"
@@ -219,6 +274,9 @@ function Contact() {
                   </span>
                   <input
                     aria-label={t("contact.phone")}
+                    type="tel"
+                    name="tel"
+                    autoComplete="tel"
                     value={form.phone}
                     onChange={(event) => update("phone", event.target.value)}
                     className="field"
@@ -243,6 +301,24 @@ function Contact() {
                   </select>
                 </label>
               </div>
+
+              {dueDateKind && (
+                <label className="block">
+                  <span className="uppercase-spaced text-muted-foreground mb-2.5 block">
+                    {t(`contact.dueDate.${dueDateKind}`)}
+                  </span>
+                  <input
+                    aria-label={t(`contact.dueDate.${dueDateKind}`)}
+                    type="date"
+                    value={form.dueDate}
+                    onChange={(event) => update("dueDate", event.target.value)}
+                    className="field sm:max-w-[calc(50%-0.75rem)]"
+                  />
+                  <span className="text-muted-foreground mt-2 block text-xs">
+                    {t(`contact.dueDate.${dueDateKind}.help`)}
+                  </span>
+                </label>
+              )}
 
               <div className="grid gap-6 sm:grid-cols-2">
                 <label className="block">
@@ -279,12 +355,12 @@ function Contact() {
 
               <label className="block">
                 <span className="uppercase-spaced text-muted-foreground mb-2.5 block">
-                  {t("contact.message")}
+                  {t("contact.message")}{" "}
+                  <span className="tracking-normal normal-case">({t("contact.optional")})</span>
                 </span>
                 <textarea
                   aria-label={t("contact.message")}
-                  required
-                  rows={6}
+                  rows={5}
                   value={form.message}
                   onChange={(event) => update("message", event.target.value)}
                   className="field resize-none"
@@ -330,16 +406,24 @@ function Contact() {
                 </span>
               </label>
 
-              <button
-                type="submit"
-                disabled={status === "sending" || !form.consent}
-                className="btn-solid disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {status === "sending" ? t("contact.sending") : t("contact.send")}
-              </button>
+              {/* Not disabled until consent: the browser's own required-field
+                  message now explains what is missing instead of a mute button. */}
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  aria-busy={status === "sending"}
+                  className="btn-solid disabled:cursor-wait disabled:opacity-60"
+                >
+                  {status === "sending" ? t("contact.sending") : t("contact.send")}
+                </button>
+                <p className="text-muted-foreground text-xs leading-relaxed">
+                  {t("contact.form.promise")}
+                </p>
+              </div>
 
               {status === "sent" && (
-                <div className="space-y-1.5">
+                <div role="status" className="space-y-1.5">
                   <p className="text-primary text-sm">{t("contact.success")}</p>
                   {autoReplySent && (
                     <p className="text-muted-foreground text-sm">
@@ -348,12 +432,22 @@ function Contact() {
                   )}
                 </div>
               )}
-              {status === "ratelimited" && (
-                <p className="text-destructive text-sm">{t("contact.form.ratelimit")}</p>
-              )}
-              {status === "error" && (
-                <p className="text-destructive text-sm">{t("contact.error")}</p>
-              )}
+              <div aria-live="polite">
+                {(status === "ratelimited" || status === "error") && (
+                  <p className="text-destructive text-sm">
+                    {t(status === "error" ? "contact.error" : "contact.form.ratelimit")}{" "}
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => trackEvent("whatsapp_click", { placement: "contact_error" })}
+                      className="text-foreground underline underline-offset-4"
+                    >
+                      {t("contact.error.whatsapp")}
+                    </a>
+                  </p>
+                )}
+              </div>
             </form>
           </Reveal>
 
@@ -427,7 +521,7 @@ function Contact() {
                 <a
                   href={`tel:${CONTACT.phoneE164}`}
                   onClick={() => trackEvent("phone_click", { placement: "contact_cta" })}
-                  className="btn-solid w-full text-center"
+                  className="btn-outline w-full text-center"
                 >
                   {t("contact.call.cta")}
                 </a>

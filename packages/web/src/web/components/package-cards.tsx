@@ -81,7 +81,9 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
                 ))}
               </ul>
               <Link
-                to={href("contact")}
+                to={`${href("contact")}?sessao=${row.sessionType}&pacote=${encodeURIComponent(
+                  `${row.name} · ${row.price}€`,
+                )}`}
                 className={cn(row.highlighted ? "btn-solid" : "btn-outline", "self-start")}
               >
                 {t("packages.cta")}

@@ -455,8 +455,9 @@
     transform: translateY(0);
   }
 
+  /* 16px keeps iOS Safari from zooming the page when a field takes focus. */
   .field {
-    @apply h-12 w-full border border-input bg-background px-4 text-foreground transition-colors outline-none;
+    @apply h-12 w-full border border-input bg-background px-4 text-base text-foreground transition-colors outline-none;
   }
 
   .field:focus {

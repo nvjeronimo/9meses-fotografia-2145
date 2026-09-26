@@ -215,6 +215,17 @@ export const translations = {
 
     // Contact
     "contact.title": "Contacto",
+    "contact.package.chosen": "Pacote escolhido",
+    "contact.package.remove": "Remover pacote",
+    "contact.dueDate.maternity": "Data prevista do parto",
+    "contact.dueDate.newborn": "Data de nascimento (ou prevista)",
+    "contact.dueDate.maternity.help": "O ideal é fotografar entre as 29 e as 35 semanas.",
+    "contact.dueDate.newborn.help":
+      "As sessões newborn fazem-se nas primeiras 2 semanas de vida.",
+    "contact.optional": "opcional",
+    "contact.form.promise": "Sem compromisso. Respondo pessoalmente a cada mensagem.",
+    "contact.error.whatsapp": "Ou fale comigo diretamente pelo WhatsApp",
+    "contact.whatsapp.withPackage": "Olá! Gostaria de saber mais sobre a sessão {session}.",
     "contact.subtitle": "Vamos conversar sobre a vossa sessão",
     "contact.name": "Nome",
     "contact.email": "Email",
@@ -663,6 +674,17 @@ export const translations = {
 
     // Contact
     "contact.title": "Contact",
+    "contact.package.chosen": "Chosen package",
+    "contact.package.remove": "Remove package",
+    "contact.dueDate.maternity": "Due date",
+    "contact.dueDate.newborn": "Baby's birth date (or due date)",
+    "contact.dueDate.maternity.help": "The ideal time is between 29 and 35 weeks.",
+    "contact.dueDate.newborn.help":
+      "Newborn sessions take place in the first 2 weeks of life.",
+    "contact.optional": "optional",
+    "contact.form.promise": "No commitment. I reply personally to every message.",
+    "contact.error.whatsapp": "Or message me directly on WhatsApp",
+    "contact.whatsapp.withPackage": "Hello! I would like to know more about the {session} session.",
     "contact.subtitle": "Let's talk about your session",
     "contact.name": "Name",
     "contact.email": "Email",
