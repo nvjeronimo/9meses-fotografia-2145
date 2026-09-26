@@ -8,8 +8,11 @@ import { BookingCta, PageShell, SectionHeading } from "../components/page-shell"
 import { PhotoGrid } from "../components/photo-grid";
 import { Reveal } from "../components/reveal";
 import { useCategoryPhotos } from "../lib/photos";
-import { sessionBySlug } from "../lib/site";
+import { SESSIONS, sessionBySlug } from "../lib/site";
 import NotFound from "./not-found";
+
+/** Sessions whose hero photo is dark enough for the white, transparent nav. */
+const DARK_HEROES = new Set<string>(["maternity", "newborn", "smash"]);
 
 function SessionDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -39,9 +42,19 @@ function SessionDetail() {
       />
 
       {/* Full-bleed hero */}
-      <section className="relative flex h-[75vh] min-h-[460px] items-end overflow-hidden">
+      {/*
+        Darker hero photos flip the transparent nav to white (data-hero="dark");
+        a soft top scrim keeps those white links legible over any sky or skin.
+      */}
+      <section
+        data-hero={DARK_HEROES.has(session.sessionType) ? "dark" : undefined}
+        className="relative flex h-[75vh] min-h-[460px] items-end overflow-hidden"
+      >
         <img src={hero} alt={t(session.titleKey)} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
+        {DARK_HEROES.has(session.sessionType) && (
+          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/45 to-transparent" />
+        )}
         <div className="container relative z-10 pb-16 md:pb-24">
           <Reveal>
             <p className="uppercase-spaced mb-4 text-white/70">{t(session.timingKey)}</p>
@@ -87,27 +100,66 @@ function SessionDetail() {
           <Reveal>
             <SectionHeading label={t("packages.title")} title={t(session.titleKey)} />
           </Reveal>
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-5xl">
             <PackageCards sessionType={session.sessionType} />
           </div>
           {/* Same pull quote as /pacotes, so the line reads identically
               wherever prices are shown. */}
-          <p className="display-serif text-foreground/85 mx-auto mt-12 max-w-2xl text-center text-xl leading-relaxed font-light italic md:text-2xl">
-            {t("packages.extras")}
+          <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-sm">
+            <Link to={href("packages")} className="link-underline">
+              {t("packages.extras.link")}
+            </Link>
           </p>
           {/* Same catalogue as /pacotes — it covers every session, so it is
               worth offering wherever prices are being read. */}
           <BrochureCta surface="background" className="mx-auto mt-12 max-w-4xl md:mt-16" />
-          {/* Way out to the other sessions, kept to the very end: someone who
-              has read this far either books or wants to compare, and this is
-              the only place the second answer belongs. */}
-          <div className="mt-12 text-center md:mt-16">
-            <Link to={href("sessions")} className="btn-outline">
-              {t("sessions.viewAll")}
+          <p className="mt-10 text-center">
+            <Link
+              to={`${href("prepare")}#${session.sessionType}`}
+              className="link-underline uppercase-spaced text-primary"
+            >
+              {t("sessions.prepareLink")}
             </Link>
-          </div>
+          </p>
         </div>
       </section>
+
+      {/* The other sessions, as a way on for anyone comparing before booking. */}
+      <nav aria-label={t("sessions.others")} className="container section-y">
+        <Reveal>
+          <h2 className="display-serif mb-8 text-center text-3xl font-light md:mb-12 md:text-4xl">
+            {t("sessions.others")}
+          </h2>
+        </Reveal>
+        <ul className="mx-auto grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          {SESSIONS.filter((other) => other.slug !== session.slug).map((other, i) => (
+            <Reveal key={other.slug} as="li" delay={i * 70}>
+              <Link
+                to={href("sessionDetail", language === "pt" ? other.slug : other.slugEn)}
+                className="group block"
+              >
+                <span className="image-mat-sm block overflow-hidden">
+                  <img
+                    src={other.fallbackImage}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                </span>
+                <span className="mt-3 block">
+                  <span className="uppercase-spaced text-muted-foreground block">
+                    {t(other.timingKey)}
+                  </span>
+                  <span className="display-serif group-hover:text-primary mt-1 block text-lg leading-snug font-light transition-colors md:text-xl">
+                    {t(other.titleKey)}
+                  </span>
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </ul>
+      </nav>
 
       <BookingCta />
     </PageShell>

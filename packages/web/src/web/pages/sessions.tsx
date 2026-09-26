@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { AguarelaDivider } from "../components/aguarela-divider";
+import { FramedTitle } from "../components/framed-title";
 import { useLanguage } from "../components/language-provider";
 import { Seo } from "../components/seo";
 import { BookingCta, PageHero, PageShell } from "../components/page-shell";
@@ -59,10 +60,11 @@ function Sessions() {
                       {t(session.timingKey)}
                     </p>
                   </div>
-                  <h2 className="display-serif text-[2rem] leading-[1.05] font-light md:text-5xl [text-wrap:balance]">
-                    {t(session.titleKey)}
-                  </h2>
-                  <hr className="rule-line my-4 w-16 md:my-6" />
+                  <FramedTitle align="start" className="my-5 md:my-7">
+                    <Link to={href("sessionDetail", slugOf(session))} className="hover:text-foreground transition-colors">
+                      {t(session.shortKey)}
+                    </Link>
+                  </FramedTitle>
                   <p className="text-muted-foreground mb-4 leading-relaxed md:mb-5">{t(session.descKey)}</p>
                   {/* Secondary blurb is redundant on a phone — the detail page carries it. */}
                   <p className="text-muted-foreground mb-9 hidden text-sm leading-relaxed md:block">

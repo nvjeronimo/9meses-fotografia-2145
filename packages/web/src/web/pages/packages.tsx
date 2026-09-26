@@ -1,5 +1,6 @@
 import { AguarelaDivider } from "../components/aguarela-divider";
 import { BrochureCta } from "../components/brochure-cta";
+import { FramedTitle } from "../components/framed-title";
 import { useLanguage } from "../components/language-provider";
 import { Seo } from "../components/seo";
 import { PackageCards } from "../components/package-cards";
@@ -46,12 +47,7 @@ function Packages() {
           {GROUPS.map((group) => (
             <div key={group.titleKey}>
               <Reveal>
-                <div className="mb-7 text-center md:mb-10">
-                  <h2 className="display-serif text-[1.9rem] leading-tight font-light md:text-5xl">
-                    {t(group.titleKey)}
-                  </h2>
-                  <hr className="rule-line mx-auto mt-5 w-16 md:mt-6" />
-                </div>
+                <FramedTitle className="mb-8 md:mb-12">{t(group.titleKey)}</FramedTitle>
               </Reveal>
               <div className="mx-auto max-w-5xl">
                 <PackageCards sessionType={group.types} />

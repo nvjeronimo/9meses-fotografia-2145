@@ -107,10 +107,16 @@ export function Navigation() {
    * Over one, the default dark nav text is unreadable, so it flips to white.
    */
   useEffect(() => {
-    const frame = requestAnimationFrame(() => {
+    // Watched rather than read once: the page's hero can mount after the bar.
+    const check = () =>
       setOverHero(Boolean(document.querySelector('[data-hero="dark"]')));
-    });
-    return () => cancelAnimationFrame(frame);
+    const frame = requestAnimationFrame(check);
+    const observer = new MutationObserver(check);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [location]);
 
   useEffect(() => {

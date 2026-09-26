@@ -164,12 +164,25 @@ export function Footer() {
         <hr className="rule-line mt-14 mb-8" />
 
         <div className="text-muted-foreground flex flex-col items-center justify-between gap-3 text-xs md:flex-row">
-          <p>
-            {t("footer.rights").replace(
-              "{year}",
-              String(new Date().getFullYear()),
-            )}
-          </p>
+          <div className="space-y-1 text-center md:text-left">
+            <p>
+              {t("footer.rights").replace(
+                "{year}",
+                String(new Date().getFullYear()),
+              )}
+            </p>
+            <p className="text-muted-foreground/80">
+              By{" "}
+              <a
+                href="https://nelsonjeronimo.pt"
+                target="_blank"
+                rel="noreferrer"
+                className="nav-link hover:text-foreground"
+              >
+                Nelson Jeronimo
+              </a>
+            </p>
+          </div>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 tracking-[0.08em] uppercase">
             <Link
               to={href("privacy")}

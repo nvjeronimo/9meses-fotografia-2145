@@ -115,6 +115,8 @@ export const translations = {
       "Cada fase merece ser lembrada. Escolha a sessão que conta a vossa história.",
     "sessions.viewSession": "VER SESSÃO",
     "sessions.viewAll": "VER TODAS AS SESSÕES",
+    "sessions.others": "Outras sessões",
+    "sessions.prepareLink": "Como preparar esta sessão",
 
     "sessions.maternity.title": "Fotografia de Maternidade",
     "sessions.maternity.timing": "29-35 semanas",
@@ -175,6 +177,7 @@ export const translations = {
     "packages.extras":
       "Extras disponíveis: impressões, telas, imagens adicionais",
     "packages.package": "Pacote",
+    "packages.extras.link": "Ver extras, impressões, telas e condições de pagamento",
     "packages.note.studioOutdoor":
       "Sessão em estúdio + exterior: acresce 50€ a qualquer um dos pacotes.",
     "packages.note.bundle":
@@ -610,6 +613,8 @@ export const translations = {
       "Every stage deserves to be remembered. Choose the session that tells your story.",
     "sessions.viewSession": "VIEW SESSION",
     "sessions.viewAll": "VIEW ALL SESSIONS",
+    "sessions.others": "Other sessions",
+    "sessions.prepareLink": "How to prepare for this session",
 
     "sessions.maternity.title": "Maternity Photography",
     "sessions.maternity.timing": "29-35 weeks",
@@ -669,6 +674,7 @@ export const translations = {
     "packages.cta": "BOOK NOW",
     "packages.extras": "Extras available: prints, canvases, additional images",
     "packages.package": "Package",
+    "packages.extras.link": "See extras, prints, canvases and payment terms",
     "packages.note.studioOutdoor":
       "Studio + outdoor session: add €50 to any package.",
     "packages.note.bundle":
