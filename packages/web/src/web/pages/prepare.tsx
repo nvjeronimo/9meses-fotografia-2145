@@ -146,7 +146,7 @@ function Prepare() {
                         : "prepare.day",
                     )}
                   </p>
-                  <div className="text-muted-foreground space-y-4 text-[15px] leading-relaxed">
+                  <div className="text-muted-foreground space-y-4 text-base leading-relaxed">
                     {t(`prepare.${note.key}.${part}`)
                       .split("\n\n")
                       .map((paragraph) => (

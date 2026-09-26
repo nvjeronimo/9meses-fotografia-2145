@@ -58,7 +58,7 @@ export function Footer() {
               href={GOOGLE_REVIEWS.url}
               target="_blank"
               rel="noreferrer"
-              className="text-foreground/80 hover:text-primary mt-4 inline-flex min-h-6 items-center gap-2 text-sm whitespace-nowrap transition-colors"
+              className="text-foreground/80 hover:text-primary mt-4 flex max-w-xs min-h-6 flex-wrap items-center gap-x-2 gap-y-1 text-sm transition-colors"
             >
               <span className="text-primary flex gap-0.5" aria-hidden>
                 {[0, 1, 2, 3, 4].map((n) => (

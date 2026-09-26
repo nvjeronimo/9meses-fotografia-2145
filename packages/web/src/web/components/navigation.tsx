@@ -368,11 +368,14 @@ export function Navigation() {
             aria-label={open ? t("nav.menu.close") : t("nav.menu.toggle")}
             aria-expanded={open}
             className={cn(
-              "-mr-2 grid size-11 shrink-0 place-items-center xl:hidden",
+              "-mr-2 flex h-11 shrink-0 items-center gap-2 px-2 xl:hidden",
               onPhoto ? "text-white" : "text-foreground",
             )}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            <span aria-hidden className="uppercase-spaced text-[11px]">
+              {t("nav.menu.label")}
+            </span>
           </button>
         </div>
       </div>

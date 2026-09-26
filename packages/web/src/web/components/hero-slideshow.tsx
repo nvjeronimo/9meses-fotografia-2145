@@ -97,7 +97,7 @@ export function HeroSlideshow() {
             {t("home.hero.title")}
           </h1>
           <p
-            className="mx-auto mt-8 max-w-xl text-[15px] leading-relaxed font-normal text-white/90 md:text-lg"
+            className="mx-auto mt-8 max-w-xl text-base leading-relaxed font-normal text-white/90 md:text-lg"
             style={{ animation: "fadeInUp 1.1s ease-out 300ms both", textShadow: "0 1px 20px rgba(0,0,0,0.4)" }}
           >
             {t("home.hero.subtitle")}
