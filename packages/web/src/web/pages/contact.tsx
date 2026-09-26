@@ -109,16 +109,31 @@ function Contact() {
 
     try {
       if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) throw new Error("EmailJS not configured");
+      // Studio notification. Field names match the "Contact Us" template in
+      // EmailJS; it is always written in Portuguese, for Tânia. The recipient
+      // is fixed in the template itself, never taken from the page.
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: form.email,
-        phone: form.phone || "—",
-        session_type: sessionLabel,
-        family_members: showFamilyMembers ? form.familyMembers || "—" : "—",
+        email_subject: `Novo pedido de marcação: ${form.name} (${sessionLabel})`,
+        badge: "NOVO PEDIDO",
+        headline: "Pedido de marcação",
+        intro: "Recebeu um novo pedido através do site 9mesesfotografia.com.",
+        name_label: "Nome",
+        client_name: form.name,
+        session_label: "Sessão",
+        session_name: sessionLabel,
+        date_label: "Data preferida",
         preferred_date: preferredDate,
+        family_label: "Família",
+        family_members: showFamilyMembers ? form.familyMembers || "—" : "—",
+        phone_label: "Telefone",
+        phone: form.phone || "—",
+        email_label: "Email",
+        client_email: form.email,
+        message_label: "Mensagem",
         message,
-        language: language === "pt" ? "Português" : "English",
-        to_email: CONTACT.email,
+        closing: `Responda a este email para falar diretamente com ${form.name}.`,
+        footer_note: `Formulário de contacto de 9mesesfotografia.com · idioma do visitante: ${language === "pt" ? "Português" : "English"}`,
+        reply_to: form.email,
       });
 
       // Auto-reply to the visitor. A failure here must not turn a delivered
