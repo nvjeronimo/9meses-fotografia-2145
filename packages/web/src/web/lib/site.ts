@@ -5,7 +5,7 @@ import type { TranslationKey } from "./translations";
 export const SITE_URL = "https://9mesesfotografia.com";
 
 export const CONTACT = {
-  email: "info@9mesesfotografia.pt",
+  email: "info@9mesesfotografia.com",
   /** Display form. */
   phone: "+351 967 716 894",
   /** E.164, for tel: and wa.me links. */

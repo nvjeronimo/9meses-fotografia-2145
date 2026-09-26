@@ -343,7 +343,7 @@ export const translations = {
     "sessions.smashTheCake": "Smash the Cake",
 
     // Contact details
-    "contact.email.address": "info@9mesesfotografia.pt",
+    "contact.email.address": "info@9mesesfotografia.com",
     "contact.social": "Redes sociais",
     "contact.instagram.handle": "@9mesesfotografia",
     "contact.instagram.url": "https://www.instagram.com/9mesesfotografia/",
@@ -853,7 +853,7 @@ export const translations = {
     "sessions.smashTheCake": "Smash the Cake",
 
     // Contact details
-    "contact.email.address": "info@9mesesfotografia.pt",
+    "contact.email.address": "info@9mesesfotografia.com",
     "contact.social": "Social media",
     "contact.instagram.handle": "@9mesesfotografia",
     "contact.instagram.url": "https://www.instagram.com/9mesesfotografia/",
