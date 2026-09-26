@@ -489,9 +489,12 @@ export const translations = {
     "home.about.cta": "LEARN MORE ABOUT ME",
     "home.sessions.label": "DISCOVER OUR SERVICES",
     "home.sessions.title": "Sessions",
-    "home.cta.title": "Let's create memories together?",
+    "home.cta.eyebrow": "LET'S BEGIN",
+    "home.cta.title": "Shall we make memories together?",
     "home.cta.subtitle": "Get in touch to schedule your session",
     "home.cta.button": "BOOK SESSION",
+    "home.cta.whatsapp": "CHAT ON WHATSAPP",
+    "home.cta.note": "STUDIO IN FERREIRAS, ALBUFEIRA",
     "home.gallery.label": "GALLERY",
     "home.gallery.title": "Captured Moments",
     "home.gallery.loadMore": "LOAD MORE",
@@ -901,6 +904,14 @@ export const translations = {
 } as const;
 
 export type TranslationKey = keyof typeof translations.pt;
+
+// Fails the typecheck when a PT key has no EN counterpart, so a missing
+// translation can never ship as a raw key again.
+type MissingInEnglish = Exclude<TranslationKey, keyof typeof translations.en>;
+const englishIsComplete: [MissingInEnglish] extends [never]
+  ? true
+  : MissingInEnglish = true;
+void englishIsComplete;
 
 /** Every key, for the admin content editor. */
 export const translationKeys = Object.keys(translations.pt) as TranslationKey[];

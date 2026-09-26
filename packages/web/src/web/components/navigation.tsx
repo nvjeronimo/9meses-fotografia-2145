@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useLanguage } from "./language-provider";
 import { useTheme } from "./theme-provider";
@@ -335,39 +336,46 @@ export function Navigation() {
         </div>
       </div>
 
-      {open && (
-        <div
-          className="bg-background fixed inset-x-0 bottom-0 z-40 overflow-y-auto lg:hidden"
-          style={{ top: barHeight }}
-        >
-          <nav className="container flex flex-col pt-4 pb-10">
-            {MOBILE_LINKS.map((link, index) => (
-              <Link
-                key={link.page}
-                to={href(link.page)}
-                className={cn(
-                  "border-border/60 uppercase-spaced border-b py-4",
-                  isActive(link.page) && "text-primary",
-                )}
-                style={{
-                  animation: `fadeInUp 0.4s ease-out ${index * 35}ms both`,
-                }}
-              >
-                {t(link.key)}
-              </Link>
-            ))}
-            <Link
-              to={href("contact")}
-              className="btn-solid mt-8"
-              style={{
-                animation: `fadeInUp 0.4s ease-out ${MOBILE_LINKS.length * 35}ms both`,
-              }}
+      {/*
+        Portalled to <body>: the scrolled bar's backdrop-filter makes the
+        header the containing block for fixed children, which collapsed the
+        drawer to 0px once the page had been scrolled.
+      */}
+      {open &&
+        createPortal(
+            <div
+              className="bg-background fixed inset-x-0 bottom-0 z-40 overflow-y-auto lg:hidden"
+              style={{ top: barHeight }}
             >
-              {t("nav.contact.cta")}
-            </Link>
-          </nav>
-        </div>
-      )}
+              <nav className="container flex flex-col pt-4 pb-10">
+                {MOBILE_LINKS.map((link, index) => (
+                  <Link
+                    key={link.page}
+                    to={href(link.page)}
+                    className={cn(
+                      "border-border/60 uppercase-spaced border-b py-4",
+                      isActive(link.page) && "text-primary",
+                    )}
+                    style={{
+                      animation: `fadeInUp 0.4s ease-out ${index * 35}ms both`,
+                    }}
+                  >
+                    {t(link.key)}
+                  </Link>
+                ))}
+                <Link
+                  to={href("contact")}
+                  className="btn-solid mt-8"
+                  style={{
+                    animation: `fadeInUp 0.4s ease-out ${MOBILE_LINKS.length * 35}ms both`,
+                  }}
+                >
+                  {t("nav.contact.cta")}
+                </Link>
+              </nav>
+            </div>,
+          document.body,
+        )}
     </header>
   );
 }

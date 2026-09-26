@@ -53,7 +53,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       const override = overrideMap.get(key);
       if (override) return override;
       const dictionary = translations[language] as Record<string, string>;
-      return dictionary[key] ?? key;
+      const fallback = translations.pt as Record<string, string>;
+      return dictionary[key] ?? fallback[key] ?? key;
     },
     [overrideMap, language],
   );
