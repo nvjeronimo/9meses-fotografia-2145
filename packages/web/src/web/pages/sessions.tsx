@@ -28,27 +28,10 @@ function Sessions() {
           {SESSIONS.map((session, i) => (
             <Reveal key={session.slug} as="article">
               <div
-                className={`grid items-end gap-5 md:grid-cols-2 md:gap-16 ${
+                className={`grid items-center gap-5 md:grid-cols-2 md:gap-16 ${
                   i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
                 }`}
               >
-                {/* Title sits on its photo, so the pair zig-zags down the page. */}
-                <div>
-                <FramedTitle className="mb-5 md:mb-7">
-                  <Link
-                    to={href("sessionDetail", slugOf(session))}
-                    className="hover:text-foreground inline-flex items-center gap-3 transition-colors"
-                  >
-                    <img
-                      src={session.icon}
-                      alt=""
-                      aria-hidden
-                      loading="lazy"
-                      className="brand-mark size-8 shrink-0 tracking-normal md:size-9"
-                    />
-                    {t(session.shortKey)}
-                  </Link>
-                </FramedTitle>
                 <Link to={href("sessionDetail", slugOf(session))} className="group block">
                   <div className="image-mat aspect-[4/3] overflow-hidden">
                     <img
@@ -63,8 +46,22 @@ function Sessions() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </Link>
-                </div>
                 <div>
+                  <FramedTitle align="start" className="mb-5 md:mb-7">
+                    <Link
+                      to={href("sessionDetail", slugOf(session))}
+                      className="hover:text-foreground inline-flex items-center gap-3 transition-colors"
+                    >
+                      <img
+                        src={session.icon}
+                        alt=""
+                        aria-hidden
+                        loading="lazy"
+                        className="brand-mark size-8 shrink-0 tracking-normal md:size-9"
+                      />
+                      {t(session.shortKey)}
+                    </Link>
+                  </FramedTitle>
                   <p className="uppercase-spaced text-muted-foreground mb-4">
                     {t(session.timingKey)}
                   </p>
