@@ -1,5 +1,6 @@
 // Testemunhos publicados no site. Para acrescentar um: copiar um bloco,
 // dar-lhe o id seguinte e ajustar sortOrder (menor aparece primeiro).
+// `photo` é opcional: só com autorização da família para mostrar a foto.
 
 export interface Testimonial {
   id: number;
@@ -9,6 +10,8 @@ export interface Testimonial {
   /** maternity | newborn | baby | family | smash, or null for any. */
   sessionType: string | null;
   sortOrder: number;
+  /** Optional family photo (path under /images/), only with the family's consent. */
+  photo?: string;
 }
 
 export const TESTIMONIALS: Testimonial[] = [

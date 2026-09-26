@@ -3,6 +3,8 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTestimonials } from "../queries/testimonials";
 import { useLanguage } from "./language-provider";
+import { GOOGLE_REVIEWS } from "../lib/site";
+import { responsive } from "../lib/responsive";
 
 /** Maps a stored session type to its translation key, for the attribution line. */
 const SESSION_KEYS: Record<string, string> = {
@@ -41,9 +43,17 @@ export function TestimonialsCarousel() {
 
   return (
     <div className="relative mx-auto max-w-3xl text-center">
-      <Quote className="text-primary/25 mx-auto mb-8 size-9" />
-
       <blockquote key={item.id} style={{ animation: "fadeInUp 0.7s ease-out both" }}>
+        {item.photo ? (
+          <img
+            {...responsive(item.photo, "96px")}
+            alt=""
+            loading="lazy"
+            className="mx-auto mb-8 size-24 rounded-full object-cover"
+          />
+        ) : (
+          <Quote className="text-primary/25 mx-auto mb-8 size-9" aria-hidden />
+        )}
         <p className="display-serif text-xl leading-relaxed font-light italic md:text-2xl">
           “{quote}”
         </p>
@@ -94,6 +104,14 @@ export function TestimonialsCarousel() {
           </button>
         </div>
       )}
+
+      <p className="text-muted-foreground mt-10 text-sm">
+        <a href={GOOGLE_REVIEWS.url} target="_blank" rel="noreferrer" className="link-underline">
+          {t("testimonials.google")
+            .replace("{rating}", language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn)
+            .replace("{count}", String(GOOGLE_REVIEWS.count))}
+        </a>
+      </p>
     </div>
   );
 }

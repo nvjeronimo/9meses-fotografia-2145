@@ -65,7 +65,11 @@ function Packages() {
                 </h2>
               </Reveal>
               <div className="mx-auto max-w-5xl">
-                <PackageCards sessionType={group.types} />
+                <PackageCards
+                  sessionType={group.types}
+                  // One Barriga + Bebé offer on this page, under maternity.
+                  showBundle={group.types[0] === "maternity"}
+                />
               </div>
             </div>
           ))}

@@ -1,4 +1,6 @@
+import { HeartHandshake } from "lucide-react";
 import { Link, useParams } from "wouter";
+import { cn } from "@/lib/utils";
 import { AguarelaDivider } from "../components/aguarela-divider";
 import { BrochureCta } from "../components/brochure-cta";
 import { useLanguage } from "../components/language-provider";
@@ -24,6 +26,8 @@ function SessionDetail() {
   if (!session) return <NotFound />;
 
   const hero = photos[0]?.url ?? session.fallbackImage;
+  // Family closes the journey, so nothing after it is its "next chapter".
+  const isNext = (i: number) => i === 0 && session.sessionType !== "family";
 
   return (
     <PageShell>
@@ -78,6 +82,19 @@ function SessionDetail() {
               <p>{t(session.bodyKeys[1])}</p>
             </div>
           </Reveal>
+          {session.sessionType === "newborn" && (
+            <Reveal>
+              {/* The anxious question for newborn parents, answered where they read. */}
+              <aside className="border-border/70 mt-12 flex gap-5 border p-6 md:p-8">
+                <HeartHandshake className="text-primary mt-1 size-6 shrink-0" strokeWidth={1.25} aria-hidden />
+                <div>
+                  <h2 className="display-serif mb-3 text-2xl font-light">{t("newborn.safety.title")}</h2>
+                  <p className="text-muted-foreground mb-3 leading-relaxed">{t("newborn.safety.text")}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{t("newborn.safety.book")}</p>
+                </div>
+              </aside>
+            </Reveal>
+          )}
         </div>
       </section>
 
@@ -133,7 +150,11 @@ function SessionDetail() {
           </h2>
         </Reveal>
         <ul className="mx-auto grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-          {SESSIONS.filter((other) => other.slug !== session.slug).map((other, i) => (
+          {/* Journey order, starting from the chapter after this one. */}
+          {[
+            ...SESSIONS.slice(SESSIONS.indexOf(session) + 1),
+            ...SESSIONS.slice(0, SESSIONS.indexOf(session)),
+          ].map((other, i) => (
             <Reveal key={other.slug} as="li" delay={i * 70}>
               <Link
                 to={href("sessionDetail", language === "pt" ? other.slug : other.slugEn)}
@@ -149,8 +170,13 @@ function SessionDetail() {
                   />
                 </span>
                 <span className="mt-3 block">
-                  <span className="uppercase-spaced text-muted-foreground block">
-                    {t(other.timingKey)}
+                  <span
+                    className={cn(
+                      "uppercase-spaced block",
+                      isNext(i) ? "text-primary" : "text-muted-foreground",
+                    )}
+                  >
+                    {isNext(i) ? t("sessions.nextChapter") : t(other.timingKey)}
                   </span>
                   <span className="display-serif group-hover:text-primary mt-1 block text-lg leading-snug font-light transition-colors md:text-xl">
                     {t(other.titleKey)}

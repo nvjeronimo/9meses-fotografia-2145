@@ -26,6 +26,14 @@ export const CONTACT = {
   addressKey: "contact.address.full" as TranslationKey,
 };
 
+/** Public Google Business rating (checked 2026-09-26). Update when it changes. */
+export const GOOGLE_REVIEWS = {
+  rating: "5,0",
+  ratingEn: "5.0",
+  count: 34,
+  url: "https://maps.google.com/?cid=12355365826419591254",
+};
+
 export interface SessionDef {
   /** Portuguese URL segment. */
   slug: string;
@@ -49,6 +57,7 @@ export interface SessionDef {
 }
 
 export const SESSIONS: SessionDef[] = [
+  // Journey order: bump → newborn → first year → first birthday, then family.
   {
     slug: "maternidade",
     slugEn: "maternity",
@@ -89,19 +98,6 @@ export const SESSIONS: SessionDef[] = [
     icon: "/images/graphics/icon-bebe.webp",
   },
   {
-    slug: "familia",
-    slugEn: "family",
-    category: "family",
-    sessionType: "family",
-    titleKey: "sessions.family.title",
-    shortKey: "session.family",
-    timingKey: "sessions.family.timing",
-    descKey: "sessions.family.desc",
-    bodyKeys: ["sessions.family.body1", "sessions.family.body2"],
-    fallbackImage: "/images/portfolio/family-c.jpg",
-    icon: "/images/graphics/icon-familia.webp",
-  },
-  {
     slug: "smash-the-cake",
     slugEn: "smash-the-cake",
     category: "smash",
@@ -113,6 +109,19 @@ export const SESSIONS: SessionDef[] = [
     bodyKeys: ["sessions.smash.body1", "sessions.smash.body2"],
     fallbackImage: "/images/portfolio/smash-featured.jpg",
     icon: "/images/graphics/icon-smash.webp",
+  },
+  {
+    slug: "familia",
+    slugEn: "family",
+    category: "family",
+    sessionType: "family",
+    titleKey: "sessions.family.title",
+    shortKey: "session.family",
+    timingKey: "sessions.family.timing",
+    descKey: "sessions.family.desc",
+    bodyKeys: ["sessions.family.body1", "sessions.family.body2"],
+    fallbackImage: "/images/portfolio/family-c.jpg",
+    icon: "/images/graphics/icon-familia.webp",
   },
 ];
 

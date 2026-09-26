@@ -72,7 +72,14 @@ function Index() {
       {/* Sessions */}
       <section className="container section-y section-flush-b">
         <Reveal>
-          <SectionHeading label={t("home.sessions.label")} title={t("home.sessions.title")} />
+          <SectionHeading
+            label={t("home.sessions.label")}
+            title={t("home.sessions.title")}
+            className="mb-6 md:mb-8"
+          />
+          <p className="text-muted-foreground mx-auto mb-12 max-w-2xl text-center leading-relaxed md:mb-16">
+            {t("home.sessions.intro")}
+          </p>
         </Reveal>
         <SessionCards />
       </section>

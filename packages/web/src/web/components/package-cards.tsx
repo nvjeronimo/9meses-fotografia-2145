@@ -8,9 +8,11 @@ import { Reveal } from "./reveal";
 interface PackageCardsProps {
   sessionType: SessionType | SessionType[];
   className?: string;
+  /** The Barriga + Bebé offer; on by default for maternity and newborn. */
+  showBundle?: boolean;
 }
 
-export function PackageCards({ sessionType, className }: PackageCardsProps) {
+export function PackageCards({ sessionType, className, showBundle = true }: PackageCardsProps) {
   const { t, language, href } = useLanguage();
   const query = usePackages();
   const wanted = Array.isArray(sessionType) ? sessionType : [sessionType];
@@ -87,6 +89,21 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
         );
       })}
     </div>
+      {showBundle && wanted.some((type) => type === "maternity" || type === "newborn") && (
+        // The maternity + newborn discount, as an offer rather than fine print.
+        <div className="border-primary/40 bg-background mx-auto mt-8 flex max-w-3xl flex-col items-start gap-5 border p-6 sm:flex-row sm:items-center sm:justify-between md:mt-10 md:p-8">
+          <div>
+            <p className="display-serif text-primary text-2xl font-light">{t("bundle.title")}</p>
+            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{t("bundle.text")}</p>
+          </div>
+          <Link
+            to={`${href("contact")}?sessao=maternity&pacote=${encodeURIComponent(t("bundle.package"))}`}
+            className="btn-outline shrink-0"
+          >
+            {t("bundle.cta")}
+          </Link>
+        </div>
+      )}
       {notes.length > 0 && (
         <ul className="text-muted-foreground mx-auto mt-8 max-w-3xl space-y-2 text-center text-sm leading-relaxed md:mt-10">
           {notes.map((key) => (
@@ -99,7 +116,6 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
 }
 
 const PACKAGE_NOTES: Partial<Record<SessionType, string[]>> = {
-  maternity: ["packages.note.studioOutdoor", "packages.note.bundle"],
-  newborn: ["packages.note.bundle"],
+  maternity: ["packages.note.studioOutdoor"],
   smash: ["packages.note.balloons"],
 };
