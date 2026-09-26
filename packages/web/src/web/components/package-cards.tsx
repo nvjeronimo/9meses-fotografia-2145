@@ -54,8 +54,7 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
                   : "border-border/70 bg-background",
               )}
             >
-              {/* Mark, label and name read as one heading block; the price
-                  follows directly underneath. */}
+              {/* One heading row: mark, label and name on the left, price on the right. */}
               <div className="flex items-center gap-4">
                 {iconFor(row.sessionType) && (
                   <img
@@ -75,11 +74,11 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
                   )}
                   <h3 className="display-serif text-2xl leading-tight font-light">{row.name}</h3>
                 </div>
+                <p className="display-serif text-primary ml-auto shrink-0 text-3xl leading-none font-light whitespace-nowrap md:text-4xl">
+                  {row.price}
+                  <span className="ml-0.5 text-lg md:text-xl">€</span>
+                </p>
               </div>
-              <p className="display-serif text-primary mt-5 text-4xl leading-none font-light">
-                {row.price}
-                <span className="ml-1 text-xl">€</span>
-              </p>
               <hr className="rule-line my-5 md:my-6" />
               <ul className="mb-7 flex-1 space-y-2.5 md:mb-9 md:space-y-3.5">
                 {features.map((feature) => (

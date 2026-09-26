@@ -420,7 +420,7 @@
 
   /* Outlined editorial button */
   .btn-outline {
-    @apply inline-block border border-foreground px-6 py-3 text-center transition-all duration-300;
+    @apply inline-block border border-foreground px-7 py-3.5 text-center transition-all duration-300;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-size: 11px;
@@ -437,9 +437,10 @@
     transform: translateY(0);
   }
 
-  /* Solid accent button */
+  /* Solid accent button — same box as .btn-outline (border included) so the
+     two always line up side by side. */
   .btn-solid {
-    @apply inline-block bg-primary px-8 py-4 text-center text-primary-foreground transition-all duration-300;
+    @apply inline-block border border-primary bg-primary px-7 py-3.5 text-center text-primary-foreground transition-all duration-300;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-size: 11px;
