@@ -48,35 +48,39 @@ export function PackageCards({ sessionType, className }: PackageCardsProps) {
           <Reveal key={row.id} delay={i * 100} as="article">
             <div
               className={cn(
-                "flex h-full flex-col border p-6 md:p-10",
+                "flex h-full flex-col border p-6 md:p-8",
                 row.highlighted
                   ? "border-primary/50 bg-card shadow-[0_1px_40px_-20px_rgba(0,0,0,0.25)]"
                   : "border-border/70 bg-background",
               )}
             >
-              <div className="mb-3 flex items-start justify-between gap-4">
-                <p className="uppercase-spaced text-muted-foreground">
-                  {/* "Pacote 1" already says it; don't print "Pacote" twice. */}
-                  {row.name.toLowerCase().startsWith(packageWord) ? "\u00a0" : t("packages.package")}
-                </p>
+              {/* Mark, label and name read as one heading block; the price
+                  follows directly underneath. */}
+              <div className="flex items-center gap-4">
                 {iconFor(row.sessionType) && (
                   <img
                     src={iconFor(row.sessionType)}
                     alt=""
                     aria-hidden
                     loading="lazy"
-                    /* Pulled up level with the label's cap height and kept small:
-                       it marks the card, it does not headline it. */
-                    className="brand-mark -mt-1.5 size-12 shrink-0 md:size-14"
+                    className="brand-mark size-12 shrink-0"
                   />
                 )}
+                <div className="min-w-0">
+                  {/* "Pacote 1" already says it; don't print "Pacote" twice. */}
+                  {!row.name.toLowerCase().startsWith(packageWord) && (
+                    <p className="uppercase-spaced text-muted-foreground mb-1">
+                      {t("packages.package")}
+                    </p>
+                  )}
+                  <h3 className="display-serif text-2xl leading-tight font-light">{row.name}</h3>
+                </div>
               </div>
-              <h3 className="display-serif text-2xl font-light">{row.name}</h3>
-              <p className="display-serif text-primary mt-4 text-4xl font-light md:mt-5">
+              <p className="display-serif text-primary mt-5 text-4xl leading-none font-light">
                 {row.price}
                 <span className="ml-1 text-xl">€</span>
               </p>
-              <hr className="rule-line my-5 md:my-7" />
+              <hr className="rule-line my-5 md:my-6" />
               <ul className="mb-7 flex-1 space-y-2.5 md:mb-9 md:space-y-3.5">
                 {features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">
