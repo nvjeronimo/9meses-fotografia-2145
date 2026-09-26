@@ -40,7 +40,7 @@ export function Footer() {
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[url('/images/aguarela-footer.webp')] bg-[length:300%_auto] bg-fixed bg-bottom bg-no-repeat opacity-90 md:bg-[length:100%_auto] dark:opacity-40"
       />
-      <div className="relative container pt-12 pb-28 md:py-20">
+      <div className="relative container pt-12 pb-24 md:py-20">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
             <img
