@@ -11,6 +11,7 @@ import { Navigation } from "./navigation";
 import { Reveal } from "./reveal";
 import { WhatsappButton } from "./whatsapp-button";
 import { useAnalytics } from "../hooks/use-analytics";
+import { responsive } from "../lib/responsive";
 
 /** Every public page: nav, content, footer, and a scroll reset on mount. */
 export function PageShell({ children }: { children: React.ReactNode }) {
@@ -66,7 +67,7 @@ export function PageHero({
         className="relative flex h-[62vh] min-h-[420px] items-end overflow-hidden"
       >
         <img
-          src={image}
+          {...responsive(image)}
           alt={t(titleKey)}
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -169,7 +170,7 @@ export function CtaCard({
       <div className="overflow-hidden">
         <div className="aspect-[16/10] overflow-hidden">
           <img
-            src={image}
+            {...responsive(image, "(min-width: 768px) 50vw, 100vw")}
             alt={t(titleKey)}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.07]"
@@ -216,7 +217,7 @@ export function BookingCta() {
         printed brochure gets from its paper.
       */}
       <img
-        src="/images/portfolio/home-2.jpg"
+        {...responsive("/images/portfolio/home-2.jpg")}
         alt=""
         aria-hidden
         className="absolute inset-0 -z-20 h-full w-full scale-110 object-cover blur-[34px]"

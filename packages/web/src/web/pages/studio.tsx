@@ -12,6 +12,7 @@ import {
 import { PhotoGrid } from "../components/photo-grid";
 import { Reveal } from "../components/reveal";
 import { useCategoryPhotos } from "../lib/photos";
+import { responsive } from "../lib/responsive";
 
 /**
  * Marks from the studio's own brand pack — the lit set, the dress rail, the
@@ -73,7 +74,7 @@ function Studio() {
           <Reveal delay={150}>
             <div className="image-mat overflow-hidden">
               <img
-                src={photos[1]?.url ?? hero}
+                {...responsive(photos[1]?.url ?? hero, "(min-width: 768px) 50vw, 100vw")}
                 alt={t("studio.intro.title")}
                 className="h-auto w-full object-cover"
               />

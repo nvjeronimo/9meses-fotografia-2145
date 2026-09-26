@@ -6,6 +6,7 @@ import { Seo } from "../components/seo";
 import { BookingCta, PageHero, PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import { SESSIONS } from "../lib/site";
+import { responsive } from "../lib/responsive";
 
 function Sessions() {
   const { t, href, language } = useLanguage();
@@ -34,7 +35,7 @@ function Sessions() {
                 <Link to={href("sessionDetail", slugOf(session))} className="group block">
                   <div className="image-mat aspect-[4/3] overflow-hidden">
                     <img
-                      src={session.fallbackImage}
+                      {...responsive(session.fallbackImage, "(min-width: 768px) 50vw, 100vw")}
                       alt={t(session.titleKey)}
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.07]"

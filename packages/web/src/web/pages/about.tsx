@@ -12,6 +12,7 @@ import {
 import { Reveal } from "../components/reveal";
 import { TestimonialsCarousel } from "../components/testimonials";
 import { useCategoryPhotos } from "../lib/photos";
+import { responsive } from "../lib/responsive";
 
 function About() {
   const { t } = useLanguage();
@@ -49,7 +50,7 @@ function About() {
           <Reveal delay={150}>
             <div className="image-mat aspect-[4/5] overflow-hidden">
               <img
-                src={portrait}
+                {...responsive(portrait, "(min-width: 768px) 45vw, 100vw")}
                 alt={t("about.hero.title")}
                 className="h-full w-full object-cover"
               />
@@ -63,7 +64,7 @@ function About() {
         <div className="container grid items-center gap-12 md:grid-cols-2 md:gap-16">
           <Reveal>
             <div className="image-mat aspect-[3/4] overflow-hidden">
-              <img src={story} alt="" className="h-full w-full object-cover" />
+              <img {...responsive(story, "(min-width: 768px) 50vw, 100vw")} alt="" className="h-full w-full object-cover" />
             </div>
           </Reveal>
           <Reveal delay={150}>
@@ -102,7 +103,7 @@ function About() {
                   className="image-mat-sm group relative block w-full overflow-hidden"
                 >
                   <img
-                    src={photo.url}
+                    {...responsive(photo.url, "(min-width: 768px) 33vw, 50vw")}
                     alt=""
                     loading="lazy"
                     decoding="async"

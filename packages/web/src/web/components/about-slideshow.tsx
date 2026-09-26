@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "../hooks/use-scroll-animation";
+import { responsive } from "../lib/responsive";
 
 /** Long hold, long dissolve — the section reads as a portrait, not a carousel. */
 const INTERVAL = 5200;
@@ -42,7 +43,7 @@ export function AboutSlideshow({
       {photos.map((url, i) => (
         <img
           key={url}
-          src={url}
+          {...responsive(url, "(min-width: 768px) 45vw, 90vw")}
           /* Only the visible frame is announced; the rest are decorative dupes. */
           alt={i === 0 ? alt : ""}
           aria-hidden={i !== 0}

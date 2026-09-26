@@ -3,6 +3,7 @@ import { useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import type { DisplayPhoto } from "../lib/photos";
 import { useLanguage } from "./language-provider";
+import { responsive } from "../lib/responsive";
 
 interface LightboxProps {
   photos: DisplayPhoto[];
@@ -91,7 +92,7 @@ export function Lightbox({ photos, index, onClose, onIndexChange }: LightboxProp
       <figure className="flex max-h-full max-w-6xl flex-col items-center gap-4">
         <img
           key={photo.id}
-          src={photo.url}
+          {...responsive(photo.url)}
           alt={caption ?? ""}
           className="max-h-[78dvh] w-auto max-w-full object-contain"
           style={{ animation: "fadeInUp 0.5s ease-out" }}

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { useLanguage } from "./language-provider";
 import { Reveal } from "./reveal";
 import { SESSIONS } from "../lib/site";
+import { responsive } from "../lib/responsive";
 
 /**
  * Editorial session grid: consistent 4:5 crop, a large serif number notched
@@ -25,7 +26,7 @@ export function SessionCards({ className }: { className?: string }) {
               <div className="bg-card relative overflow-hidden">
                 <div className="aspect-[4/5] overflow-hidden">
                   <img
-                    src={session.fallbackImage}
+                    {...responsive(session.fallbackImage, "(min-width: 1024px) 33vw, 50vw")}
                     alt={t(session.titleKey)}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.07]"

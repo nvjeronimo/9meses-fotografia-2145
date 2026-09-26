@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { useCategoryPhotos } from "../lib/photos";
 import { usePrefersReducedMotion } from "../hooks/use-scroll-animation";
 import { useLanguage } from "./language-provider";
+import { responsive } from "../lib/responsive";
 
 const INTERVAL = 6500;
 
@@ -24,7 +25,7 @@ export function HeroSlideshow() {
       {photos.map((photo, i) => (
         <img
           key={photo.id}
-          src={photo.url}
+          {...responsive(photo.url)}
           alt=""
           className={cn(
             "absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ease-in-out",

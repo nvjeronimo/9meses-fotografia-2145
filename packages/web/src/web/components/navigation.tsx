@@ -276,7 +276,7 @@ export function Navigation() {
           aria-label="9 Meses Fotografia"
         >
           <img
-            src="/images/logo.png"
+            src="/images/logo.webp"
             alt="9 Meses Fotografia"
             className={cn(
               "w-auto transition-all duration-500",

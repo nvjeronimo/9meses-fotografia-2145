@@ -10,6 +10,7 @@ import { Reveal } from "../components/reveal";
 import { useCategoryPhotos } from "../lib/photos";
 import { SESSIONS, sessionBySlug } from "../lib/site";
 import NotFound from "./not-found";
+import { responsive } from "../lib/responsive";
 
 /** Sessions whose hero photo is dark enough for the white, transparent nav. */
 const DARK_HEROES = new Set<string>(["maternity", "newborn", "smash"]);
@@ -50,7 +51,7 @@ function SessionDetail() {
         data-hero={DARK_HEROES.has(session.sessionType) ? "dark" : undefined}
         className="relative flex h-[75vh] min-h-[460px] items-end overflow-hidden"
       >
-        <img src={hero} alt={t(session.titleKey)} className="absolute inset-0 h-full w-full object-cover" />
+        <img {...responsive(hero)} alt={t(session.titleKey)} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
         {DARK_HEROES.has(session.sessionType) && (
           <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/45 to-transparent" />
@@ -140,7 +141,7 @@ function SessionDetail() {
               >
                 <span className="image-mat-sm block overflow-hidden">
                   <img
-                    src={other.fallbackImage}
+                    {...responsive(other.fallbackImage, "(min-width: 768px) 25vw, 50vw")}
                     alt=""
                     loading="lazy"
                     decoding="async"

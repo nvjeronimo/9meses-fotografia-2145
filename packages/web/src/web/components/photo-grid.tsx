@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { DisplayPhoto } from "../lib/photos";
 import { useLanguage } from "./language-provider";
 import { Lightbox } from "./lightbox";
+import { responsive } from "../lib/responsive";
 
 interface PhotoGridProps {
   photos: DisplayPhoto[];
@@ -57,7 +58,7 @@ export function PhotoGrid({ photos, className, columns = 3, emptyMessage }: Phot
               className="image-mat-sm group relative mb-3 block w-full break-inside-avoid overflow-hidden md:mb-5"
             >
               <img
-                src={photo.url}
+                {...responsive(photo.url, "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw")}
                 alt={caption ?? ""}
                 loading={i < 6 ? "eager" : "lazy"}
                 decoding="async"
