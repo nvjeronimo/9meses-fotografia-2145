@@ -18,11 +18,20 @@ export function HeroSlideshow() {
   // Only slide one loads with the page; the rest follow once it has settled.
   const later = useAfterLoad();
 
-  // WCAG 2.2.2: the slideshow can be paused, pauses while hovered or focused,
-  // and never advances on its own for visitors who asked for reduced motion.
+  // WCAG 2.2.2: the pause button stops it, keyboard focus inside holds it,
+  // and it never advances on its own with reduced motion. Hovering with the
+  // mouse does not change the timing.
   const [userPaused, setUserPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const paused = reduced || userPaused || hovered;
+  const [focused, setFocused] = useState(false);
+  const paused = reduced || userPaused || focused;
+
+  // The first slide mounts at scale 1 and starts zooming on the next frame;
+  // mounting it already zoomed left nothing to animate.
+  const [started, setStarted] = useState(false);
+  useEffect(() => {
+    const id = setTimeout(() => setStarted(true), 60);
+    return () => clearTimeout(id);
+  }, []);
 
   useEffect(() => {
     if (photos.length < 2 || paused) return;
@@ -34,11 +43,9 @@ export function HeroSlideshow() {
     <section
       data-hero="dark"
       className="relative h-[94vh] min-h-[560px] overflow-hidden"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setHovered(true)}
+      onFocus={() => setFocused(true)}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setHovered(false);
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
       }}
     >
       {photos.map((photo, i) =>
@@ -56,7 +63,7 @@ export function HeroSlideshow() {
           style={
             reduced
               ? { transition: "opacity 1.6s ease-in-out" }
-              : i === index
+              : i === index && started
                 ? // Incoming: fade in while a slow zoom starts.
                   { transform: "scale(1.06)", transition: "opacity 1.6s ease-in-out, transform 9s ease-out" }
                 : // Outgoing: keep the zoom it reached and only reset it once
