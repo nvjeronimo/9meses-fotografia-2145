@@ -22,7 +22,8 @@ export type PageId =
   | "journalPost"
   | "faq"
   | "contact"
-  | "privacy";
+  | "privacy"
+  | "cookies";
 
 interface PageDef {
   pt: string;
@@ -45,6 +46,7 @@ export const PAGES: Record<PageId, PageDef> = {
   faq: { pt: "/faq", en: "/en/faq" },
   contact: { pt: "/contacto", en: "/en/contact" },
   privacy: { pt: "/privacidade", en: "/en/privacy" },
+  cookies: { pt: "/cookies", en: "/en/cookies" },
 };
 
 export const PAGE_IDS = Object.keys(PAGES) as PageId[];

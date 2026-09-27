@@ -487,37 +487,14 @@ export const translations = {
     // Privacy
     "privacy.label": "RGPD",
     "privacy.title": "Política de Privacidade",
+    "cookies.label": "COOKIES",
+    "cookies.title": "Política de Cookies",
+    "cookies.forget": "Esquecer tudo o que o site guardou",
+    "cookies.forgotten": "Feito. Este site já não guarda nada no seu navegador.",
+    "nav.cookies": "Cookies",
+    "seo.cookies.title": "Política de Cookies",
+    "seo.cookies.desc": "Este site não usa cookies nem rastreio. Saiba o que fica guardado no seu navegador e como apagar.",
     "privacy.updated": "Última atualização",
-    "privacy.controller.title": "Responsável pelo tratamento",
-    "privacy.controller.text":
-      "[NOME LEGAL / EMPRESA], NIF [NIF], com sede em Avenida 25 de Abril, Edif. Space Beautiful, Loja G, 8200-559 Ferreiras, Albufeira, é a entidade responsável pelo tratamento dos dados pessoais recolhidos através deste site. Para qualquer questão sobre os seus dados, contacte-nos por email.",
-    "privacy.data.title": "Que dados recolhemos",
-    "privacy.data.text":
-      "Através do formulário de marcação recolhemos o seu nome, email, telefone (opcional), tipo de sessão pretendido, data preferida (opcional) e a mensagem que escrever. Não recolhemos dados que não nos dê voluntariamente.",
-    "privacy.purpose.title": "Para que usamos os dados",
-    "privacy.purpose.text":
-      "Usamos os seus dados exclusivamente para responder ao seu pedido, organizar a marcação e comunicar consigo sobre a sessão. Não usamos os seus dados para marketing sem o seu consentimento expresso, e nunca os vendemos nem partilhamos com terceiros para fins publicitários.",
-    "privacy.legal.title": "Fundamento legal",
-    "privacy.legal.text":
-      "O tratamento baseia-se no seu consentimento, dado ao submeter o formulário, e no interesse legítimo em responder a um pedido de informação comercial. Pode retirar o consentimento a qualquer momento.",
-    "privacy.retention.title": "Quanto tempo guardamos",
-    "privacy.retention.text":
-      "Os pedidos de informação são conservados até 24 meses. Quando a sessão se concretiza, os dados de faturação são conservados pelo prazo legal exigido em Portugal (10 anos). As fotografias são arquivadas para que possa fazer encomendas futuras, e são eliminadas a seu pedido.",
-    "privacy.images.title": "Uso das fotografias",
-    "privacy.images.text":
-      "As fotografias da sua sessão nunca são publicadas no site, redes sociais ou material promocional sem a sua autorização escrita. Essa autorização é separada e opcional — recusá-la não afeta em nada a sua sessão, e pode revogá-la mais tarde.",
-    "privacy.processors.title": "Serviços que utilizamos",
-    "privacy.processors.text":
-      "Este site usa um serviço de envio de email para nos entregar as suas mensagens, alojamento em servidores na União Europeia e uma ferramenta de estatísticas sem cookies, que não recolhe dados pessoais nem o identifica individualmente.",
-    "privacy.cookies.title": "Cookies",
-    "privacy.cookies.text":
-      "Não usamos cookies de publicidade nem de rastreio. O site guarda apenas a sua preferência de idioma e de tema no seu próprio navegador, o que é estritamente funcional e não exige consentimento.",
-    "privacy.rights.title": "Os seus direitos",
-    "privacy.rights.text":
-      "Tem o direito de acesso, retificação, apagamento, limitação, oposição e portabilidade dos seus dados. Basta pedir-nos por email e respondemos no prazo de 30 dias. Se entender que os seus direitos não foram respeitados, pode apresentar reclamação à Comissão Nacional de Proteção de Dados (CNPD).",
-    "privacy.complaints.title": "Livro de Reclamações",
-    "privacy.complaints.text":
-      "Nos termos da lei portuguesa, está disponível o Livro de Reclamações Eletrónico em www.livroreclamacoes.pt.",
   },
   en: {
     // Navigation
@@ -995,37 +972,14 @@ export const translations = {
     // Privacy
     "privacy.label": "GDPR",
     "privacy.title": "Privacy Policy",
+    "cookies.label": "COOKIES",
+    "cookies.title": "Cookie Policy",
+    "cookies.forget": "Forget everything this site stored",
+    "cookies.forgotten": "Done. This site no longer keeps anything in your browser.",
+    "nav.cookies": "Cookies",
+    "seo.cookies.title": "Cookie Policy",
+    "seo.cookies.desc": "This website uses no cookies or tracking. See what is kept in your browser and how to delete it.",
     "privacy.updated": "Last updated",
-    "privacy.controller.title": "Data controller",
-    "privacy.controller.text":
-      "[LEGAL NAME / COMPANY], VAT [VAT NUMBER], registered at Avenida 25 de Abril, Edif. Space Beautiful, Loja G, 8200-559 Ferreiras, Albufeira, Portugal, is the controller of the personal data collected through this website. For any question about your data, please email us.",
-    "privacy.data.title": "What data we collect",
-    "privacy.data.text":
-      "Through the booking form we collect your name, email, phone (optional), the session type you are interested in, your preferred date (optional) and the message you write. We do not collect data you do not give us voluntarily.",
-    "privacy.purpose.title": "What we use it for",
-    "privacy.purpose.text":
-      "We use your data solely to answer your enquiry, arrange the booking and communicate with you about the session. We do not use your data for marketing without your express consent, and we never sell or share it with third parties for advertising.",
-    "privacy.legal.title": "Legal basis",
-    "privacy.legal.text":
-      "Processing is based on your consent, given when you submit the form, and on our legitimate interest in answering a commercial enquiry. You may withdraw consent at any time.",
-    "privacy.retention.title": "How long we keep it",
-    "privacy.retention.text":
-      "Enquiries are kept for up to 24 months. Where a session goes ahead, invoicing data is kept for the period required by Portuguese law (10 years). Photographs are archived so you can place future orders, and are deleted on your request.",
-    "privacy.images.title": "Use of photographs",
-    "privacy.images.text":
-      "Photographs from your session are never published on this website, social media or promotional material without your written permission. That permission is separate and optional — declining it does not affect your session in any way, and you may withdraw it later.",
-    "privacy.processors.title": "Services we use",
-    "privacy.processors.text":
-      "This site uses an email delivery service to pass your messages to us, hosting on servers within the European Union, and a cookieless statistics tool that collects no personal data and does not identify you individually.",
-    "privacy.cookies.title": "Cookies",
-    "privacy.cookies.text":
-      "We use no advertising or tracking cookies. The site stores only your language and theme preference in your own browser, which is strictly functional and requires no consent.",
-    "privacy.rights.title": "Your rights",
-    "privacy.rights.text":
-      "You have the right of access, rectification, erasure, restriction, objection and portability of your data. Simply ask us by email and we will respond within 30 days. If you believe your rights have not been respected, you may complain to the Portuguese data protection authority (CNPD).",
-    "privacy.complaints.title": "Complaints Book",
-    "privacy.complaints.text":
-      "As required by Portuguese law, the electronic Complaints Book is available at www.livroreclamacoes.pt.",
   },
 } as const;
 

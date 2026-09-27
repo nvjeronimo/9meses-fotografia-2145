@@ -218,6 +218,12 @@ export function Footer() {
             >
               {t("nav.privacy")}
             </Link>
+            <Link
+              to={href("cookies")}
+              className="nav-link hover:text-foreground"
+            >
+              {t("nav.cookies")}
+            </Link>
             <a
               href={COMPLAINTS_URL}
               target="_blank"
