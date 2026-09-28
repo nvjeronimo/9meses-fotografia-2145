@@ -13,6 +13,7 @@ import Journal from "./pages/journal";
 import JournalPost from "./pages/journal-post";
 import Privacy from "./pages/privacy";
 import Cookies from "./pages/cookies";
+import Vouchers from "./pages/vouchers";
 import Faq from "./pages/faq";
 import Contact from "./pages/contact";
 import NotFound from "./pages/not-found";
@@ -36,6 +37,7 @@ const COMPONENTS: Record<PageId, React.ComponentType> = {
   contact: Contact,
   privacy: Privacy,
   cookies: Cookies,
+  vouchers: Vouchers,
 };
 
 // Longer paths first so /sessoes/:slug is tried before /sessoes.

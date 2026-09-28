@@ -4,6 +4,7 @@ import { BookingCta, PageHero, PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import { Seo } from "../components/seo";
 import { usePosts } from "../queries/posts";
+import { responsive } from "../lib/responsive";
 
 function formatDate(value: string | Date | null, language: string) {
   if (!value) return "";
@@ -57,7 +58,7 @@ function Journal() {
                       {post.coverUrl && (
                         <div className="mb-5 overflow-hidden">
                           <img
-                            src={post.coverUrl}
+                            {...responsive(post.coverUrl, "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw")}
                             alt={title}
                             loading="lazy"
                             className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"

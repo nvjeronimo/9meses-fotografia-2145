@@ -23,7 +23,8 @@ export type PageId =
   | "faq"
   | "contact"
   | "privacy"
-  | "cookies";
+  | "cookies"
+  | "vouchers";
 
 interface PageDef {
   pt: string;
@@ -47,6 +48,7 @@ export const PAGES: Record<PageId, PageDef> = {
   contact: { pt: "/contacto", en: "/en/contact" },
   privacy: { pt: "/privacidade", en: "/en/privacy" },
   cookies: { pt: "/cookies", en: "/en/cookies" },
+  vouchers: { pt: "/vales-oferta", en: "/en/gift-vouchers" },
 };
 
 export const PAGE_IDS = Object.keys(PAGES) as PageId[];

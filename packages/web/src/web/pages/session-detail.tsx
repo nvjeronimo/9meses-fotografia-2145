@@ -10,7 +10,8 @@ import { BookingCta, PageShell, SectionHeading } from "../components/page-shell"
 import { PhotoGrid } from "../components/photo-grid";
 import { Reveal } from "../components/reveal";
 import { useCategoryPhotos } from "../lib/photos";
-import { SESSIONS, sessionBySlug } from "../lib/site";
+import { SESSIONS, SITE_URL, sessionBySlug } from "../lib/site";
+import { PACKAGES } from "../content/packages";
 import NotFound from "./not-found";
 import { responsive } from "../lib/responsive";
 
@@ -40,9 +41,24 @@ function SessionDetail() {
           "@type": "Service",
           serviceType: t(session.titleKey),
           description: t(session.descKey),
-          provider: { "@type": "PhotographyBusiness", name: "9 Meses Fotografia" },
+          name: t(session.titleKey),
+          provider: {
+            "@type": "PhotographyBusiness",
+            "@id": `${SITE_URL}/#business`,
+            name: "9 Meses Fotografia",
+            url: SITE_URL,
+          },
           areaServed: { "@type": "Place", name: "Albufeira, Algarve, Portugal" },
           inLanguage: language === "pt" ? "pt-PT" : "en",
+          // The brochure price list, so search engines can show "from" prices.
+          offers: PACKAGES.filter((row) => row.sessionType === session.sessionType).map((row) => ({
+            "@type": "Offer",
+            name: `${t(session.titleKey)} · ${row.name}`,
+            price: row.price,
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+            url: `${SITE_URL}${href("sessionDetail", language === "pt" ? session.slug : session.slugEn)}`,
+          })),
         }}
       />
 

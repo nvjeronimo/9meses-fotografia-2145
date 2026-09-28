@@ -1,0 +1,16 @@
+# Weekly dependency updates as pull requests. The deploy workflow only runs on
+# main, so nothing ships until a PR is reviewed and merged.
+version: 2
+updates:
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      build-tools:
+        patterns: ["vite", "@vitejs/*", "tailwindcss", "@tailwindcss/*", "typescript", "sharp", "playwright"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"

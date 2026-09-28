@@ -135,6 +135,10 @@ export function TestimonialsCarousel() {
                   ),
                 )}
         </a>
+        <span aria-hidden className="mx-2">·</span>
+        <a href={GOOGLE_REVIEWS.writeUrl} target="_blank" rel="noreferrer" className="link-underline">
+          {t("testimonials.write")}
+        </a>
       </p>
     </div>
   );

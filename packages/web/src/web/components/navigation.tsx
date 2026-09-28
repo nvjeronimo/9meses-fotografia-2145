@@ -45,6 +45,7 @@ const NAV: NavEntry[] = [
     children: [
       { page: "sessions", key: "nav.sessions.all" },
       { page: "packages", key: "nav.packages" },
+      { page: "vouchers", key: "nav.vouchers" },
       { page: "prepare", key: "nav.prepare" },
       { page: "faq", key: "nav.faq" },
     ],
@@ -61,6 +62,7 @@ const MOBILE_LINKS: NavItem[] = [
   { page: "studio", key: "nav.studio" },
   { page: "sessions", key: "nav.sessions" },
   { page: "packages", key: "nav.packages" },
+  { page: "vouchers", key: "nav.vouchers" },
   { page: "gallery", key: "nav.gallery" },
   { page: "prepare", key: "nav.prepare" },
   { page: "journal", key: "nav.journal" },

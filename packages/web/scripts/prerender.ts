@@ -9,7 +9,7 @@
  *
  * Run with: bun scripts/prerender.ts   (after vite build)
  */
-import { copyFile, mkdir, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
 import { POSTS } from "../src/web/content/posts";
@@ -25,7 +25,7 @@ for (const language of ["pt", "en"] as const) {
   for (const session of SESSIONS) {
     routes.push(pathFor("sessionDetail", language, language === "pt" ? session.slug : session.slugEn));
   }
-  for (const post of POSTS) routes.push(pathFor("journalPost", language, post.slug));
+  for (const post of POSTS.filter((p) => !p.draft)) routes.push(pathFor("journalPost", language, post.slug));
 }
 
 await copyFile(path.join(DIST, "index.html"), path.join(DIST, "app.html"));
@@ -92,6 +92,28 @@ ${routes.map((route) => `  <url><loc>${SITE_URL}${route}</loc><lastmod>${today}<
 </urlset>
 `,
 );
+
+// The pages load WebP variants; the original JPEGs are only needed where a
+// page still names them (social cards, structured data). Ship only those.
+const html: string[] = [];
+const walk = async (dir: string): Promise<void> => {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) await walk(full);
+    else if (entry.name.endsWith(".html")) html.push(await readFile(full, "utf8"));
+  }
+};
+await walk(DIST);
+const referenced = html.join("\n");
+const portfolio = path.join(DIST, "images/portfolio");
+let removed = 0;
+for (const name of await readdir(portfolio)) {
+  if (/\.jpe?g$/i.test(name) && !referenced.includes(`/images/portfolio/${name}`)) {
+    await rm(path.join(portfolio, name));
+    removed++;
+  }
+}
+console.log(`${removed} unused original JPEGs left out of the upload.`);
 
 console.log(`\n${routes.length - failed}/${routes.length} pages pre-rendered, sitemap.xml written.`);
 if (failed) process.exit(1);

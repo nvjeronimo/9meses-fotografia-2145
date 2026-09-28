@@ -6,6 +6,7 @@ import { Reveal } from "../components/reveal";
 import { Seo } from "../components/seo";
 import { SITE_URL } from "../lib/site";
 import { usePost } from "../queries/posts";
+import { responsive } from "../lib/responsive";
 
 function formatDate(value: string | Date | null, language: string) {
   if (!value) return "";
@@ -81,13 +82,14 @@ function JournalPost() {
         description={excerpt || t("seo.journal.desc")}
         image={post.coverUrl ?? undefined}
         jsonLd={jsonLd}
+        noindex={!post.published}
       />
 
       <article>
         {post.coverUrl ? (
           <section className="relative flex h-[58vh] min-h-[380px] items-end overflow-hidden">
             <img
-              src={post.coverUrl}
+              {...responsive(post.coverUrl, "100vw")}
               alt={title}
               className="absolute inset-0 h-full w-full object-cover"
             />

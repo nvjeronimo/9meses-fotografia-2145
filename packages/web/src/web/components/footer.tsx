@@ -16,6 +16,7 @@ const NAV = [
   { page: "about", key: "nav.about" },
   { page: "studio", key: "nav.studio" },
   { page: "packages", key: "nav.packages" },
+  { page: "vouchers", key: "nav.vouchers" },
   { page: "gallery", key: "nav.gallery" },
   { page: "prepare", key: "nav.prepare" },
   { page: "journal", key: "nav.journal" },
