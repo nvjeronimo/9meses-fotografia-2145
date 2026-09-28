@@ -113,7 +113,7 @@ export const SESSIONS: SessionDef[] = [
     descKey: "sessions.smash.desc",
     bodyKeys: ["sessions.smash.body1", "sessions.smash.body2"],
     fallbackImage: "/images/portfolio/smash-featured.jpg",
-    icon: "/images/graphics/icon-smash-cake.webp",
+    icon: "/images/graphics/icon-smash-cake-2.webp",
   },
   {
     slug: "familia",
