@@ -398,6 +398,8 @@ export const translations = {
 
     // Phone / WhatsApp
     "contact.phone.label": "Telefone",
+    "contact.callNote.mobile": "Chamada para a rede móvel nacional",
+    "contact.callNote.fixed": "Chamada para a rede fixa nacional",
     "contact.whatsapp": "WhatsApp",
     "contact.whatsapp.aria": "Falar connosco pelo WhatsApp",
     "contact.whatsapp.cta": "ENVIAR MENSAGEM NO WHATSAPP",
@@ -911,6 +913,8 @@ export const translations = {
 
     // Phone / WhatsApp
     "contact.phone.label": "Phone",
+    "contact.callNote.mobile": "Call to a national mobile network",
+    "contact.callNote.fixed": "Call to a national landline network",
     "contact.whatsapp": "WhatsApp",
     "contact.whatsapp.aria": "Message us on WhatsApp",
     "contact.whatsapp.cta": "MESSAGE US ON WHATSAPP",

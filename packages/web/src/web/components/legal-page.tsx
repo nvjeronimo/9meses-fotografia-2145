@@ -3,26 +3,34 @@ import type { Block, Policy } from "../content/legal";
 import { useLanguage } from "./language-provider";
 
 /** Plain-text contacts in the policy copy become links. */
-function linkify(text: string) {
+function linkify(text: string, callNote: string) {
   const parts = text.split(/(info@9mesesfotografia\.com|\+351 967 716 894|www\.[a-z.]+\.pt)/g);
   return parts.map((part, i) => {
     if (part === "info@9mesesfotografia.com") return <a key={i} href={`mailto:${part}`} className="text-primary link-underline">{part}</a>;
-    if (part === "+351 967 716 894") return <a key={i} href="tel:+351967716894" className="text-primary link-underline whitespace-nowrap">{part}</a>;
+    if (part === "+351 967 716 894")
+      return (
+        <span key={i}>
+          <a href="tel:+351967716894" className="text-primary link-underline whitespace-nowrap">{part}</a>{" "}
+          ({callNote})
+        </span>
+      );
     if (/^www\./.test(part)) return <a key={i} href={`https://${part}`} target="_blank" rel="noreferrer" className="text-primary link-underline">{part}</a>;
     return part;
   });
 }
 
 function BlockView({ block }: { block: Block }) {
+  const { t } = useLanguage();
+  const callNote = t("contact.callNote.mobile").toLowerCase();
   if ("p" in block) {
-    return <p className="text-muted-foreground text-base leading-relaxed">{linkify(block.p)}</p>;
+    return <p className="text-muted-foreground text-base leading-relaxed">{linkify(block.p, callNote)}</p>;
   }
   if ("ul" in block) {
     return (
       <ul className="text-muted-foreground space-y-3 text-base leading-relaxed">
         {block.ul.map((item) => (
           <li key={item} className="border-border/70 border-l pl-4">
-            {linkify(item)}
+            {linkify(item, callNote)}
           </li>
         ))}
       </ul>

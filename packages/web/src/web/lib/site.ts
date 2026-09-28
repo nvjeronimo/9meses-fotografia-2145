@@ -10,6 +10,8 @@ export const CONTACT = {
   phone: "+351 967 716 894",
   /** E.164, for tel: and wa.me links. */
   phoneE164: "+351967716894",
+  /** Drives the legally required call-price note (see components/call-note). */
+  phoneNetwork: "mobile" as "mobile" | "fixed",
   whatsappUrl: "https://wa.me/351967716894",
   instagram: "9mesesfotografia",
   instagramUrl: "https://www.instagram.com/9mesesfotografia/",

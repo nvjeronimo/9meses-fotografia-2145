@@ -11,6 +11,7 @@ import { Link } from "wouter";
 import { CONTACT, GOOGLE_REVIEWS, SESSIONS } from "../lib/site";
 import type { PageId } from "../lib/routes";
 import { useLanguage } from "./language-provider";
+import { CallNote } from "./call-note";
 
 const NAV = [
   { page: "about", key: "nav.about" },
@@ -133,12 +134,15 @@ export function Footer() {
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <Phone className="text-primary mt-0.5 size-4 shrink-0" />
-                <a
-                  href={`tel:${CONTACT.phoneE164}`}
-                  className="nav-link text-foreground/80 hover:text-primary"
-                >
-                  {CONTACT.phone}
-                </a>
+                <div>
+                  <a
+                    href={`tel:${CONTACT.phoneE164}`}
+                    className="nav-link text-foreground/80 hover:text-primary"
+                  >
+                    {CONTACT.phone}
+                  </a>
+                  <CallNote className="mt-0.5" />
+                </div>
               </li>
               <li className="flex items-start gap-3">
                 <MessageCircle className="text-primary mt-0.5 size-4 shrink-0" />

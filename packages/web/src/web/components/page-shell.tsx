@@ -12,6 +12,7 @@ import { Reveal } from "./reveal";
 import { WhatsappButton } from "./whatsapp-button";
 import { useAnalytics } from "../hooks/use-analytics";
 import { responsive } from "../lib/responsive";
+import { CallNote } from "./call-note";
 
 /** Every public page: nav, content, footer, and a scroll reset on mount. */
 export function PageShell({ children }: { children: React.ReactNode }) {
@@ -311,6 +312,7 @@ export function BookingCta() {
                 ·
               </span>
               <span className="whitespace-nowrap">{CONTACT.phone}</span>
+              <CallNote className="text-band-foreground w-full text-center" />
             </p>
           </div>
         </Reveal>
