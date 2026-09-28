@@ -8,7 +8,7 @@ import { PageHero, PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import { useAnalytics } from "../hooks/use-analytics";
 import { CONTACT, SESSIONS } from "../lib/site";
-import { CallNote } from "../components/call-note";
+import { CALL_NOTE_ID, CallMark } from "../components/call-note";
 
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
@@ -467,11 +467,12 @@ function Contact() {
                     <a
                       href={`tel:${CONTACT.phoneE164}`}
                       onClick={() => trackEvent("phone_click", { placement: "contact_page" })}
+                      aria-describedby={CALL_NOTE_ID}
                       className="nav-link hover:text-primary"
                     >
                       {CONTACT.phone}
+                      <CallMark />
                     </a>
-                    <CallNote className="mt-1" />
                   </div>
                 </li>
 
