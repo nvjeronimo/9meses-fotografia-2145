@@ -1,13 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1024" height="1024">
-<g transform="translate(128 132) scale(1.15) translate(-128 -136)" fill="none" stroke="#4f4a42" stroke-linecap="round" stroke-linejoin="round">
- <!-- flame -->
- <path stroke-width="1.6" d="M128 56c-5 7-8 11-6 16 1.5 4 8.5 4 10 0 2-5-1-9-4-16z"/>
- <path stroke-width="0.9" opacity=".7" d="M128 64c-2 4-3 6-2 8.5 1 1.8 3.2 1.8 4 0 .8-2.4 0-4.5-2-8.5z"/>
- <path stroke-width="1" d="M128 76v4"/>
- <!-- candle shaped like a 1 -->
- <path stroke-width="1.7" d="M121.5 90.5l9-9.5v33"/>
- <path stroke-width="1.7" d="M125.5 91.5l3.5-3.6V114"/>
- <path stroke-width="1" opacity=".7" d="M121.8 90.4c1.2 1.3 2.6 1.6 3.7 1.1"/>
+<g transform="translate(128 145) scale(1.22) translate(-128 -160)" fill="none" stroke="#4f4a42" stroke-linecap="round" stroke-linejoin="round">
  <!-- top tier -->
  <path stroke-width="1.8" d="M97 124c0-6 14-10 31-10s31 4 31 10"/>
  <path stroke-width="1.1" opacity=".6" d="M99 122.5c3-4.5 15-7.5 29-7.5 14.5 0 26.5 3 29.5 7.8"/>
@@ -31,6 +23,6 @@
  <!-- crumbs -->
  <path stroke-width="1.5" d="M195 190.5l3.5-2.2 2.4 3-3.4 2.1zM204 181.5l2.4-.8.9 2.2-2.5.9zM191 181l1.8-1.5 1.6 1.7-1.9 1.3zM56 189l2.8-1.4 1.5 2.5-2.9 1.2zM202 204.5l2.6-1.3 1.3 2.3-2.7 1.1z"/>
  <!-- sparkles -->
- <path stroke-width="1.1" opacity=".75" d="M103 76v10M98 81h10M158 90v7M154.5 93.5h7"/>
+ <path stroke-width="1.1" opacity=".75" d="M100 94v10M95 99h10M160 100v7M156.5 103.5h7"/>
 </g>
 </svg>
