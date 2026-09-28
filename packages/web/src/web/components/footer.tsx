@@ -5,10 +5,10 @@ import {
   MapPin,
   MessageCircle,
   Phone,
-  Star,
 } from "lucide-react";
 import { Link } from "wouter";
-import { CONTACT, GOOGLE_REVIEWS, SESSIONS } from "../lib/site";
+import { CONTACT, SESSIONS } from "../lib/site";
+import { GoogleRating } from "./google-rating";
 import type { PageId } from "../lib/routes";
 import { useLanguage } from "./language-provider";
 import { CALL_NOTE_ID, CallMark, CallNote } from "./call-note";
@@ -59,29 +59,7 @@ export function Footer() {
             <p className="text-muted-foreground max-w-xs text-base leading-relaxed">
               {t("footer.tagline")}
             </p>
-            <a
-              href={GOOGLE_REVIEWS.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-foreground/80 hover:text-primary mt-4 flex max-w-xs min-h-6 flex-wrap items-center gap-x-2 gap-y-1 text-sm transition-colors"
-            >
-              <Star className="text-primary size-3.5 fill-current" strokeWidth={0} aria-hidden />
-              {t("footer.google")
-                .replace("{count}", String(GOOGLE_REVIEWS.count))
-                .split("{rating}")
-                .map((part, i) =>
-                  i === 0 ? (
-                    part
-                  ) : (
-                    <span key={i}>
-                      <strong className="font-bold">
-                        {language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn}
-                      </strong>
-                      {part}
-                    </span>
-                  ),
-                )}
-            </a>
+            <GoogleRating className="mt-4 max-w-xs leading-relaxed" />
           </div>
 
           {/* Footer links carry the header's `nav-link` underline: it already
@@ -192,6 +170,7 @@ export function Footer() {
                 </span>
               </li>
             </ul>
+            <CallNote className="text-muted-foreground mt-5 text-xs" />
           </div>
         </div>
 
@@ -205,7 +184,6 @@ export function Footer() {
                 String(new Date().getFullYear()),
               )}
             </p>
-            <CallNote className="text-muted-foreground/80" />
             <p className="text-muted-foreground/80">
               By{" "}
               <a

@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTestimonials } from "../queries/testimonials";
 import { useLanguage } from "./language-provider";
-import { GOOGLE_REVIEWS } from "../lib/site";
+import { GoogleRating } from "./google-rating";
 import { usePrefersReducedMotion } from "../hooks/use-scroll-animation";
 import { responsive } from "../lib/responsive";
 
@@ -117,29 +117,7 @@ export function TestimonialsCarousel() {
         </div>
       )}
 
-      <p className="text-muted-foreground mt-10 text-sm">
-        <a href={GOOGLE_REVIEWS.url} target="_blank" rel="noreferrer" className="link-underline">
-          {t("testimonials.google")
-                .replace("{count}", String(GOOGLE_REVIEWS.count))
-                .split("{rating}")
-                .map((part, i) =>
-                  i === 0 ? (
-                    part
-                  ) : (
-                    <span key={i}>
-                      <strong className="font-bold">
-                        {language === "pt" ? GOOGLE_REVIEWS.rating : GOOGLE_REVIEWS.ratingEn}
-                      </strong>
-                      {part}
-                    </span>
-                  ),
-                )}
-        </a>
-        <span aria-hidden className="mx-2">·</span>
-        <a href={GOOGLE_REVIEWS.writeUrl} target="_blank" rel="noreferrer" className="link-underline">
-          {t("testimonials.write")}
-        </a>
-      </p>
+      <GoogleRating className="mt-10" />
     </div>
   );
 }
