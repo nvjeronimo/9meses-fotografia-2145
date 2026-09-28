@@ -109,7 +109,7 @@ export function LegalBody({ policy, children }: { policy: Policy; children?: Rea
             {policy.sections.map((section, i) => (
               <li key={section.id}>
                 <a href={`#${section.id}`} className="hover:text-primary inline-flex min-h-9 items-center gap-3 transition-colors">
-                  <span className="text-primary/80 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-primary tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                   {section.title}
                 </a>
               </li>
