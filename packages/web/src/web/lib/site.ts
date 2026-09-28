@@ -55,8 +55,8 @@ export interface SessionDef {
   fallbackImage: string;
   /**
    * Line-art mark from the studio's own brand pack, shown small beside the
-   * session title. The pack ships no smash-the-cake mark, so that session
-   * borrows the baby one.
+   * session title. The pack ships no smash-the-cake mark, so that one
+   * (first-birthday cake) was drawn to match it.
    */
   icon: string;
 }
@@ -113,7 +113,7 @@ export const SESSIONS: SessionDef[] = [
     descKey: "sessions.smash.desc",
     bodyKeys: ["sessions.smash.body1", "sessions.smash.body2"],
     fallbackImage: "/images/portfolio/smash-featured.jpg",
-    icon: "/images/graphics/icon-smash.webp",
+    icon: "/images/graphics/icon-smash-bolo.webp",
   },
   {
     slug: "familia",
