@@ -59,7 +59,7 @@ export function Footer() {
             <p className="text-muted-foreground max-w-xs text-base leading-relaxed">
               {t("footer.tagline")}
             </p>
-            <GoogleRating className="mt-4 max-w-xs leading-relaxed" />
+            <GoogleRating stacked className="mt-4 max-w-xs leading-relaxed" />
           </div>
 
           {/* Footer links carry the header's `nav-link` underline: it already
