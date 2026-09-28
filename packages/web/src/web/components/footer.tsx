@@ -44,14 +44,16 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
           {/* Brand and contact span the row on phones; the two link lists pair up. */}
           <div className="col-span-2 lg:col-span-1">
-            <img
-              src="/images/logo.webp"
-              alt="9 Meses Fotografia"
-              width={330}
-              height={196}
-              loading="lazy"
-              className="mb-5 h-20 w-auto md:h-24"
-            />
+            <Link to={href("home")} className="mb-5 inline-block">
+              <img
+                src="/images/logo.webp"
+                alt="9 Meses Fotografia"
+                width={330}
+                height={196}
+                loading="lazy"
+                className="h-20 w-auto md:h-24"
+              />
+            </Link>
             <p className="text-muted-foreground max-w-xs text-base leading-relaxed">
               {t("footer.tagline")}
             </p>
