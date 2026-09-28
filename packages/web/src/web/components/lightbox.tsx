@@ -68,6 +68,7 @@ export function Lightbox({ photos, index, onClose, onIndexChange }: LightboxProp
   return createPortal(
     <dialog
       ref={dialogRef}
+      data-lenis-prevent
       aria-label={t("lightbox.label")}
       onCancel={(event) => {
         event.preventDefault();

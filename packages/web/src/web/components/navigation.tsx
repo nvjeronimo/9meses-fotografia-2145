@@ -392,6 +392,7 @@ export function Navigation() {
         createPortal(
             <div
               ref={drawerRef}
+              data-lenis-prevent
               className="bg-background fixed inset-x-0 bottom-0 z-40 overflow-y-auto xl:hidden"
               style={{ top: barHeight }}
             >

@@ -13,6 +13,7 @@ import { WhatsappButton } from "./whatsapp-button";
 import { useAnalytics } from "../hooks/use-analytics";
 import { responsive } from "../lib/responsive";
 import { CALL_NOTE_ID, CallMark } from "./call-note";
+import { resetScroll } from "../lib/motion";
 
 /** Every public page: nav, content, footer, and a scroll reset on mount. */
 export function PageShell({ children }: { children: React.ReactNode }) {
@@ -22,7 +23,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
 
   const firstRender = useRef(true);
   useEffect(() => {
-    window.scrollTo(0, 0);
+    resetScroll();
     // After in-app navigation, move focus to the new page so keyboard and
     // screen-reader users start at its content (not on the first load).
     if (firstRender.current) {
@@ -79,6 +80,7 @@ export function PageHero({
           {...responsive(image)}
           fetchPriority="high"
           alt={t(titleKey)}
+          data-parallax="hero"
           className="absolute inset-0 h-full w-full object-cover"
         />
         {/*

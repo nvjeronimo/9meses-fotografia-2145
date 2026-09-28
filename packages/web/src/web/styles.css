@@ -588,3 +588,18 @@ html {
   background-color: oklch(0.79 0.075 80 / 0.28);
   color: oklch(0.97 0.008 82);
 }
+
+/* Lenis (smooth scroll, lib/motion.ts): it drives the scroll itself, so the
+   CSS smooth behaviour must not animate on top of it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}

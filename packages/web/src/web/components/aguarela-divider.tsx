@@ -31,6 +31,7 @@ export function AguarelaDivider({
 
   return (
     <div aria-hidden className={cn("pointer-events-none relative w-full select-none", className)}>
+      <div data-parallax="0.08">
       <img
         src={edge === "top" ? "/images/graphics/aguarela-band-top.webp" : "/images/graphics/aguarela-band.webp"}
         alt=""
@@ -55,6 +56,7 @@ export function AguarelaDivider({
           edge === "top" ? "object-bottom" : "object-top",
         )}
       />
+      </div>
     </div>
   );
 }

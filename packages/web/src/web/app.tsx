@@ -17,6 +17,8 @@ import Vouchers from "./pages/vouchers";
 import Faq from "./pages/faq";
 import Contact from "./pages/contact";
 import NotFound from "./pages/not-found";
+import { useEffect } from "react";
+import { startMotion } from "./lib/motion";
 
 /**
  * Every public page answers on two URLs — the Portuguese one at the root and
@@ -51,6 +53,8 @@ const ROUTES = (Object.keys(COMPONENTS) as PageId[])
   .sort((a, b) => b.path.split("/").length - a.path.split("/").length);
 
 function App() {
+  useEffect(() => startMotion(), []);
+
   return (
     <Provider>
       <Switch>

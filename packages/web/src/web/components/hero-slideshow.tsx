@@ -48,6 +48,7 @@ export function HeroSlideshow() {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
       }}
     >
+      <div data-parallax="hero" className="absolute inset-0">
       {photos.map((photo, i) =>
         i !== 0 && !later ? null : (
         <img
@@ -74,6 +75,7 @@ export function HeroSlideshow() {
         />
         ),
       )}
+      </div>
 
       {/*
         One continuous ramp across the whole hero instead of three stacked
