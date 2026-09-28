@@ -9,9 +9,9 @@ import Lenis from "lenis";
  *   view; the line-art session marks pop in;
  * - a gentle parallax on page heroes and the watercolour washes.
  *
- * Nothing is ever hidden by default: every effect is an animation that plays
- * on an element already rendered, so the pre-rendered HTML, reduced-motion
- * visitors and anything that fails here all simply see the page.
+ * Nothing is hidden in the HTML itself: photos below the fold are only held
+ * closed by this script, so the pre-rendered page, reduced-motion visitors
+ * and anything that fails before it runs all simply see the photos.
  */
 
 const REDUCED = "(prefers-reduced-motion: reduce)";
@@ -62,9 +62,24 @@ function isPhoto(img: HTMLImageElement) {
   return !img.closest("[aria-hidden]") && img.getBoundingClientRect().width >= 120;
 }
 
+const isMark = (img: HTMLImageElement) => img.classList.contains("brand-mark");
+
+/*
+ * A photo waiting below the fold is held closed from the moment it is
+ * rendered (by script, so pre-rendered HTML and failed scripts still show it).
+ * Hiding it only when it reached the screen made it flash in full first.
+ */
+function hold(img: HTMLImageElement) {
+  // Opacity, not a clip: Chrome will not lazy-load an image clipped to nothing.
+  img.dataset.reveal = "pending";
+  img.style.opacity = "0";
+}
+
 function reveal(img: HTMLImageElement, delay: number) {
   const play = () => {
-    if (img.classList.contains("brand-mark")) {
+    delete img.dataset.reveal;
+    img.style.opacity = "";
+    if (isMark(img)) {
       img.animate(
         [
           { opacity: 0, transform: "scale(0.6) rotate(-14deg)" },
@@ -95,8 +110,8 @@ function startPhotoReveal() {
   if (!("IntersectionObserver" in window) || !Element.prototype.animate) return () => {};
 
   // On the very first load, whatever is already on screen was pre-rendered and
-  // painted before this ran: animating it would read as a flicker. Only later
-  // entries (scrolling, or a new page opened in the app) get the reveal.
+  // painted before this ran, so it stays as it is. Everything below the fold,
+  // and every photo of a page opened later in the app, gets the reveal.
   let booting = true;
   const boot = setTimeout(() => (booting = false), 700);
 
@@ -105,13 +120,14 @@ function startPhotoReveal() {
       let stagger = 0;
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        io.unobserve(entry.target);
-        if (booting) continue;
-        reveal(entry.target as HTMLImageElement, Math.min(stagger, 4) * 120);
+        const img = entry.target as HTMLImageElement;
+        io.unobserve(img);
+        if (img.dataset.reveal !== "pending") continue;
+        reveal(img, Math.min(stagger, 4) * 120);
         stagger++;
       }
     },
-    { rootMargin: "0px 0px -8% 0px" },
+    { rootMargin: "0px 0px -5% 0px" },
   );
 
   const seen = new WeakSet<Element>();
@@ -119,7 +135,9 @@ function startPhotoReveal() {
     for (const img of root.querySelectorAll("img")) {
       if (seen.has(img)) continue;
       seen.add(img);
-      if (isPhoto(img)) io.observe(img);
+      if (!isPhoto(img)) continue;
+      if (!booting || img.getBoundingClientRect().top > window.innerHeight) hold(img);
+      io.observe(img);
     }
   };
   scan(document);
