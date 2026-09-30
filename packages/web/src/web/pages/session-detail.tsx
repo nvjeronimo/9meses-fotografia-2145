@@ -12,6 +12,8 @@ import { Reveal } from "../components/reveal";
 import { useCategoryPhotos } from "../lib/photos";
 import { SESSIONS, SITE_URL, sessionBySlug } from "../lib/site";
 import { PACKAGES } from "../content/packages";
+import { SESSION_SEO } from "../content/session-seo";
+import { FaqList, faqJsonLd } from "../components/faq-list";
 import NotFound from "./not-found";
 import { responsive } from "../lib/responsive";
 
@@ -27,16 +29,22 @@ function SessionDetail() {
   if (!session) return <NotFound />;
 
   const hero = photos[0]?.url ?? session.fallbackImage;
+  const seo = SESSION_SEO[session.sessionType][language];
+  const pagePath = href("sessionDetail", language === "pt" ? session.slug : session.slugEn);
   // Family closes the journey, so nothing after it is its "next chapter".
   const isNext = (i: number) => i === 0 && session.sessionType !== "family";
 
   return (
     <PageShell>
       <Seo
-        title={t(session.titleKey)}
-        description={t(session.descKey)}
+        title={seo.title}
+        description={seo.description}
         image={hero}
-        jsonLd={{
+        crumbs={[
+          { name: language === "pt" ? "Sessões" : "Sessions", path: href("sessions") },
+          { name: t(session.titleKey), path: pagePath },
+        ]}
+        jsonLd={[{
           "@context": "https://schema.org",
           "@type": "Service",
           serviceType: t(session.titleKey),
@@ -57,9 +65,9 @@ function SessionDetail() {
             price: row.price,
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
-            url: `${SITE_URL}${href("sessionDetail", language === "pt" ? session.slug : session.slugEn)}`,
+            url: `${SITE_URL}${pagePath}`,
           })),
-        }}
+        }, faqJsonLd(seo.faq)]}
       />
 
       {/* Full-bleed hero */}
@@ -81,6 +89,8 @@ function SessionDetail() {
             <p className="uppercase-spaced mb-4 text-white/70">{t(session.timingKey)}</p>
             <h1 className="display-serif text-4xl leading-[1.1] font-light text-white md:text-6xl">
               {t(session.titleKey)}
+              {/* Where, in the heading itself: it is what people search for. */}
+              <span className="mt-4 block font-[family-name:var(--font-body)] text-base font-light tracking-[0.04em] text-white/85 md:text-xl">{t("sessions.place")}</span>
             </h1>
           </Reveal>
         </div>
@@ -150,6 +160,16 @@ function SessionDetail() {
               worth offering wherever prices are being read. */}
           <BrochureCta surface="background" className="mx-auto mt-12 max-w-4xl md:mt-16" />
         </div>
+      </section>
+
+      {/* The questions parents ask before booking, answered on the page. */}
+      <section className="container section-y" aria-labelledby="perguntas">
+        <Reveal>
+          <h2 id="perguntas" className="display-serif mb-8 text-center text-3xl font-light md:mb-12 md:text-4xl">
+            {t("sessions.faqTitle")}
+          </h2>
+        </Reveal>
+        <FaqList items={seo.faq} />
       </section>
 
       {/* The other sessions, as a way on for anyone comparing before booking. */}

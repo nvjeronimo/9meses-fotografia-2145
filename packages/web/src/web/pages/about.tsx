@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLanguage } from "../components/language-provider";
 import { Lightbox } from "../components/lightbox";
-import { Seo } from "../components/seo";
+import { Seo, taniaJsonLd } from "../components/seo";
 import {
   BookingCta,
   CtaCard,
@@ -15,7 +15,7 @@ import { useCategoryPhotos } from "../lib/photos";
 import { responsive } from "../lib/responsive";
 
 function About() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { photos } = useCategoryPhotos("about");
   const portrait = photos[0]?.url ?? "/images/portfolio/about-portrait.jpg";
   const story = photos[1]?.url ?? "/images/portfolio/about-story.jpg";
@@ -25,7 +25,7 @@ function About() {
 
   return (
     <PageShell>
-      <Seo title={t("seo.about.title")} description={t("seo.about.desc")} />
+      <Seo title={t("seo.about.title")} description={t("seo.about.desc")} jsonLd={taniaJsonLd(language)} />
 
       <PageHero labelKey="about.hero.label" titleKey="about.hero.title" />
 

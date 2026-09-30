@@ -15,6 +15,7 @@ import { chromium } from "playwright";
 import { POSTS } from "../src/web/content/posts";
 import { PAGES, STATIC_PAGE_IDS, pathFor } from "../src/web/lib/routes";
 import { SESSIONS, SITE_URL } from "../src/web/lib/site";
+import { writeLlmsTxt } from "./llms";
 
 const DIST = path.resolve(import.meta.dir, "../dist");
 const PORT = 4310;
@@ -92,6 +93,8 @@ ${routes.map((route) => `  <url><loc>${SITE_URL}${route}</loc><lastmod>${today}<
 </urlset>
 `,
 );
+
+await writeLlmsTxt(DIST);
 
 // The pages load WebP variants; the original JPEGs are only needed where a
 // page still names them (social cards, structured data). Ship only those.

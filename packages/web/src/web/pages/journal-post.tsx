@@ -70,7 +70,7 @@ function JournalPost() {
     datePublished: post.publishedAt ?? undefined,
     dateModified: post.updatedAt ?? post.publishedAt ?? undefined,
     inLanguage: language === "pt" ? "pt-PT" : "en",
-    author: { "@type": "Organization", name: "9 Meses Fotografia" },
+    author: { "@type": "Person", "@id": `${SITE_URL}/#tania`, name: "Tânia Pires" },
     publisher: { "@type": "Organization", name: "9 Meses Fotografia" },
     mainEntityOfPage: `${SITE_URL}${href("journalPost", post.slug)}`,
   };
@@ -83,6 +83,10 @@ function JournalPost() {
         image={post.coverUrl ?? undefined}
         jsonLd={jsonLd}
         noindex={!post.published}
+        crumbs={[
+          { name: language === "pt" ? "Diário" : "Journal", path: href("journal") },
+          { name: title, path: href("journalPost", post.slug) },
+        ]}
       />
 
       <article>

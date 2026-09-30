@@ -152,6 +152,8 @@ export const translations = {
     "sessions.viewSession": "VER SESSÃO",
     "sessions.viewAll": "VER TODAS AS SESSÕES",
     "sessions.others": "Outras sessões",
+    "sessions.place": "em Albufeira, Algarve",
+    "sessions.faqTitle": "Perguntas frequentes",
     "sessions.prepareLink": "Como preparar esta sessão",
 
     "sessions.maternity.title": "Fotografia de Maternidade",
@@ -424,19 +426,19 @@ export const translations = {
       "Fotografia de Maternidade, Recém-Nascido e Família em Albufeira",
     "seo.home.desc":
       "Estúdio de fotografia em Ferreiras, Albufeira. Sessões de maternidade, recém-nascido, bebé, família e smash the cake no Algarve. Marque a sua sessão.",
-    "seo.about.title": "Sobre a Tânia",
+    "seo.about.title": "Tânia Pires, Fotógrafa de Grávida e Newborn em Albufeira",
     "seo.about.desc":
       "Conheça a fotógrafa por trás do 9 Meses Fotografia: mais de uma década a registar maternidade, recém-nascidos e famílias no Algarve.",
     "seo.studio.title": "O Estúdio em Ferreiras, Albufeira",
     "seo.studio.desc":
       "Um estúdio preparado para bebés e famílias, com luz natural, aquecimento, props e todo o conforto para sessões tranquilas.",
-    "seo.sessions.title": "Sessões de Fotografia",
+    "seo.sessions.title": "Sessões Fotográficas em Albufeira, Algarve",
     "seo.sessions.desc":
       "Maternidade, recém-nascido, bebé, família e smash the cake. Saiba o que inclui cada sessão, a melhor altura e como se prepara.",
-    "seo.packages.title": "Pacotes e Preços",
+    "seo.packages.title": "Preços de Sessões Fotográficas em Albufeira",
     "seo.packages.desc":
       "Pacotes de fotografia de maternidade, recém-nascido, bebé e família em Albufeira. Veja o que inclui cada pacote e peça orçamento.",
-    "seo.gallery.title": "Galeria",
+    "seo.gallery.title": "Galeria: Grávida, Newborn e Família no Algarve",
     "seo.gallery.desc":
       "Portfólio de fotografia de maternidade, recém-nascido, bebé e família realizado no estúdio em Ferreiras, Albufeira.",
     "seo.prepare.title": "Como Preparar a Sua Sessão",
@@ -670,6 +672,8 @@ export const translations = {
     "sessions.viewSession": "VIEW SESSION",
     "sessions.viewAll": "VIEW ALL SESSIONS",
     "sessions.others": "Other sessions",
+    "sessions.place": "in Albufeira, Algarve",
+    "sessions.faqTitle": "Frequently asked questions",
     "sessions.prepareLink": "How to prepare for this session",
 
     "sessions.maternity.title": "Maternity Photography",
@@ -937,19 +941,19 @@ export const translations = {
     "seo.home.title": "Maternity, Newborn and Family Photography in Albufeira",
     "seo.home.desc":
       "Photography studio in Ferreiras, Albufeira. Maternity, newborn, baby, family and smash the cake sessions in the Algarve. Book your session.",
-    "seo.about.title": "About Tânia",
+    "seo.about.title": "Tânia Pires, Maternity and Newborn Photographer in Albufeira",
     "seo.about.desc":
       "Meet the photographer behind 9 Meses Fotografia: over a decade photographing maternity, newborns and families in the Algarve.",
     "seo.studio.title": "The Studio in Ferreiras, Albufeira",
     "seo.studio.desc":
       "A studio built for babies and families, with natural light, heating, props and everything needed for calm, unhurried sessions.",
-    "seo.sessions.title": "Photography Sessions",
+    "seo.sessions.title": "Photo Sessions in Albufeira, Algarve",
     "seo.sessions.desc":
       "Maternity, newborn, baby, family and smash the cake. See what each session includes, the best timing and how to prepare.",
-    "seo.packages.title": "Packages and Pricing",
+    "seo.packages.title": "Photo Session Prices in Albufeira, Algarve",
     "seo.packages.desc":
       "Maternity, newborn, baby and family photography packages in Albufeira. See what each package includes and request a quote.",
-    "seo.gallery.title": "Gallery",
+    "seo.gallery.title": "Gallery: Maternity, Newborn and Family in the Algarve",
     "seo.gallery.desc":
       "Portfolio of maternity, newborn, baby and family photography shot at the studio in Ferreiras, Albufeira.",
     "seo.prepare.title": "How to Prepare for Your Session",

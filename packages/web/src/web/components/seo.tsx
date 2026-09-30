@@ -21,6 +21,8 @@ interface SeoProps {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   /** Keeps a page out of the index (e.g. thank-you or admin screens). */
   noindex?: boolean;
+  /** Trail below the home page, e.g. Sessões › Newborn (BreadcrumbList). */
+  crumbs?: { name: string; path: string }[];
 }
 
 const BRAND = "9 Meses Fotografia";
@@ -30,7 +32,7 @@ function absolute(url: string) {
   return `${SITE_URL}${url.startsWith("/") ? url : `/${url}`}`;
 }
 
-export function Seo({ title, description, image, path, jsonLd, noindex }: SeoProps) {
+export function Seo({ title, description, image, path, jsonLd, noindex, crumbs }: SeoProps) {
   const [location] = useLocation();
   const { language } = useLanguage();
   const rawPath = path ?? location;
@@ -87,6 +89,17 @@ export function Seo({ title, description, image, path, jsonLd, noindex }: SeoPro
           {JSON.stringify(jsonLd)}
         </script>
       )}
+      {crumbs && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [{ name: BRAND, path: language === "pt" ? "/" : "/en" }, ...crumbs].map(
+              (crumb, i) => ({ "@type": "ListItem", position: i + 1, name: crumb.name, item: absolute(crumb.path) }),
+            ),
+          })}
+        </script>
+      )}
     </>
   );
 }
@@ -132,5 +145,54 @@ export function localBusinessJsonLd(language: "pt" | "en"): Record<string, unkno
       },
     ],
     sameAs: [CONTACT.instagramUrl, CONTACT.facebookUrl, GOOGLE_REVIEWS.url],
+    founder: { "@id": `${SITE_URL}/#tania` },
+    slogan: language === "pt" ? "Da barriga ao primeiro aninho" : "From the bump to the first birthday",
+    knowsAbout: KNOWS_ABOUT[language],
+  };
+}
+
+const KNOWS_ABOUT = {
+  pt: [
+    "Fotografia de grávida",
+    "Fotografia newborn",
+    "Fotografia de recém-nascido",
+    "Fotografia de bebé",
+    "Smash the cake",
+    "Fotografia de família",
+  ],
+  en: [
+    "Maternity photography",
+    "Newborn photography",
+    "Baby photography",
+    "Cake smash photography",
+    "Family photography",
+  ],
+};
+
+/**
+ * Tânia, as the person behind the studio: who photographs your baby is the
+ * question parents (and AI answers) ask, and her nursing background is the
+ * trust signal no other studio nearby has.
+ */
+export function taniaJsonLd(language: "pt" | "en"): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${SITE_URL}/#tania`,
+    name: "Tânia Pires",
+    url: `${SITE_URL}${language === "pt" ? "/sobre" : "/en/about"}`,
+    image: absolute("/images/portfolio/about-portrait.jpg"),
+    jobTitle:
+      language === "pt"
+        ? "Fotógrafa de grávida, newborn, bebé e família"
+        : "Maternity, newborn, baby and family photographer",
+    description:
+      language === "pt"
+        ? "Fotógrafa no Algarve desde 2012 e a tempo inteiro desde 2017. Foi enfermeira durante vários anos antes de se dedicar à fotografia; tem o estúdio 9 Meses Fotografia em Ferreiras, Albufeira."
+        : "Photographer in the Algarve since 2012, full time since 2017. She worked as a nurse for several years before turning to photography, and runs the 9 Meses Fotografia studio in Ferreiras, Albufeira.",
+    worksFor: { "@id": `${SITE_URL}/#business` },
+    workLocation: { "@type": "Place", name: "Albufeira, Algarve, Portugal" },
+    knowsAbout: KNOWS_ABOUT[language],
+    sameAs: [CONTACT.instagramUrl],
   };
 }

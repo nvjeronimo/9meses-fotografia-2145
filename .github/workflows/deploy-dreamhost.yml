@@ -49,6 +49,25 @@ jobs:
           printf '%s\n' "$DH_SSH_KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
           # Pinned host key (no trust-on-first-use).
           printf '%s\n' "$DH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          SSH="ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=20"
+          TARGET="$DH_USER@$DH_HOST:${DH_PATH:-9mesesfotografia.com}/"
+          # Pages whose HTML really changed (by content, not date), for IndexNow below.
+          rsync -rcn --out-format='%n' --exclude '.DS_Store' --exclude '.well-known' --exclude '.dh-diag' \
+            -e "$SSH" packages/web/dist/ "$TARGET" | grep -E '(^|/)index\.html$' > "$RUNNER_TEMP/changed.txt" || true
           rsync -rlptvz --delete --exclude '.DS_Store' --exclude '.well-known' --exclude '.dh-diag' \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=20" \
-            packages/web/dist/ "$DH_USER@$DH_HOST:${DH_PATH:-9mesesfotografia.com}/"
+            -e "$SSH" packages/web/dist/ "$TARGET"
+
+      - name: Avisar Bing e outros motores (IndexNow)
+        if: steps.check.outputs.skip != '1'
+        # Bing (and the AI answers built on it) learn about changed pages right
+        # away instead of waiting for a crawl. Never fails the deploy.
+        continue-on-error: true
+        run: |
+          KEY=1e4c7010ac2e760dc354fa11acfd83a3
+          URLS=$(sed -e 's#index\.html$##' -e 's#/$##' -e 's#^#https://9mesesfotografia.com/#' "$RUNNER_TEMP/changed.txt" \
+            | sed 's#/$##; s#\.com$#.com/#' | jq -R . | jq -sc .)
+          echo "Páginas alteradas: $(jq length <<<"$URLS")"
+          [ "$(jq length <<<"$URLS")" -gt 0 ] || exit 0
+          curl -sS -o /dev/null -w "IndexNow: %{http_code}\n" -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "{\"host\":\"9mesesfotografia.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://9mesesfotografia.com/$KEY.txt\",\"urlList\":$URLS}"

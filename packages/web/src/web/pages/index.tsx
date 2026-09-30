@@ -3,7 +3,7 @@ import { AboutSlideshow } from "../components/about-slideshow";
 import { AguarelaDivider } from "../components/aguarela-divider";
 import { HeroSlideshow } from "../components/hero-slideshow";
 import { useLanguage } from "../components/language-provider";
-import { Seo, localBusinessJsonLd } from "../components/seo";
+import { Seo, localBusinessJsonLd, taniaJsonLd } from "../components/seo";
 import { BookingCta, PageShell, SectionHeading } from "../components/page-shell";
 import { PhotoGrid } from "../components/photo-grid";
 import { Reveal } from "../components/reveal";
@@ -30,7 +30,7 @@ function Index() {
       <Seo
         title={t("seo.home.title")}
         description={t("seo.home.desc")}
-        jsonLd={localBusinessJsonLd(language)}
+        jsonLd={[localBusinessJsonLd(language), taniaJsonLd(language)]}
       />
 
       <HeroSlideshow />
