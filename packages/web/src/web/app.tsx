@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch } from "wouter";
+import { Redirect, Route, Router, Switch } from "wouter";
 import { Provider } from "./components/provider";
 import { PAGES, type PageId } from "./lib/routes";
 import Index from "./pages/index";
@@ -18,7 +18,7 @@ import Faq from "./pages/faq";
 import Contact from "./pages/contact";
 import NotFound from "./pages/not-found";
 import { useEffect } from "react";
-import { startMotion } from "./lib/motion";
+import { pageTransition, startMotion } from "./lib/motion";
 
 /**
  * Every public page answers on two URLs — the Portuguese one at the root and
@@ -57,6 +57,7 @@ function App() {
 
   return (
     <Provider>
+      <Router aroundNav={pageTransition}>
       <Switch>
         {ROUTES.map((route) => (
           <Route key={route.path} path={route.path} component={route.component} />
@@ -70,6 +71,7 @@ function App() {
         </Route>
         <Route component={NotFound} />
       </Switch>
+      </Router>
     </Provider>
   );
 }

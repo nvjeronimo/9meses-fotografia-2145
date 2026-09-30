@@ -28,7 +28,7 @@ export function WhatsappButton() {
 
   // Same frosted surface as the sticky header, so the two read as one family.
   return (
-    <aside aria-label={t("contact.whatsapp")} data-floating>
+    <aside aria-label={t("contact.whatsapp")} data-floating className="[view-transition-name:whatsapp]">
     <a
       href={url}
       // Out of the tab order and hidden from AT while it is faded out.

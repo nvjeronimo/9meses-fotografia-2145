@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ArrowRight, MessageCircle } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Link } from "wouter";
 import { useLocation } from "wouter";
 import type { PageId } from "../lib/routes";
@@ -13,13 +13,19 @@ import { WhatsappButton } from "./whatsapp-button";
 import { useAnalytics } from "../hooks/use-analytics";
 import { responsive } from "../lib/responsive";
 import { CALL_NOTE_ID, CallMark } from "./call-note";
-import { resetScroll } from "../lib/motion";
+import { isTransitioning, resetScroll } from "../lib/motion";
 
 /** Every public page: nav, content, footer, and a scroll reset on mount. */
 export function PageShell({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { trackView } = useAnalytics();
   const { t } = useLanguage();
+
+  // A View Transition already animates the page change; the column's own fade
+  // is for first loads, back/forward and browsers without the API. Decided
+  // once per page so it never starts late when the transition ends.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const enter = useMemo(() => (isTransitioning() ? "" : "page-enter"), [location]);
 
   const firstRender = useRef(true);
   useEffect(() => {
@@ -45,7 +51,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
         {t("a11y.skip")}
       </a>
       <Navigation />
-      <main id="conteudo" tabIndex={-1} key={location} className="page-enter flex-1 outline-none">
+      <main id="conteudo" tabIndex={-1} key={location} className={cn(enter, "flex-1 outline-none")}>
         {children}
       </main>
       <Footer />

@@ -1,4 +1,6 @@
 import Lenis from "lenis";
+import { flushSync } from "react-dom";
+import type { AroundNavHandler } from "wouter";
 
 /*
  * Site-wide motion, started once from <Motion /> in app.tsx:
@@ -24,6 +26,39 @@ export function resetScroll() {
   if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
   else window.scrollTo({ top: 0, behavior: "instant" });
 }
+
+/*
+ * Page transitions: every in-app link goes through the router's aroundNav,
+ * which wraps the swap in a View Transition. The old page lifts away and fades,
+ * the new one settles in from just below, header included (it changes look
+ * between pages, and cross-fading two headers read as a double image). The
+ * WhatsApp button holds still (its own view-transition-name, styles.css). Browsers without the
+ * API, and reduced motion, just swap pages, and the main column's own
+ * .page-enter fade carries the change instead.
+ */
+export const isTransitioning = () => document.documentElement.classList.contains("vt");
+
+export const pageTransition: AroundNavHandler = (navigate, to, options) => {
+  const here = location.pathname + location.search;
+  if (
+    !document.startViewTransition ||
+    document.visibilityState !== "visible" ||
+    window.matchMedia(REDUCED).matches ||
+    to === here
+  ) {
+    navigate(to, options);
+    return;
+  }
+  document.documentElement.classList.add("vt");
+  const transition = document.startViewTransition(() => {
+    flushSync(() => navigate(to, options));
+    resetScroll();
+  });
+  // A skipped transition (tab hidden, a second click mid-way) still navigates;
+  // only the animation is dropped, so its rejection is not an error.
+  transition.ready.catch(() => {});
+  transition.finished.finally(() => document.documentElement.classList.remove("vt"));
+};
 
 export function startMotion(): () => void {
   if (typeof window === "undefined" || window.matchMedia(REDUCED).matches) return () => {};
