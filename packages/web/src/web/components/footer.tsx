@@ -185,11 +185,15 @@ export function Footer() {
               )}
             </p>
             <p className="text-muted-foreground/80">
-              By{" "}
+              {t("footer.credit")}{" "}
               <a
-                href="https://nelsonjeronimo.pt"
+                href={
+                  language === "en"
+                    ? "https://nelsonjeronimo.pt/en/"
+                    : "https://nelsonjeronimo.pt/"
+                }
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener"
                 className="nav-link hover:text-foreground"
               >
                 Nelson Jeronimo

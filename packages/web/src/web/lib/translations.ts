@@ -316,6 +316,7 @@ export const translations = {
     "footer.contact": "CONTACTO",
     "footer.rights":
       "© {year} 9 Meses Fotografia. Todos os direitos reservados.",
+    "footer.credit": "Design e desenvolvimento:",
 
     // Not found
     "notfound.title": "Página não encontrada",
@@ -830,6 +831,7 @@ export const translations = {
     "footer.sessions": "SESSIONS",
     "footer.contact": "CONTACT",
     "footer.rights": "© {year} 9 Meses Fotografia. All rights reserved.",
+    "footer.credit": "Design and development:",
 
     // Not found
     "notfound.title": "Page not found",
