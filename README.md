@@ -10,6 +10,7 @@ Cada push para `main` constrói e publica automaticamente
 |---|---|
 | Textos do site (PT/EN) | `packages/web/src/web/lib/translations.ts` |
 | Pacotes e preços | `packages/web/src/web/content/packages.ts` |
+| Títulos Google e perguntas frequentes de cada sessão (também alimentam o `llms.txt`) | `packages/web/src/web/content/session-seo.ts` — se um preço mudar em `packages.ts`, atualizar aqui o "desde" |
 | Testemunhos | `packages/web/src/web/content/testimonials.ts` |
 | Artigos do diário | `packages/web/src/web/content/posts.ts` |
 | Fotos por sessão / galeria | `packages/web/src/web/lib/site.ts` (`DEFAULT_PHOTOS`) + ficheiros em `packages/web/public/images/` |
