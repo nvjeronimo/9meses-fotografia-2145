@@ -34,9 +34,8 @@ export const GOOGLE_REVIEWS = {
   ratingEn: "5.0",
   count: 34,
   url: "https://maps.google.com/?cid=12355365826419591254",
-  /** Opens Google Maps straight on the "rate and review" dialog. */
-  writeUrl:
-    "https://www.google.com/maps/place/9+Meses+Fotografia/data=!4m3!3m2!1s0xd1acfd51cc0e869:0xab7713c1f1bd8856!12e1",
+  /** The Business Profile's own review link: opens the "rate and review" dialog. */
+  writeUrl: "https://g.page/r/CVaIvfHBE3erEAE/review",
 };
 
 export interface SessionDef {
