@@ -82,8 +82,7 @@ export const POSTS: Post[] = [
 {
   "id": 6,
   "slug": "quando-marcar-sessao-newborn-algarve",
-  "draft": true,
-  "publishedAt": "2026-09-28T10:00:00.000Z",
+  "publishedAt": "2026-09-30T10:20:00.000Z",
   "coverUrl": "/images/portfolio/newborn-mariana-2.jpg",
   "titlePt": "Sessão newborn no Algarve: quando marcar (e porque é durante a gravidez)",
   "titleEn": "Newborn photos in the Algarve: when to book (and why during pregnancy)",
@@ -95,8 +94,7 @@ export const POSTS: Post[] = [
 {
   "id": 7,
   "slug": "sessao-gravida-algarve-estudio-praia",
-  "draft": true,
-  "publishedAt": "2026-09-28T10:00:00.000Z",
+  "publishedAt": "2026-09-30T10:10:00.000Z",
   "coverUrl": "/images/portfolio/maternity-patricia.jpg",
   "titlePt": "Sessão de grávida no Algarve: estúdio, praia ou os dois?",
   "titleEn": "Maternity photos in the Algarve: studio, beach or both?",
@@ -108,8 +106,7 @@ export const POSTS: Post[] = [
 {
   "id": 8,
   "slug": "smash-the-cake-primeiro-aniversario",
-  "draft": true,
-  "publishedAt": "2026-09-28T10:00:00.000Z",
+  "publishedAt": "2026-09-30T10:00:00.000Z",
   "coverUrl": "/images/portfolio/smash-3.jpg",
   "titlePt": "Smash the cake: como é a sessão do primeiro aniversário",
   "titleEn": "Smash the cake: what the first-birthday session is like",
