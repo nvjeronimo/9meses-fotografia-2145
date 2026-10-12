@@ -54,6 +54,11 @@ ErrorDocument 404 /app.html
   Header always set Cross-Origin-Opener-Policy "same-origin"
 </IfModule>
 
+# The form's shared PHP helpers (public/api/_store.php) are included by the endpoints, never opened directly.
+<FilesMatch "^_">
+  Require all denied
+</FilesMatch>
+
 <IfModule mod_brotli.c>
   AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json image/svg+xml text/xml application/xml
 </IfModule>
