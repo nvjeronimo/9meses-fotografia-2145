@@ -101,7 +101,6 @@ function shell(string $lang, string $title, string $inner, string $footer): stri
 
 $first = mb_substr(preg_split('/\s+/', $name)[0] ?? '', 0, 40);
 $sessionForStudio = $session !== '' ? SESSIONS[$session][0] : '—';
-$ip = $_SERVER['REMOTE_ADDR'] ?? '';
 
 // 1) Notification to the studio, always in Portuguese.
 $rows = [
@@ -117,7 +116,7 @@ $rows = [
 $text = "Novo pedido de marcação pelo site (" . ($en ? 'EN' : 'PT') . ")\n\n";
 foreach ($rows as $k => $v) $text .= "{$k}: {$v}\n";
 $text .= "\nMensagem:\n" . ($message ?: '—') . "\n\n—\nResponda a este email para falar diretamente com {$name}.\n"
-    . "Consentimento RGPD: aceite em " . date('c') . " (Política de Privacidade)\nIP: {$ip}\n";
+    . "Consentimento RGPD: aceite em " . date('c') . " (Política de Privacidade)\n";
 $table = '';
 foreach ($rows as $k => $v) {
     $table .= '<tr><td style="padding:8px 12px 8px 0;border-bottom:1px solid #efe8de;font:400 12px/1.4 Arial,Helvetica,sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:#8a8076;white-space:nowrap;vertical-align:top;">' . $esc($k) . '</td>'

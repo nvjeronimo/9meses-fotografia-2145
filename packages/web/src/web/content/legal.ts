@@ -1,9 +1,9 @@
 // Política de privacidade e política de cookies (PT/EN).
 // Ao mudar o conteúdo, atualizar VERSION e IN_FORCE e rever as duas línguas.
 
-export const VERSION = "2.0";
+export const VERSION = "2.1";
 /** ISO date the current version took effect. */
-export const IN_FORCE = "2026-09-27";
+export const IN_FORCE = "2026-10-12";
 
 export type Block =
   | { p: string }
@@ -97,7 +97,7 @@ export const PRIVACY: Record<Lang, Policy> = {
               "Pedidos que não resultam em sessão: até 24 meses depois do último contacto.",
               "Clientes: os dados de faturação pelo prazo exigido pela lei portuguesa (10 anos); os restantes enquanto durar a relação e até 24 meses depois.",
               "Fotografias: guardadas em arquivo para permitir encomendas futuras e apagadas quando o pedir.",
-              "Registo de envios do formulário no EmailJS: pelo prazo definido por esse serviço.",
+              "Registo técnico do formulário (envios recusados e contagens por dia, sem nome, email nem mensagem): até 120 dias. Para travar envios automáticos, o servidor guarda durante alguns minutos uma impressão digital irreversível do endereço IP.",
               "Registos do servidor: pelo prazo definido pelo alojamento (DreamHost).",
             ],
           },
@@ -110,15 +110,14 @@ export const PRIVACY: Record<Lang, Policy> = {
           {
             ul: [
               "Não vendemos nem cedemos os seus dados a ninguém.",
-              "DreamHost: alojamento do site e do email do estúdio, em servidores na União Europeia (Amesterdão).",
-              "EmailJS: serviço que entrega as mensagens do formulário na caixa de email do estúdio e guarda um registo de cada envio.",
+              "DreamHost: alojamento do site e do email do estúdio, em servidores na União Europeia (Amesterdão). É o próprio servidor do site que envia as mensagens do formulário para a caixa de email do estúdio e a confirmação para o seu email.",
               "Google (Gmail): recebe uma cópia dos pedidos na caixa de email do estúdio.",
               "Zoom e o serviço de galeria online: usados depois da sessão para a apresentação das fotografias e para a entrega da galeria.",
               "WhatsApp, Instagram, Facebook, Google Maps e Livro de Reclamações: os links só enviam dados para esses serviços quando carrega neles, e a partir daí aplicam-se as regras de cada um.",
             ],
           },
           {
-            p: "Alguns destes serviços (Google, EmailJS, Zoom) podem tratar dados fora da União Europeia. Nesses casos aplicam-se as garantias previstas no RGPD, como as cláusulas contratuais-tipo aprovadas pela Comissão Europeia.",
+            p: "Alguns destes serviços (Google, Zoom) podem tratar dados fora da União Europeia. Nesses casos aplicam-se as garantias previstas no RGPD, como as cláusulas contratuais-tipo aprovadas pela Comissão Europeia.",
           },
         ],
       },
@@ -244,7 +243,7 @@ export const PRIVACY: Record<Lang, Policy> = {
               "Enquiries that do not lead to a session: up to 24 months after the last contact.",
               "Clients: invoicing details for the period required by Portuguese law (10 years); everything else for as long as we work together and up to 24 months afterwards.",
               "Photographs: archived so you can order prints later, and deleted when you ask.",
-              "EmailJS log of form sends: for the period set by that service.",
+              "Technical log of the form (refused sends and daily counts, with no name, email or message): up to 120 days. To stop automated sends, the server keeps an irreversible fingerprint of the IP address for a few minutes.",
               "Server logs: for the period set by the host (DreamHost).",
             ],
           },
@@ -257,15 +256,14 @@ export const PRIVACY: Record<Lang, Policy> = {
           {
             ul: [
               "We never sell or give your data to anyone.",
-              "DreamHost: hosting for the website and the studio email, on servers in the European Union (Amsterdam).",
-              "EmailJS: delivers contact-form messages to the studio mailbox and keeps a log of each send.",
+              "DreamHost: hosting for the website and the studio email, on servers in the European Union (Amsterdam). The site's own server sends the form messages to the studio mailbox and the confirmation to your email.",
               "Google (Gmail): receives a copy of each enquiry in the studio mailbox.",
               "Zoom and the online gallery service: used after the session to present the photographs and deliver the gallery.",
               "WhatsApp, Instagram, Facebook, Google Maps and the Complaints Book: the links only send data to those services when you click them, and their own rules apply from then on.",
             ],
           },
           {
-            p: "Some of these services (Google, EmailJS, Zoom) may process data outside the European Union. Where they do, the safeguards set out in the GDPR apply, such as the European Commission's standard contractual clauses.",
+            p: "Some of these services (Google, Zoom) may process data outside the European Union. Where they do, the safeguards set out in the GDPR apply, such as the European Commission's standard contractual clauses.",
           },
         ],
       },
@@ -347,17 +345,11 @@ export const COOKIES: Record<Lang, Policy> = {
                   "Memória local do navegador (localStorage), só neste site",
                   "Até a apagar",
                 ],
-                [
-                  "contact",
-                  "Guardar a hora do último envio do formulário, para travar envios repetidos (proteção contra spam do EmailJS).",
-                  "Memória local do navegador (localStorage), só neste site",
-                  "Até a apagar",
-                ],
               ],
             },
           },
           {
-            p: "Nada disto é um cookie e nada sai do seu computador ou telemóvel. Só fica guardado se mudar o tema ou enviar o formulário. Como é estritamente necessário para as funções que pede, não é preciso pedir consentimento nem mostrar um aviso de cookies.",
+            p: "Nada disto é um cookie e nada sai do seu computador ou telemóvel. Só fica guardado se mudar o tema. Como é estritamente necessário para as funções que pede, não é preciso pedir consentimento nem mostrar um aviso de cookies.",
           },
         ],
       },
@@ -369,7 +361,7 @@ export const COOKIES: Record<Lang, Policy> = {
             ul: [
               "Letras: estão alojadas no próprio site. Não é feito nenhum pedido à Google nem a outros serviços de letras.",
               "Fotografias e vídeos: estão alojados no próprio site.",
-              "Formulário: o serviço EmailJS só é contactado quando carrega em enviar.",
+              "Formulário: é enviado para o servidor do próprio site, sem nenhum serviço externo. Antes do envio, o seu navegador faz um pequeno cálculo que mostra que não é um programa automático; nada fica guardado no seu dispositivo.",
               "WhatsApp, Instagram, Facebook e Google Maps: os links abrem esses serviços; nada é carregado deles enquanto não carregar no link.",
               "Estatísticas: não usamos nenhuma ferramenta de estatísticas nem de rastreio.",
             ],
@@ -415,17 +407,11 @@ export const COOKIES: Record<Lang, Policy> = {
                   "Browser local storage (localStorage), this site only",
                   "Until you delete it",
                 ],
-                [
-                  "contact",
-                  "Keeping the time of your last form submission, to stop repeated sends (EmailJS spam protection).",
-                  "Browser local storage (localStorage), this site only",
-                  "Until you delete it",
-                ],
               ],
             },
           },
           {
-            p: "None of this is a cookie and nothing leaves your computer or phone. It is only stored if you change the theme or send the form. Because it is strictly necessary for features you ask for, no consent or cookie banner is needed.",
+            p: "None of this is a cookie and nothing leaves your computer or phone. It is only stored if you change the theme. Because it is strictly necessary for features you ask for, no consent or cookie banner is needed.",
           },
         ],
       },
@@ -437,7 +423,7 @@ export const COOKIES: Record<Lang, Policy> = {
             ul: [
               "Fonts: hosted on this website. No request is made to Google or any other font service.",
               "Photographs and videos: hosted on this website.",
-              "Form: EmailJS is only contacted when you press send.",
+              "Form: it is sent to this site's own server, with no outside service. Before sending, your browser does a small calculation that shows it is not an automated program; nothing is stored on your device.",
               "WhatsApp, Instagram, Facebook and Google Maps: the links open those services; nothing is loaded from them until you click.",
               "Statistics: we use no analytics or tracking tools.",
             ],

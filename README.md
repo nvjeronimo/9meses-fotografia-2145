@@ -15,7 +15,7 @@ Cada push para `main` constrói e publica automaticamente
 | Artigos do diário | `packages/web/src/web/content/posts.ts` |
 | Fotos por sessão / galeria | `packages/web/src/web/lib/site.ts` (`DEFAULT_PHOTOS`) + ficheiros em `packages/web/public/images/` |
 | Contactos, redes sociais | `packages/web/src/web/lib/site.ts` (`CONTACT`) |
-| Formulário (EmailJS) | `.env.production` |
+| Formulário de contacto: destinatários e textos dos emails | `packages/web/public/api/contact.php` (protecção contra spam em `_store.php` e `guard.php`) |
 
 Depois de acrescentar fotos: `python3 tools/optimize-images.py` (gera as versões WebP).
 

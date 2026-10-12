@@ -1,6 +1,5 @@
-import emailjs from "@emailjs/browser";
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone, X } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useSearch } from "wouter";
 import { useLanguage } from "../components/language-provider";
 import { Seo } from "../components/seo";
@@ -10,27 +9,41 @@ import { useAnalytics } from "../hooks/use-analytics";
 import { CONTACT, SESSIONS } from "../lib/site";
 import { CALL_NOTE_ID, CallMark } from "../components/call-note";
 
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
 /**
- * Second EmailJS template: the confirmation that goes back to the visitor.
- * Optional — while it is unset the studio notification still goes out and the
- * auto-reply is simply skipped, so the form never breaks over a missing id.
+ * The form posts to this site's own server (public/api/contact.php), which
+ * sends the emails. With every request goes a proof that a real browser took
+ * the time to fill the form (public/api/guard.php and _store.php): a signed
+ * challenge and a number that, hashed with it, starts with a few zero bits.
+ * It is asked for when the form is first touched and worked out in the
+ * background; the visitor sees nothing of it.
  */
-const AUTOREPLY_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID as
-  | string
-  | undefined;
-
-// Free-tier protections from the SDK: refuse headless browsers (most bots)
-// and allow one send per 10 seconds from the same browser.
-if (PUBLIC_KEY) {
-  emailjs.init({
-    publicKey: PUBLIC_KEY,
-    blockHeadless: true,
-    limitRate: { id: "contact", throttle: 10_000 },
-  });
+interface Proof {
+  c: string;
+  a: string;
+  at: number;
 }
+
+async function makeProof(): Promise<Proof> {
+  const response = await fetch("/api/guard.php", { headers: { Accept: "application/json" } });
+  const challenge = (await response.json()) as { ok: boolean; c: string; bits: number };
+  if (!challenge.ok) throw new Error("guard");
+  const encoder = new TextEncoder();
+  const at = Date.now();
+  for (let n = 0; ; n++) {
+    const hash = new Uint8Array(
+      await crypto.subtle.digest("SHA-256", encoder.encode(`${challenge.c}.${n}`)),
+    );
+    let bits = challenge.bits;
+    let ok = true;
+    for (let i = 0; bits > 0 && ok; i++, bits -= 8) {
+      ok = bits >= 8 ? hash[i] === 0 : hash[i] >> (8 - bits) === 0;
+    }
+    if (ok) return { c: challenge.c, a: String(n), at };
+  }
+}
+
+/** The server wants a few seconds between handing out a challenge and its use. */
+const PROOF_MIN_AGE = 3400;
 
 interface FormState {
   name: string;
@@ -89,7 +102,19 @@ function Contact() {
       ? form.sessionType
       : null;
 
+  // One proof per send, started at the first keystroke so it is ready (and
+  // old enough) by the time the form is submitted.
+  const proof = useRef<Promise<Proof> | null>(null);
+  function prove() {
+    proof.current ??= makeProof().catch((error) => {
+      proof.current = null;
+      throw error;
+    });
+    return proof.current;
+  }
+
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
+    prove().catch(() => {});
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
@@ -97,17 +122,6 @@ function Contact() {
     event.preventDefault();
     setStatus("sending");
     setAutoReplySent(false);
-
-    const sessionLabel = form.sessionType ? t(`session.${form.sessionType}`) : "—";
-    const preferredDate = form.preferredDate || "—";
-    // Package and due date have no columns of their own; they travel at the
-    // top of the message so both the inbox and the email carry them.
-    const context = [
-      chosenPackage && `${t("contact.package.chosen")}: ${chosenPackage}`,
-      dueDateKind && form.dueDate && `${t(`contact.dueDate.${dueDateKind}`)}: ${form.dueDate}`,
-    ].filter(Boolean);
-    const message =
-      [...context, form.message.trim()].filter(Boolean).join("\n\n") || "—";
 
     // Bots fill the hidden "website" field; pretend success and send nothing.
     if (form.website) {
@@ -117,60 +131,49 @@ function Contact() {
     }
 
     try {
-      if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) throw new Error("EmailJS not configured");
-      // Studio notification. Field names match the "Contact Us" template in
-      // EmailJS; it is always written in Portuguese, for Tânia. The recipient
-      // is fixed in the template itself, never taken from the page.
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        email_subject: `Novo pedido de marcação: ${form.name} (${sessionLabel})`,
-        badge: "NOVO PEDIDO",
-        headline: "Pedido de marcação",
-        intro: "Recebeu um novo pedido através do site 9mesesfotografia.com.",
-        name_label: "Nome",
-        client_name: form.name,
-        session_label: "Sessão",
-        session_name: sessionLabel,
-        date_label: "Data preferida",
-        preferred_date: preferredDate,
-        family_label: "Família",
-        family_members: showFamilyMembers ? form.familyMembers || "—" : "—",
-        phone_label: "Telefone",
-        phone: form.phone || "—",
-        email_label: "Email",
-        client_email: form.email,
-        message_label: "Mensagem",
-        message,
-        closing: `Responda a este email para falar diretamente com ${form.name}.`,
-        footer_note: `Formulário de contacto de 9mesesfotografia.com · idioma do visitante: ${language === "pt" ? "Português" : "English"}`,
-        reply_to: form.email,
-      });
+      const data = new FormData();
+      data.set("name", form.name);
+      data.set("email", form.email);
+      data.set("phone", form.phone);
+      data.set("session", form.sessionType);
+      data.set("family", showFamilyMembers ? form.familyMembers : "");
+      data.set("due_date", dueDateKind ? form.dueDate : "");
+      data.set("preferred_date", form.preferredDate);
+      data.set("package", chosenPackage);
+      data.set("message", form.message.trim());
+      data.set("consent", form.consent ? "1" : "");
+      data.set("lang", language === "pt" ? "pt" : "en");
+      data.set("website", form.website);
 
-      // Auto-reply to the visitor. A failure here must not turn a delivered
-      // enquiry into an error, so it is awaited separately and swallowed.
-      if (SERVICE_ID && AUTOREPLY_TEMPLATE_ID && PUBLIC_KEY) {
-        try {
-          await emailjs.send(SERVICE_ID, AUTOREPLY_TEMPLATE_ID, {
-            to_name: form.name,
-            to_email: form.email,
-            session_type: sessionLabel,
-            preferred_date: preferredDate,
-            message,
-            language: language === "pt" ? "pt" : "en",
-            studio_email: CONTACT.email,
-            studio_phone: CONTACT.phone,
-          });
-          setAutoReplySent(true);
-        } catch {
-          setAutoReplySent(false);
-        }
+      // A proof the server no longer takes (form left open for hours, sent
+      // twice) is made again and the send repeated, once, without a word to
+      // the visitor.
+      let response!: Response;
+      let result: { ok?: boolean; error?: string; copy?: boolean } = {};
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const made = await prove();
+        const wait = PROOF_MIN_AGE - (Date.now() - made.at);
+        if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
+        data.set("g", made.c);
+        data.set("ga", made.a);
+        response = await fetch("/api/contact.php", {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" },
+        });
+        result = (await response.json().catch(() => ({}))) as typeof result;
+        proof.current = null; // a challenge is good for one request
+        if (result.error !== "check") break;
       }
+      if (!response.ok || !result.ok) throw Object.assign(new Error(result.error), { status: response.status });
 
+      setAutoReplySent(result.copy === true);
       trackEvent("contact_submit", { session_type: form.sessionType || "unspecified" });
       setStatus("sent");
       setForm(EMPTY);
       setChosenPackage("");
     } catch (error) {
-      // EmailJS answers 429 when its own rate limit trips.
+      // The server answers 429 when its rate limit trips.
       const code = (error as { status?: number })?.status;
       setStatus(code === 429 ? "ratelimited" : "error");
     }

@@ -27,7 +27,7 @@ What a neighbouring studio cannot truthfully copy, all four confirmed by the own
 
 ## Operating Context
 
-- Enquiries arrive by WhatsApp (+351 967 716 894), the contact form (EmailJS → email) and phone; no online payment.
+- Enquiries arrive by WhatsApp (+351 967 716 894), the contact form (the site's own PHP endpoint → email) and phone; no online payment.
 - Booking: 50% deposit, 50% on the day; cash, bank transfer or MB WAY. Newborn sessions are booked during pregnancy for the due date and confirmed after birth; a questionnaire follows booking.
 - After the session: online Zoom slideshow reveal, image selection, online gallery within 2 months (3 working days with a 100€ rush fee), prints delivered later.
 - Session windows: maternity 29–35 weeks; newborn first 2 weeks (3–4 h, baby-led); baby and smash ~1 h; outdoor sessions start 1 h before sunset.
@@ -36,7 +36,7 @@ What a neighbouring studio cannot truthfully copy, all four confirmed by the own
 
 - Static bilingual site (PT default at `/`, EN under `/en`), pre-rendered, hosted on DreamHost, deployed from GitHub. No CMS: content is edited in the repo by Nelson (+ Claude).
 - Source of truth for prices and terms: *Pacotes e Informações 2024* brochure (`packages/web/public/brochura/9meses-brochura.pdf`); three packages per session.
-- Contact form must keep working without a server (EmailJS).
+- The contact form posts to the site's own PHP endpoints (`packages/web/public/api`), which send the emails and guard against automated sends without any outside service or cookie.
 - Undecided: whether a dedicated "Barriga + Bebé" bundle becomes its own product (today it is the 50€ discount note).
 
 ## Brand Commitments
