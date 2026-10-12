@@ -4,8 +4,9 @@
 declare(strict_types=1);
 require __DIR__ . '/_store.php';
 
-const TO = 'info@9mesesfotografia.com';        // the studio's mailbox
-const BCC = '9mesesfotografia@gmail.com';      // hidden copy, as before
+const TO = 'info@9mesesfotografia.com';        // forward-only address: it passes everything on to the studio's Gmail
+const CC = 'website@9mesesfotografia.com';     // a real mailbox on the domain, which keeps its own copy
+const BCC = '9mesesfotografia@gmail.com';      // hidden copy sent straight to the Gmail, in case the forward fails
 const FROM = 'info@9mesesfotografia.com';      // sender of the notification and of the confirmation
 const PHONE = '+351 967 716 894';
 
@@ -132,6 +133,7 @@ $html = shell('pt', 'Pedido de marcação',
     'Formulário de contacto de 9mesesfotografia.com · idioma do visitante: ' . ($en ? 'English' : 'Português') . ' · ' . date('d/m/Y H:i'));
 $sent = send_mail(TO, ($doubt ? '[verificar: possível spam] ' : '') . "Novo pedido de marcação: {$name} ({$sessionForStudio})", $text, $html, [
     'From: 9 Meses Fotografia (site) <' . FROM . '>',
+    'Cc: ' . CC,
     'Bcc: ' . BCC,
     'Reply-To: ' . $email,
     'X-Mailer: 9mesesfotografia.com',
