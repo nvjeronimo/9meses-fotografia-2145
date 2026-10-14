@@ -328,6 +328,8 @@ export function Navigation() {
             alt="9 Meses Fotografia"
             width={330}
             height={196}
+            // On phones the logo is the largest thing in the first screen: fetch it first.
+            fetchPriority="high"
             className={cn(
               "w-auto transition-all duration-500",
               scrolled ? "h-10 md:h-12" : "h-16 md:h-24",

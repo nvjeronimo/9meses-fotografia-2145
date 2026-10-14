@@ -57,6 +57,8 @@ function Packages() {
                       src={iconFor(group.types[0])}
                       alt=""
                       aria-hidden
+                      width={256}
+                      height={256}
                       loading="lazy"
                       className="brand-mark size-11 shrink-0 md:size-14"
                     />

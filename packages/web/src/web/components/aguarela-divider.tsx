@@ -35,6 +35,8 @@ export function AguarelaDivider({
       <img
         src={edge === "top" ? "/images/graphics/aguarela-band-top.webp" : "/images/graphics/aguarela-band.webp"}
         alt=""
+        width={1440}
+        height={280}
         loading="lazy"
         decoding="async"
         style={{ maskImage: fade, WebkitMaskImage: fade }}

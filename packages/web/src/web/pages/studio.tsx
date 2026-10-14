@@ -65,6 +65,8 @@ function Studio() {
                   key={mark}
                   src={mark}
                   alt=""
+                  width={256}
+                  height={256}
                   loading="lazy"
                   className="brand-mark size-14 shrink-0 md:size-16"
                 />
