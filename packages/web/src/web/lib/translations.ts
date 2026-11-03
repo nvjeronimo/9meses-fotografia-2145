@@ -247,10 +247,12 @@ export const translations = {
     "brochure.label": "CATÁLOGO",
     "brochure.title": "Brochura 9 Meses",
     "brochure.text":
-      "Todos os pacotes, preços, condições e exemplos de trabalho num só documento. Consulte online ou guarde no seu dispositivo.",
+      "Como decorre a sessão, os pacotes, as condições e exemplos de trabalho. Consulte online ou guarde no seu dispositivo.",
     "brochure.view": "VER BROCHURA",
     "brochure.download": "DESCARREGAR PDF",
-    "brochure.meta": "PDF · 55 páginas",
+    "brochure.titleFor": "Brochura {session}",
+    "brochure.meta": "PDF · {n} páginas",
+    "brochure.choose": "PDF · uma brochura por sessão",
 
     // Gallery
     "gallery.hero.label": "PORTFÓLIO",
@@ -768,10 +770,12 @@ export const translations = {
     "brochure.label": "CATALOGUE",
     "brochure.title": "9 Meses Brochure",
     "brochure.text":
-      "Every package, price, condition and work sample in a single document. Read it online or save it to your device.",
+      "How the session goes, the packages, the terms and work samples. Read it online or save it to your device.",
     "brochure.view": "VIEW BROCHURE",
     "brochure.download": "DOWNLOAD PDF",
-    "brochure.meta": "PDF · 55 pages",
+    "brochure.titleFor": "{session} brochure",
+    "brochure.meta": "PDF · {n} pages",
+    "brochure.choose": "PDF · one brochure per session",
 
     // Gallery
     "gallery.hero.label": "PORTFOLIO",

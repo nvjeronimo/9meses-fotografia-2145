@@ -167,7 +167,7 @@ function SessionDetail() {
           </div>
           {/* Same catalogue as /pacotes — it covers every session, so it is
               worth offering wherever prices are being read. */}
-          <BrochureCta surface="background" className="mx-auto mt-12 max-w-4xl md:mt-16" />
+          <BrochureCta session={session.sessionType} surface="background" className="mx-auto mt-12 max-w-4xl md:mt-16" />
         </div>
       </section>
 
