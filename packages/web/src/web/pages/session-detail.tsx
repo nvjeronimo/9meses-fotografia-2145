@@ -11,7 +11,7 @@ import { PhotoGrid } from "../components/photo-grid";
 import { Reveal } from "../components/reveal";
 import { useCategoryPhotos } from "../lib/photos";
 import { SESSIONS, SITE_URL, sessionBySlug } from "../lib/site";
-import { PACKAGES } from "../content/packages";
+import { PACKAGES, PRICES_PUBLIC, fromPrice } from "../content/packages";
 import { SESSION_SEO } from "../content/session-seo";
 import { FaqList, faqJsonLd } from "../components/faq-list";
 import NotFound from "./not-found";
@@ -58,15 +58,24 @@ function SessionDetail() {
           },
           areaServed: { "@type": "Place", name: "Albufeira, Algarve, Portugal" },
           inLanguage: language === "pt" ? "pt-PT" : "en",
-          // The brochure price list, so search engines can show "from" prices.
-          offers: PACKAGES.filter((row) => row.sessionType === session.sessionType).map((row) => ({
-            "@type": "Offer",
-            name: `${t(session.titleKey)} · ${row.name}`,
-            price: row.price,
-            priceCurrency: "EUR",
-            availability: "https://schema.org/InStock",
-            url: `${SITE_URL}${pagePath}`,
-          })),
+          // The brochure price list, so search engines can show "from" prices; while the
+          // package prices are not public, only the base price of the session.
+          offers: PRICES_PUBLIC
+            ? PACKAGES.filter((row) => row.sessionType === session.sessionType).map((row) => ({
+                "@type": "Offer",
+                name: `${t(session.titleKey)} · ${row.name}`,
+                price: row.price,
+                priceCurrency: "EUR",
+                availability: "https://schema.org/InStock",
+                url: `${SITE_URL}${pagePath}`,
+              }))
+            : {
+                "@type": "AggregateOffer",
+                lowPrice: fromPrice(session.sessionType),
+                priceCurrency: "EUR",
+                availability: "https://schema.org/InStock",
+                url: `${SITE_URL}${pagePath}`,
+              },
         }, faqJsonLd(seo.faq)]}
       />
 

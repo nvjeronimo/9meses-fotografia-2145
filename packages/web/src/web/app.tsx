@@ -14,6 +14,7 @@ import JournalPost from "./pages/journal-post";
 import Privacy from "./pages/privacy";
 import Cookies from "./pages/cookies";
 import Vouchers from "./pages/vouchers";
+import Prices from "./pages/prices";
 import Faq from "./pages/faq";
 import Contact from "./pages/contact";
 import NotFound from "./pages/not-found";
@@ -40,6 +41,7 @@ const COMPONENTS: Record<PageId, React.ComponentType> = {
   privacy: Privacy,
   cookies: Cookies,
   vouchers: Vouchers,
+  prices: Prices,
 };
 
 // Longer paths first so /sessoes/:slug is tried before /sessoes.

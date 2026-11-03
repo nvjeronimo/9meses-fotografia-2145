@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { Link } from "wouter";
 import { usePackages, type SessionType } from "../queries/packages";
+import { PRICES_PUBLIC, fromPrice } from "../content/packages";
 import { useLanguage } from "./language-provider";
 import { Reveal } from "./reveal";
 
@@ -10,10 +11,15 @@ interface PackageCardsProps {
   className?: string;
   /** The Barriga + Bebé offer; on by default for maternity and newborn. */
   showBundle?: boolean;
+  /** Every package with its price, even while PRICES_PUBLIC is false (the unlisted /precos page). */
+  full?: boolean;
 }
 
-export function PackageCards({ sessionType, className, showBundle = true }: PackageCardsProps) {
+export function PackageCards({ sessionType, className, showBundle = true, full = false }: PackageCardsProps) {
   const { t, language, href } = useLanguage();
+  if (!PRICES_PUBLIC && !full) {
+    return <PriceFrom sessionType={sessionType} className={className} showBundle={showBundle} />;
+  }
   const query = usePackages();
   const wanted = Array.isArray(sessionType) ? sessionType : [sessionType];
 
@@ -110,6 +116,57 @@ export function PackageCards({ sessionType, className, showBundle = true }: Pack
             <li key={key}>{t(key)}</li>
           ))}
         </ul>
+      )}
+    </div>
+  );
+}
+
+/**
+ * While the package prices are not public: the session's base price and an
+ * invitation to ask for the rest, in the same card style as the packages.
+ */
+function PriceFrom({
+  sessionType,
+  className,
+  showBundle,
+}: {
+  sessionType: SessionType | SessionType[];
+  className?: string;
+  showBundle: boolean;
+}) {
+  const { t, href } = useLanguage();
+  const types = Array.isArray(sessionType) ? sessionType : [sessionType];
+  const type = types[0];
+  return (
+    <div className={className}>
+      <Reveal>
+        <div className="border-primary/50 bg-card mx-auto flex max-w-3xl flex-col items-start gap-6 border p-6 shadow-[0_1px_40px_-20px_rgba(0,0,0,0.25)] sm:flex-row sm:items-center sm:justify-between md:p-8">
+          <div>
+            <p className="uppercase-spaced text-muted-foreground mb-1">{t("packages.startsAt")}</p>
+            <p className="display-serif text-primary text-4xl leading-none font-light whitespace-nowrap md:text-5xl">
+              {fromPrice(type)}
+              <span className="ml-0.5 text-xl md:text-2xl">€</span>
+            </p>
+            <p className="text-muted-foreground mt-4 max-w-md text-base leading-relaxed">{t("packages.ask.text")}</p>
+          </div>
+          <Link to={`${href("contact")}?sessao=${type}`} className="btn-solid shrink-0">
+            {t("packages.ask.cta")}
+          </Link>
+        </div>
+      </Reveal>
+      {showBundle && types.some((each) => each === "maternity" || each === "newborn") && (
+        <div className="border-primary/40 bg-background mx-auto mt-8 flex max-w-3xl flex-col items-start gap-5 border p-6 sm:flex-row sm:items-center sm:justify-between md:mt-10 md:p-8">
+          <div>
+            <p className="display-serif text-primary text-2xl font-light">{t("bundle.title")}</p>
+            <p className="text-muted-foreground mt-2 text-base leading-relaxed">{t("bundle.text")}</p>
+          </div>
+          <Link
+            to={`${href("contact")}?sessao=maternity&pacote=${encodeURIComponent(t("bundle.package"))}`}
+            className="btn-outline shrink-0"
+          >
+            {t("bundle.cta")}
+          </Link>
+        </div>
       )}
     </div>
   );

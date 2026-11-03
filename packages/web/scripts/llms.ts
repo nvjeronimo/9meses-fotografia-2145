@@ -5,7 +5,7 @@
  */
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
-import { PACKAGES } from "../src/web/content/packages";
+import { PACKAGES, PRICES_PUBLIC } from "../src/web/content/packages";
 import { POSTS } from "../src/web/content/posts";
 import { SESSION_SEO } from "../src/web/content/session-seo";
 import { CONTACT, GOOGLE_REVIEWS, SESSIONS, SITE_URL } from "../src/web/lib/site";
@@ -23,7 +23,7 @@ export async function writeLlmsTxt(dist: string) {
     const faq = pt.faq.map((qa) => `  - ${qa.q} ${qa.a}`).join("\n");
     return `### ${pt.title}
 - PT: ${SITE_URL}/sessoes/${s.slug} · EN: ${SITE_URL}/en/sessions/${s.slugEn} (${en.title})
-- Desde ${from(s.sessionType)} € · Pacotes: ${packages}
+- Desde ${from(s.sessionType)} €${PRICES_PUBLIC ? ` · Pacotes: ${packages}` : " · preços de cada pacote a pedido (formulário ou WhatsApp)"}
 - ${pt.description}
 ${faq}`;
   }).join("\n\n");

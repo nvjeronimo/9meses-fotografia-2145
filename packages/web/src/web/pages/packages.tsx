@@ -7,6 +7,7 @@ import { BookingCta, PageHero, PageShell } from "../components/page-shell";
 import { Reveal } from "../components/reveal";
 import type { SessionType } from "../queries/packages";
 import { SESSIONS } from "../lib/site";
+import { PRICES_PUBLIC } from "../content/packages";
 
 const iconFor = (type: SessionType) =>
   SESSIONS.find((session) => session.sessionType === type)?.icon;
@@ -32,17 +33,28 @@ const EXTRAS: { label: string; labelKey?: string; kindKey?: string; price: strin
   { label: "100x150", kindKey: "packages.extras.canvasOne", price: "230€" },
 ];
 
-function Packages() {
+/**
+ * The packages page. While PRICES_PUBLIC is false it shows each session's base
+ * price and the extras without amounts; `full` (the unlisted /precos page, not
+ * indexed and in no menu) always shows every package and price, to send to
+ * whoever asks.
+ */
+export function PackagesView({ full = false }: { full?: boolean }) {
   const { t } = useLanguage();
+  const prices = PRICES_PUBLIC || full;
 
   return (
     <PageShell>
-      <Seo title={t("seo.packages.title")} description={t("seo.packages.desc")} />
+      <Seo
+        title={t("seo.packages.title")}
+        description={t("seo.packages.desc")}
+        noindex={full && !PRICES_PUBLIC}
+      />
 
       <PageHero
         labelKey="nav.packages"
         titleKey="packages.title"
-        subtitleKey="packages.subtitle"
+        subtitleKey={prices ? "packages.subtitle" : "packages.subtitle.ask"}
       />
 
       <section className="container section-y-b section-flush-b">
@@ -68,6 +80,7 @@ function Packages() {
               </Reveal>
               <div className="mx-auto max-w-5xl">
                 <PackageCards
+                  full={full}
                   sessionType={group.types}
                   // One Barriga + Bebé offer on this page, under maternity.
                   showBundle={group.types[0] === "maternity"}
@@ -83,6 +96,9 @@ function Packages() {
           <div className="border-border/70 mx-auto mt-14 grid max-w-5xl gap-12 border-t pt-12 md:mt-24 md:grid-cols-2 md:gap-20 md:pt-16">
             <div>
               <h2 className="display-serif mb-6 text-3xl font-light">{t("packages.extras.title")}</h2>
+              {!prices ? (
+                <p className="text-muted-foreground text-base leading-relaxed">{t("packages.extras")}</p>
+              ) : (
               <dl className="divide-border/60 divide-y text-sm">
                 {EXTRAS.map((line) => (
                   <div key={line.label} className="flex items-baseline justify-between gap-6 py-3">
@@ -96,6 +112,7 @@ function Packages() {
                   </div>
                 ))}
               </dl>
+              )}
             </div>
             <div>
               <h2 className="display-serif mb-6 text-3xl font-light">{t("packages.terms.title")}</h2>
@@ -121,6 +138,10 @@ function Packages() {
       <BookingCta />
     </PageShell>
   );
+}
+
+function Packages() {
+  return <PackagesView />;
 }
 
 export default Packages;

@@ -24,7 +24,8 @@ export type PageId =
   | "contact"
   | "privacy"
   | "cookies"
-  | "vouchers";
+  | "vouchers"
+  | "prices";
 
 interface PageDef {
   pt: string;
@@ -49,6 +50,8 @@ export const PAGES: Record<PageId, PageDef> = {
   privacy: { pt: "/privacidade", en: "/en/privacy" },
   cookies: { pt: "/cookies", en: "/en/cookies" },
   vouchers: { pt: "/vales-oferta", en: "/en/gift-vouchers" },
+  // Unlisted: in no menu, not in the sitemap, not indexed (see PRICES_PUBLIC).
+  prices: { pt: "/precos", en: "/en/prices" },
 };
 
 export const PAGE_IDS = Object.keys(PAGES) as PageId[];

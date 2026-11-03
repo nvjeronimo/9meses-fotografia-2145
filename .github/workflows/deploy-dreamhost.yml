@@ -51,9 +51,9 @@ jobs:
           printf '%s\n' "$DH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           SSH="ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o ConnectTimeout=20"
           TARGET="$DH_USER@$DH_HOST:${DH_PATH:-9mesesfotografia.com}/"
-          # Pages whose HTML really changed (by content, not date), for IndexNow below.
+          # Pages whose HTML really changed (by content, not date), for IndexNow below; the unlisted prices page is left out.
           rsync -rcn --out-format='%n' --exclude '.DS_Store' --exclude '.well-known' --exclude '.dh-diag' \
-            -e "$SSH" packages/web/dist/ "$TARGET" | grep -E '(^|/)index\.html$' > "$RUNNER_TEMP/changed.txt" || true
+            -e "$SSH" packages/web/dist/ "$TARGET" | grep -E '(^|/)index\.html$' | grep -v -E '^(precos|en/prices)/' > "$RUNNER_TEMP/changed.txt" || true
           rsync -rlptvz --delete --exclude '.DS_Store' --exclude '.well-known' --exclude '.dh-diag' \
             -e "$SSH" packages/web/dist/ "$TARGET"
 

@@ -2,6 +2,15 @@
 // Para mudar um preço ou uma linha: editar aqui e fazer push — o site
 // atualiza sozinho. `highlighted` = pacote em destaque (botão cheio).
 
+/**
+ * Preços dos pacotes visíveis no site? Desde 2026-11-03, a pedido da Tânia,
+ * não: as páginas mostram só "a partir de" (o pacote mais barato de cada
+ * sessão) e convidam a pedir os preços. A tabela completa fica na página não
+ * listada /precos (/en/prices), sem indexação, para enviar a quem pedir.
+ * Para voltar a mostrar tudo: true.
+ */
+export const PRICES_PUBLIC = false;
+
 export type SessionType = "maternity" | "newborn" | "baby" | "family" | "smash";
 
 export interface Package {
@@ -83,3 +92,8 @@ export const PACKAGES: Package[] = [
       [CAKE[1], SLIDESHOW[1], PRINTS_15[1], "€20 voucher for a family session (valid for 1 year)"]),
     sortOrder: 15 },
 ];
+
+/** The cheapest package of a session: the "a partir de" price shown while PRICES_PUBLIC is false. */
+export function fromPrice(sessionType: SessionType): number {
+  return Math.min(...PACKAGES.filter((row) => row.sessionType === sessionType).map((row) => row.price));
+}

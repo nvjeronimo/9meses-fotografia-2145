@@ -84,12 +84,14 @@ for (const route of routes) {
 await browser.close();
 server.kill();
 
+// Pages that are pre-rendered (so a shared link works) but kept out of the sitemap.
+const UNLISTED = new Set([PAGES.prices.pt, PAGES.prices.en]);
 const today = new Date().toISOString().slice(0, 10);
 await writeFile(
   path.join(DIST, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes.map((route) => `  <url><loc>${SITE_URL}${route}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
+${routes.filter((route) => !UNLISTED.has(route)).map((route) => `  <url><loc>${SITE_URL}${route}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
 </urlset>
 `,
 );

@@ -4,7 +4,7 @@
 // As perguntas aparecem na página (e em dados estruturados FAQPage), por isso
 // são também o que os motores de pesquisa e as IAs citam.
 
-import type { SessionType } from "./packages";
+import { PRICES_PUBLIC, fromPrice, type SessionType } from "./packages";
 
 export interface Qa {
   q: string;
@@ -349,3 +349,24 @@ export const SESSION_SEO: Record<SessionType, { pt: SessionSeoCopy; en: SessionS
     },
   },
 };
+
+/*
+ * While the package prices are not public (PRICES_PUBLIC in packages.ts), the
+ * "how much" answer gives the base price only and invites the visitor to ask;
+ * the full answers above come back when the switch is turned on again.
+ */
+const ASK = {
+  pt: (from: number) =>
+    `Os pacotes começam nos ${from} €. Os preços de cada pacote, e o que inclui cada um, são enviados a pedido: basta escrever-me pelo formulário ou pelo WhatsApp. ${PAYMENT_PT}`,
+  en: (from: number) =>
+    `Packages start at €${from}. The price of each package, and what each one includes, is sent on request: just write to me through the form or on WhatsApp. ${PAYMENT_EN}`,
+};
+if (!PRICES_PUBLIC) {
+  for (const type of Object.keys(SESSION_SEO) as SessionType[]) {
+    for (const lang of ["pt", "en"] as const) {
+      const copy = SESSION_SEO[type][lang];
+      copy.faq = copy.faq.map((qa) => (/^(Quanto custa|How much)/.test(qa.q) ? { ...qa, a: ASK[lang](fromPrice(type)) } : qa));
+    }
+  }
+}
+
