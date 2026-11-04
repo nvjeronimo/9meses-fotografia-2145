@@ -1,6 +1,7 @@
 // A brochura "Pacotes e Informações 2024" dividida por sessão (a pedido da Tânia, 2026-11-03).
-// Os PDFs e as capas estão em public/brochura/; a brochura completa (9meses-brochura.pdf) fica lá
-// para links antigos, mas o site já não a mostra. Para refazer a divisão a partir de uma brochura
+// Os PDFs e as capas estão em public/brochura/. Como têm os preços, só aparecem nas páginas públicas
+// quando PRICES_PUBLIC (content/packages.ts) for true; até lá estão só na página não listada /precos.
+// A brochura completa original está em docs/brochura-2024-completa.pdf (fora do site). Para refazer a divisão a partir de uma brochura
 // nova, ver o mapa de páginas no README.
 
 import type { SessionType } from "./packages";

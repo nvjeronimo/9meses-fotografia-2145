@@ -30,5 +30,5 @@ cd packages/web && bun run build   # dist/ com todas as páginas pré-renderizad
 
 ## Brochura por sessão
 
-A brochura completa (`packages/web/public/brochura/9meses-brochura.pdf`, 55 páginas) é dividida em cinco PDFs, um por sessão, listados em `packages/web/src/web/content/brochures.ts`. Mapa de páginas da brochura 2024: Bebé 1–12 · Família 13–25 · Maternidade 26–33 + 38–43 · Newborn 26–28 + 34–43 (as páginas 26–28 e 38–43 são comuns às duas) · Smash the Cake 44–55. Com uma brochura nova, refazer a divisão com o novo mapa e gerar as capas (página 1 de cada PDF, WebP com 640 px).
+A brochura completa (`docs/brochura-2024-completa.pdf`, 55 páginas, fora do site) é dividida em cinco PDFs, um por sessão, listados em `packages/web/src/web/content/brochures.ts`. Mapa de páginas da brochura 2024: Bebé 1–12 · Família 13–25 · Maternidade 26–33 + 38–43 · Newborn 26–28 + 34–43 (as páginas 26–28 e 38–43 são comuns às duas) · Smash the Cake 44–55. Enquanto os preços não forem públicos (`PRICES_PUBLIC`), as brochuras só aparecem na página não listada `/precos`, e o servidor pede aos motores de pesquisa que não indexem nenhum PDF. Com uma brochura nova, refazer a divisão com o novo mapa e gerar as capas (página 1 de cada PDF, WebP com 640 px).
 

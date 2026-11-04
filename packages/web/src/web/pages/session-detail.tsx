@@ -167,7 +167,10 @@ function SessionDetail() {
           </div>
           {/* Same catalogue as /pacotes — it covers every session, so it is
               worth offering wherever prices are being read. */}
-          <BrochureCta session={session.sessionType} surface="background" className="mx-auto mt-12 max-w-4xl md:mt-16" />
+          {/* The brochure carries every price: hidden while the prices are (it stays on /precos). */}
+          {PRICES_PUBLIC && (
+            <BrochureCta session={session.sessionType} surface="background" className="mx-auto mt-12 max-w-4xl md:mt-16" />
+          )}
         </div>
       </section>
 

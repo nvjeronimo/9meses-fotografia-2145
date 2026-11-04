@@ -130,7 +130,9 @@ export function PackagesView({ full = false }: { full?: boolean }) {
         {/* The catalogue closes the page, after the extras: by this point the
             reader has seen every package, and this is what they take with
             them. */}
-        <BrochureCta className="mx-auto mt-14 max-w-5xl md:mt-24" />
+        {/* The brochures carry every price, so they follow the prices: only on the
+            unlisted /precos page while PRICES_PUBLIC is false. */}
+        {prices && <BrochureCta className="mx-auto mt-14 max-w-5xl md:mt-24" />}
       </section>
 
       <AguarelaDivider />
